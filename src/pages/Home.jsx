@@ -72,60 +72,60 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Thrillophilia Style Perfected */}
-      <section className="relative pt-64 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
+      <section className="relative pt-48 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
         {/* Patterned Static Thumbnails Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          {/* Left Side Horizontal Rows */}
-          <div className="absolute left-0 top-[15%] flex flex-col gap-6">
+          {/* Left Side Horizontal Rows (Tapering) */}
+          <div className="absolute left-0 top-[18%] flex flex-col gap-6">
             {/* Row 1 */}
-            <div className="flex gap-4 -ml-16">
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -ml-24">
+              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
             {/* Row 2 */}
-            <div className="flex gap-4 -ml-8">
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -ml-12">
+              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
           </div>
 
-          {/* Right Side Horizontal Rows */}
-          <div className="absolute right-0 top-[15%] flex flex-col gap-6 items-end">
+          {/* Right Side Horizontal Rows (Tapering) */}
+          <div className="absolute right-0 top-[18%] flex flex-col gap-6 items-end">
             {/* Row 1 */}
-            <div className="flex gap-4 -mr-16">
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -mr-24">
+              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
             {/* Row 2 */}
-            <div className="flex gap-4 -mr-8">
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -mr-12">
+              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
