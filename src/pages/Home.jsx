@@ -72,51 +72,61 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Thrillophilia Style Perfected */}
-      <section className="relative pt-60 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
+      <section className="relative pt-64 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
         {/* Patterned Static Thumbnails Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="max-w-[1600px] mx-auto relative h-full w-full">
-            {/* Left Side Pattern (6 images) */}
-            <div className="absolute left-[2%] top-[5%] grid grid-cols-2 gap-4">
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-6deg]">
+          {/* Left Side Horizontal Rows */}
+          <div className="absolute left-0 top-[15%] flex flex-col gap-6">
+            {/* Row 1 */}
+            <div className="flex gap-4 -ml-16">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[4deg] mt-12">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[8deg] -ml-6">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-10deg] mt-6">
+            </div>
+            {/* Row 2 */}
+            <div className="flex gap-4 -ml-8">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-5deg]">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[12deg] mt-10">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
+          </div>
 
-            {/* Right Side Pattern (6 images) */}
-            <div className="absolute right-[2%] top-[5%] grid grid-cols-2 gap-4">
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-4deg] mt-12">
-                <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
-              </div>
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[6deg]">
-                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
-              </div>
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-8deg] mt-6">
+          {/* Right Side Horizontal Rows */}
+          <div className="absolute right-0 top-[15%] flex flex-col gap-6 items-end">
+            {/* Row 1 */}
+            <div className="flex gap-4 -mr-16">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[10deg] -mr-6">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[12deg] mt-10">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-5deg]">
+            </div>
+            {/* Row 2 */}
+            <div className="flex gap-4 -mr-8">
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+                <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
           </div>
