@@ -71,87 +71,98 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Jadoo Style */}
-      <section className="relative pt-20 pb-32 px-6 overflow-hidden bg-white min-h-[800px] flex items-center">
-        {/* Background Decore (Blob behind the girl) */}
-        <div className="absolute top-0 right-0 w-[45%] md:w-[50%] pointer-events-none z-0 translate-x-[10%] -translate-y-[10%]">
-          <img src={DecoreBg} alt="" className="w-full h-auto opacity-70" />
-        </div>
-
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-4 items-center relative z-10">
-          <div className="space-y-6 md:space-y-8">
-            <motion.p 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="text-[#DF6951] font-bold uppercase tracking-[0.2em] text-base md:text-lg font-poppins"
+      {/* Hero Section - Thrillophilia Style */}
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden bg-[#FDFDFD] border-b border-slate-50">
+        {/* Floating Thumbnails Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden opacity-40 pointer-events-none">
+          <div className="relative w-full h-full">
+            <motion.div 
+              animate={{ 
+                y: [0, -20, 0],
+                rotate: [0, 2, 0]
+              }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-10 left-[5%] w-32 h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[-6deg]"
             >
-              Best Destinations around the world
-            </motion.p>
-            
-            <div className="relative">
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-6xl md:text-[84px] font-bold text-[#181E4B] leading-[1.1] font-volkhov tracking-[-0.02em]"
-              >
-                Travel, <span className="relative inline-block">
-                  enjoy
-                  <div className="absolute bottom-2 left-0 w-full h-[12px] bg-[#F1A501]/30 -z-10 rounded-full skew-x-[-15deg]"></div>
-                </span> <br />
-                and live a new <br />
-                and full life
-              </motion.h1>
-            </div>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-[#5E6282] text-lg font-medium max-w-lg leading-[1.8] font-poppins"
-            >
-              Built Wicket longer admire do barton vanity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.
-            </motion.p>
+              <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+            </motion.div>
 
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap items-center gap-6 md:gap-10 pt-4"
+              animate={{ 
+                y: [0, 25, 0],
+                rotate: [0, -3, 0]
+              }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-40 left-[15%] w-28 h-36 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[8deg]"
             >
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => navigate('/packages')}
-                className="group relative overflow-hidden bg-gradient-to-r from-[#F1A501] to-[#DF6951] text-white font-bold px-12 py-5 rounded-2xl shadow-[0_20px_40px_rgba(223,105,81,0.3)] transition-all flex items-center gap-3 text-lg font-poppins"
-              >
-                {/* Shine effect */}
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shine"></div>
-                
-                <span>Explore Packages</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+              <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            <motion.div 
+              animate={{ 
+                y: [0, -30, 0],
+                scale: [1, 1.05, 1]
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 right-[10%] w-36 h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[5deg]"
+            >
+              <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            <motion.div 
+              animate={{ 
+                x: [0, 20, 0],
+                rotate: [0, 4, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-10 right-[15%] w-32 h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[-12deg]"
+            >
+              <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
             </motion.div>
           </div>
+        </div>
 
-          <div className="relative mt-12 md:mt-0 flex justify-center">
-            {/* Main Visual - The Girl (Union.png according to user) */}
-            <div className="relative z-20 w-full max-w-[650px]">
-              <img src={UnionBg} alt="Traveler" className="w-full h-auto relative z-10" />
-              
-              {/* Floating Planes (plane.png) */}
-              <img 
-                src={PlaneImg} 
-                className="absolute top-[10%] -left-[15%] w-32 md:w-48 z-20 pointer-events-none" 
-                alt="Plane" 
-              />
-              <img 
-                src={PlaneImg} 
-                className="absolute top-[35%] -right-[5%] w-32 md:w-48 z-0 pointer-events-none opacity-80" 
-                alt="Plane" 
-              />
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-bold text-slate-800 mb-6 tracking-tight font-poppins"
+          >
+            Your Tour, <br />
+            Perfectly <span className="text-[#F1A501]">Personalised!</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-slate-500 font-medium mb-12 font-poppins"
+          >
+            Explore expertly curated multi-day tours
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="flex items-center gap-4 bg-white shadow-2xl rounded-full p-2 pl-6 border border-slate-100 max-w-2xl w-full"
+          >
+            <MapPin className="text-slate-400 w-5 h-5" />
+            <input 
+              type="text" 
+              placeholder="Search for destinations, tours..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              className="flex-1 bg-transparent border-none outline-none text-slate-700 py-3 font-poppins"
+            />
+            <button 
+              onClick={handleSearch}
+              className="bg-[#F1A501] text-white px-10 py-4 rounded-full font-bold hover:bg-[#e09901] transition-all shadow-lg shadow-orange-100"
+            >
+              Search
+            </button>
+          </motion.div>
         </div>
       </section>
 
