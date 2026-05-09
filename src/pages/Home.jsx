@@ -71,53 +71,75 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Thrillophilia Style */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden bg-[#FDFDFD] border-b border-slate-50">
-        {/* Floating Thumbnails Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden opacity-40 pointer-events-none">
-          <div className="relative w-full h-full">
+      {/* Hero Section - Thrillophilia Style Perfected */}
+      <section className="relative pt-40 pb-28 px-6 overflow-hidden bg-[#FDFDFD]">
+        {/* Dense Floating Thumbnails Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="relative w-full h-full max-w-7xl mx-auto">
+            {/* Left Side Images */}
             <motion.div 
-              animate={{ 
-                y: [0, -20, 0],
-                rotate: [0, 2, 0]
-              }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-10 left-[5%] w-32 h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[-6deg]"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-10 -left-10 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-6deg]"
             >
               <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
             </motion.div>
 
             <motion.div 
-              animate={{ 
-                y: [0, 25, 0],
-                rotate: [0, -3, 0]
-              }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-40 left-[15%] w-28 h-36 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[8deg]"
+              animate={{ y: [0, 20, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-48 left-10 w-20 h-20 md:w-28 md:h-28 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[8deg]"
             >
               <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
             </motion.div>
 
             <motion.div 
-              animate={{ 
-                y: [0, -30, 0],
-                scale: [1, 1.05, 1]
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-20 right-[10%] w-36 h-48 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[5deg]"
+              animate={{ y: [0, -25, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 left-32 w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-4deg]"
             >
               <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
             </motion.div>
 
             <motion.div 
-              animate={{ 
-                x: [0, 20, 0],
-                rotate: [0, 4, 0]
-              }}
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-20 left-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[12deg]"
+            >
+              <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            {/* Right Side Images */}
+            <motion.div 
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-12 -right-10 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[5deg]"
+            >
+              <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            <motion.div 
+              animate={{ y: [0, 25, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-10 right-[15%] w-32 h-40 rounded-2xl overflow-hidden shadow-2xl border-4 border-white rotate-[-12deg]"
+              className="absolute top-52 right-12 w-20 h-20 md:w-28 md:h-28 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-8deg]"
             >
               <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            <motion.div 
+              animate={{ y: [0, -30, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-24 right-36 w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[10deg]"
+            >
+              <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+
+            <motion.div 
+              animate={{ y: [0, 20, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-24 right-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-5deg]"
+            >
+              <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
             </motion.div>
           </div>
         </div>
@@ -126,7 +148,7 @@ const Home = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold text-slate-800 mb-6 tracking-tight font-poppins"
+            className="text-5xl md:text-[80px] font-extrabold text-[#2D2D2D] mb-8 leading-[1.1] tracking-tight font-poppins"
           >
             Your Tour, <br />
             Perfectly <span className="text-[#F1A501]">Personalised!</span>
@@ -136,7 +158,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-slate-500 font-medium mb-12 font-poppins"
+            className="text-lg md:text-xl text-[#666666] font-medium mb-12 font-poppins"
           >
             Explore expertly curated multi-day tours
           </motion.p>
