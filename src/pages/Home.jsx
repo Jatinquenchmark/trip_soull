@@ -72,75 +72,53 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Thrillophilia Style Perfected */}
-      <section className="relative pt-40 pb-28 px-6 overflow-hidden bg-[#FDFDFD]">
-        {/* Dense Floating Thumbnails Background */}
+      <section className="relative pt-60 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
+        {/* Patterned Static Thumbnails Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="relative w-full h-full max-w-7xl mx-auto">
-            {/* Left Side Images */}
-            <motion.div 
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-10 -left-10 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-6deg]"
-            >
-              <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
-            </motion.div>
+          <div className="max-w-[1600px] mx-auto relative h-full w-full">
+            {/* Left Side Pattern (6 images) */}
+            <div className="absolute left-[2%] top-[5%] grid grid-cols-2 gap-4">
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-6deg]">
+                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[4deg] mt-12">
+                <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[8deg] -ml-6">
+                <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-10deg] mt-6">
+                <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-5deg]">
+                <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[12deg] mt-10">
+                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+              </div>
+            </div>
 
-            <motion.div 
-              animate={{ y: [0, 20, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-48 left-10 w-20 h-20 md:w-28 md:h-28 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[8deg]"
-            >
-              <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, -25, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-20 left-32 w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-4deg]"
-            >
-              <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-20 left-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[12deg]"
-            >
-              <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            {/* Right Side Images */}
-            <motion.div 
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-12 -right-10 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[5deg]"
-            >
-              <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, 25, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-52 right-12 w-20 h-20 md:w-28 md:h-28 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-8deg]"
-            >
-              <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, -30, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-24 right-36 w-16 h-16 md:w-24 md:h-24 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[10deg]"
-            >
-              <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-
-            <motion.div 
-              animate={{ y: [0, 20, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-24 right-0 w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-4 border-white rotate-[-5deg]"
-            >
-              <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
-            </motion.div>
+            {/* Right Side Pattern (6 images) */}
+            <div className="absolute right-[2%] top-[5%] grid grid-cols-2 gap-4">
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-4deg] mt-12">
+                <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[6deg]">
+                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-8deg] mt-6">
+                <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[10deg] -mr-6">
+                <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-24 md:w-28 md:h-32 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[12deg] mt-10">
+                <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white rotate-[-5deg]">
+                <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
+              </div>
+            </div>
           </div>
         </div>
 
