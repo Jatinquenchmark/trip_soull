@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/trip_soull">
       <div className="min-h-screen bg-[#FDFCFB] selection:bg-luxury-gold selection:text-white">
         <Navbar />
         <Routes>
