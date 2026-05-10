@@ -30,7 +30,7 @@ const Packages = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-black text-slate-800 mb-6"
           >
-            Special <span className="text-thrill-orange">Packages</span>
+            Special <span className="text-soul-blue">Packages</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -49,13 +49,13 @@ const Packages = () => {
           <div className="flex items-center justify-center gap-16 overflow-x-auto no-scrollbar py-2">
             <div 
               onClick={() => setSelectedCountry(null)}
-              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-thrill-orange' : 'text-slate-500 hover:text-slate-800'}`}
+              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
             >
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-slate-50 ${!selectedCountry ? 'bg-orange-50 text-thrill-orange' : ''}`}>
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
                 <Compass className="w-7 h-7" />
               </div>
               <span className="text-[11px] font-bold uppercase tracking-tight">All</span>
-              {!selectedCountry && <motion.div layoutId="active-p" className="h-0.5 w-full bg-thrill-orange" />}
+              {!selectedCountry && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
             </div>
 
             {destinations.map((country, i) => {
@@ -64,13 +64,13 @@ const Packages = () => {
                 <div 
                   key={country.id}
                   onClick={() => setSelectedCountry(country)}
-                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-thrill-orange' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
                 >
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-thrill-orange bg-orange-50 text-thrill-orange scale-110 shadow-lg' : 'border-slate-100 bg-slate-50 text-slate-400'}`}>
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
                     <IconComponent className="w-7 h-7" />
                   </div>
                   <span className="text-[11px] font-bold uppercase tracking-tight">{country.name}</span>
-                  {selectedCountry?.id === country.id && <motion.div layoutId="active-p" className="h-0.5 w-full bg-thrill-orange" />}
+                  {selectedCountry?.id === country.id && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
                 </div>
               );
             })}
@@ -88,11 +88,14 @@ const Packages = () => {
       {/* CTA Section */}
       <section className="py-24 px-6 bg-[#FDFDFD]">
         <div className="max-w-5xl mx-auto text-center bg-white border border-slate-100 p-16 rounded-[40px] shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-thrill-orange"></div>
+          <div style={{ backgroundColor: '#2B4A8C' }} className="absolute top-0 left-0 w-full h-2"></div>
           <div className="relative z-10">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-8">Crafting Memories, <br /><span className="text-thrill-orange">Not Just Trips.</span></h2>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-8">Crafting Memories, <br /><span className="text-[#2B4A8C]">Not Just Trips.</span></h2>
             <p className="text-slate-500 mb-10 max-w-xl mx-auto text-lg font-medium leading-relaxed">Our signature packages are designed for the discerning traveler who seeks more than just a vacation.</p>
-            <button className="bg-thrill-orange text-white font-bold px-12 py-5 rounded-2xl hover:bg-orange-600 transition-all shadow-xl text-lg active:scale-95">
+            <button 
+              style={{ backgroundColor: '#2B4A8C' }}
+              className="text-white font-bold px-12 py-5 rounded-2xl hover:opacity-90 transition-all shadow-xl text-lg active:scale-95"
+            >
               Plan My Journey Now
             </button>
           </div>

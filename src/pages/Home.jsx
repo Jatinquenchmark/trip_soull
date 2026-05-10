@@ -11,6 +11,8 @@ import HomeHero5 from '../assets/verdant-mountain-valley-stockcake.webp';
 import UnionBg from '../assets/Union.png';
 import DecoreBg from '../assets/Decore.png';
 import PlaneImg from '../assets/plane.png';
+import HerocompLeft from '../assets/HerocompLeft.avif';
+import HerocompRight from '../assets/HerocompRight.avif';
 import { 
   User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play,
   Map, Palmtree, Building2, Ship, Waves, Landmark, Castle 
@@ -72,63 +74,71 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section - Thrillophilia Style Perfected */}
-      <section className="relative pt-48 pb-32 px-6 overflow-hidden bg-[#FDFDFD]">
+      <section className="relative pt-48 pb-12 px-6 overflow-hidden bg-[#FDFDFD]">
         {/* Patterned Static Thumbnails Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          {/* Left Side Horizontal Rows (Tapering) */}
-          <div className="absolute left-0 top-[18%] flex flex-col gap-6">
+          {/* Left Side Horizontal Rows (Tapering) - Dynamic Square Pattern */}
+          <div className="absolute left-[2%] top-[12%] flex flex-col gap-8 pointer-events-none">
             {/* Row 1 */}
-            <div className="flex gap-4 items-center -ml-24">
-              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -ml-20">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-2">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 translate-y-6">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 translate-y-10">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
             {/* Row 2 */}
-            <div className="flex gap-4 items-center -ml-12">
-              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -ml-10">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 -translate-y-2">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-4">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-6 translate-y-8">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
           </div>
 
-          {/* Right Side Horizontal Rows (Tapering) */}
-          <div className="absolute right-0 top-[18%] flex flex-col gap-6 items-end">
+          {/* Right Side Horizontal Rows (Tapering) - Dynamic Square Pattern */}
+          <div className="absolute right-[2%] top-[12%] flex flex-col gap-8 items-end pointer-events-none">
             {/* Row 1 */}
-            <div className="flex gap-4 items-center -mr-24">
-              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -mr-20">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 translate-y-10">
+                <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-6">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-3 translate-y-2">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
-              </div>
-              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
             </div>
             {/* Row 2 */}
-            <div className="flex gap-4 items-center -mr-12">
-              <div className="w-14 h-18 md:w-20 md:h-24 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+            <div className="flex gap-4 items-center -mr-10">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-6 translate-y-8">
+                <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
+              </div>
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-3 translate-y-4">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-28 md:w-28 md:h-36 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 -translate-y-2">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
-              </div>
             </div>
+          </div>
+
+          {/* New Herocomp Images - Moved Inwards */}
+          <div className="absolute left-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100">
+            <img src={HerocompLeft} className="w-full h-auto object-contain transform -rotate-6" alt="" />
+          </div>
+          <div className="absolute right-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100">
+            <img src={HerocompRight} className="w-full h-auto object-contain transform rotate-6" alt="" />
           </div>
         </div>
 
@@ -139,7 +149,7 @@ const Home = () => {
             className="text-5xl md:text-[80px] font-extrabold text-[#2D2D2D] mb-8 leading-[1.1] tracking-tight font-poppins"
           >
             Your Tour, <br />
-            Perfectly <span className="text-[#F1A501]">Personalised!</span>
+            Perfectly <span className="text-[#2B4A8C]">Personalised!</span>
           </motion.h1>
           
           <motion.p 
@@ -168,7 +178,8 @@ const Home = () => {
             />
             <button 
               onClick={handleSearch}
-              className="bg-[#F1A501] text-white px-10 py-4 rounded-full font-bold hover:bg-[#e09901] transition-all shadow-lg shadow-orange-100"
+              style={{ backgroundColor: '#2B4A8C' }}
+              className="text-white px-10 py-4 rounded-full font-bold hover:opacity-90 transition-all shadow-lg"
             >
               Search
             </button>
@@ -183,13 +194,13 @@ const Home = () => {
           <div className="flex items-center justify-center gap-16 overflow-x-auto no-scrollbar py-2">
             <div 
               onClick={() => setSelectedCountry(null)}
-              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-thrill-orange' : 'text-slate-500 hover:text-slate-800'}`}
+              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
             >
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-slate-50 ${!selectedCountry ? 'bg-orange-50 text-thrill-orange' : ''}`}>
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
                 <Compass className="w-7 h-7" />
               </div>
               <span className="text-[11px] font-bold uppercase tracking-tight">All</span>
-              {!selectedCountry && <motion.div layoutId="active" className="h-0.5 w-full bg-thrill-orange" />}
+              {!selectedCountry && <motion.div layoutId="active" className="h-0.5 w-full bg-soul-blue" />}
             </div>
 
             {destinations.map((country, i) => {
@@ -198,13 +209,13 @@ const Home = () => {
                 <div 
                   key={country.id}
                   onClick={() => setSelectedCountry(country)}
-                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-thrill-orange' : 'text-slate-500 hover:text-slate-800'}`}
+                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
                 >
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-thrill-orange bg-orange-50 text-thrill-orange scale-110 shadow-lg' : 'border-slate-100 bg-slate-50 text-slate-400'}`}>
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
                     <IconComponent className="w-7 h-7" />
                   </div>
                   <span className="text-[11px] font-bold uppercase tracking-tight">{country.name}</span>
-                  {selectedCountry?.id === country.id && <motion.div layoutId="active" className="h-0.5 w-full bg-thrill-orange" />}
+                  {selectedCountry?.id === country.id && <motion.div layoutId="active" className="h-0.5 w-full bg-soul-blue" />}
                 </div>
               );
             })}

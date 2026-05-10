@@ -15,7 +15,7 @@ const FAQSection = () => {
     <section id="faq" className="py-24 px-6 bg-slate-50/50">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Frequently Asked <span className="text-thrill-orange">Questions</span></h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Frequently Asked <span className="text-soul-blue">Questions</span></h2>
           <p className="text-slate-500 font-medium">Everything you need to know about your next soulful journey</p>
         </div>
 
@@ -26,8 +26,8 @@ const FAQSection = () => {
                 onClick={() => setActiveIndex(activeIndex === i ? null : i)}
                 className="w-full text-left p-6 flex items-center justify-between group"
               >
-                <span className={`text-lg font-bold transition-colors ${activeIndex === i ? 'text-thrill-orange' : 'text-slate-700 group-hover:text-thrill-orange'}`}>{faq.q}</span>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeIndex === i ? 'bg-thrill-orange text-white rotate-180' : 'bg-orange-50 text-thrill-orange'}`}>
+                <span className={`text-lg font-bold transition-colors ${activeIndex === i ? 'text-soul-blue' : 'text-soul-blue/80 group-hover:text-soul-blue'}`}>{faq.q}</span>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeIndex === i ? 'bg-soul-blue text-white rotate-180' : 'bg-blue-50 text-soul-blue'}`}>
                   {activeIndex === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                 </div>
               </button>

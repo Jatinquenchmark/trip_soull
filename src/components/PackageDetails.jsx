@@ -48,12 +48,12 @@ const PackageDetails = () => {
       {/* Fixed Back Button */}
       <button 
         onClick={handleBack}
-        className="fixed top-24 left-8 z-[100] group flex items-center gap-4 bg-white p-2 pr-6 rounded-full border border-slate-200 hover:border-thrill-orange transition-all shadow-xl"
+        className="fixed top-24 left-8 z-[100] group flex items-center gap-4 bg-white p-2 pr-6 rounded-full border border-slate-200 hover:border-soul-blue transition-all shadow-xl"
       >
-        <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center group-hover:bg-thrill-orange transition-colors">
-          <ArrowLeft className="w-5 h-5 text-thrill-orange group-hover:text-white" />
+        <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-soul-blue transition-colors">
+          <ArrowLeft className="w-5 h-5 text-soul-blue group-hover:text-white" />
         </div>
-        <span className="text-xs font-bold text-slate-700">
+        <span className="text-xs font-bold text-soul-blue/80">
           {step > 1 ? 'Go Back' : 'All Packages'}
         </span>
       </button>
@@ -77,7 +77,7 @@ const PackageDetails = () => {
             className="text-left"
           >
             <div className="flex items-center gap-3 text-white mb-4">
-              <div className="flex items-center gap-1 bg-thrill-orange px-3 py-1 rounded text-xs font-bold">
+              <div style={{ backgroundColor: '#2B4A8C' }} className="flex items-center gap-1 px-3 py-1 rounded text-xs font-bold">
                 <Star className="w-3 h-3 fill-white" /> {pkg.rating || '4.5'}
               </div>
               <span className="text-sm font-bold opacity-90">{pkg.duration}</span>
@@ -100,7 +100,7 @@ const PackageDetails = () => {
               exit={{ opacity: 0, y: -20 }}
               className="bg-white rounded-[32px] p-12 shadow-2xl border border-slate-100 text-center"
             >
-              <h3 className="text-3xl md:text-4xl font-black mb-4 text-slate-800">Who's <span className="text-thrill-orange">Traveling?</span></h3>
+              <h3 className="text-3xl md:text-4xl font-black mb-4 text-slate-800">Who's <span className="text-soul-blue">Traveling?</span></h3>
               <p className="text-slate-500 text-lg font-medium mb-12">Select your travel style for a perfectly personalised experience</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -115,7 +115,7 @@ const PackageDetails = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     
                     <div className="absolute inset-0 p-8 flex flex-col items-center justify-end text-center">
-                      <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 group-hover:bg-thrill-orange transition-all duration-500">
+                      <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 group-hover:bg-soul-blue transition-all duration-500">
                         {exp.icon === 'User' && <User className="w-7 h-7 text-white" />}
                         {exp.icon === 'Heart' && <Heart className="w-7 h-7 text-white" />}
                         {exp.icon === 'Compass' && <Compass className="w-7 h-7 text-white" />}
@@ -137,7 +137,7 @@ const PackageDetails = () => {
               exit={{ opacity: 0, y: -20 }}
               className="bg-white rounded-[32px] p-12 shadow-2xl border border-slate-100 text-center"
             >
-              <h3 className="text-3xl md:text-4xl font-black mb-4 text-slate-800">Choose Your <span className="text-thrill-orange">Comfort</span></h3>
+              <h3 className="text-3xl md:text-4xl font-black mb-4 text-slate-800">Choose Your <span className="text-soul-blue">Comfort</span></h3>
               <p className="text-slate-500 text-lg font-medium mb-12">Pick a pricing tier that fits your soul</p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -146,10 +146,10 @@ const PackageDetails = () => {
                     key={tier.id}
                     whileHover={{ y: -8 }}
                     onClick={() => handleTierSelect(tier)}
-                    className="p-10 rounded-3xl border-2 border-slate-50 hover:border-thrill-orange bg-white hover:shadow-xl transition-all duration-500 cursor-pointer group text-left"
+                    className="p-10 rounded-3xl border-2 border-slate-50 hover:border-soul-blue bg-white hover:shadow-xl transition-all duration-500 cursor-pointer group text-left"
                   >
-                    <span className="text-xs font-black text-thrill-orange mb-4 block uppercase tracking-widest">{tier.name}</span>
-                    <h4 className="text-4xl font-black mb-8 text-slate-800">{tier.price}</h4>
+                    <span className="text-xs font-black text-soul-blue mb-4 block uppercase tracking-widest">{tier.name}</span>
+                    <h4 className="text-4xl font-black mb-8 text-soul-blue">{tier.price}</h4>
                     <div className="space-y-4 mb-10">
                       {tier.features.map((f, i) => (
                         <div key={i} className="flex items-center gap-3 text-sm text-slate-500 font-medium">
@@ -158,13 +158,13 @@ const PackageDetails = () => {
                         </div>
                       ))}
                     </div>
-                    <div className="w-full bg-slate-50 group-hover:bg-thrill-orange group-hover:text-white py-4 rounded-xl text-center font-bold text-slate-500 transition-all">
+                    <div className="w-full bg-slate-50 group-hover:bg-soul-blue group-hover:text-white py-4 rounded-xl text-center font-bold text-slate-500 transition-all">
                       Choose {tier.name}
                     </div>
                   </motion.div>
                 ))}
               </div>
-              <button onClick={() => setStep(1)} className="mt-12 text-sm font-bold text-slate-400 hover:text-thrill-orange transition-all uppercase tracking-widest">← Back to Styles</button>
+              <button onClick={() => setStep(1)} className="mt-12 text-sm font-bold text-slate-400 hover:text-soul-blue transition-all uppercase tracking-widest">← Back to Styles</button>
             </motion.div>
           )}
 
@@ -184,7 +184,7 @@ const PackageDetails = () => {
                     </div>
                     <div>
                       <span className="text-[10px] uppercase font-black text-slate-500 block mb-1">Tier</span>
-                      <span className="text-lg font-bold text-thrill-orange">{selectedTier?.name}</span>
+                      <span className="text-lg font-bold text-soul-blue">{selectedTier?.name}</span>
                     </div>
                   </div>
                   <button onClick={resetSelection} className="text-xs font-bold text-white/60 hover:text-white border-b border-white/20 pb-1">Change Choices</button>
@@ -201,13 +201,13 @@ const PackageDetails = () => {
                     {pkg.itinerary.map((day, i) => (
                       <div key={i} className="flex gap-8 group">
                         <div className="flex flex-col items-center">
-                          <div className="w-12 h-12 bg-orange-50 text-thrill-orange rounded-2xl flex items-center justify-center text-lg font-black shrink-0 group-hover:bg-thrill-orange group-hover:text-white transition-all">
+                          <div className="w-12 h-12 bg-blue-50 text-soul-blue rounded-2xl flex items-center justify-center text-lg font-black shrink-0 group-hover:bg-soul-blue group-hover:text-white transition-all">
                             {day.day}
                           </div>
                           {i !== pkg.itinerary.length - 1 && <div className="w-[2px] h-full bg-slate-50 mt-4"></div>}
                         </div>
                         <div className="pb-8">
-                          <h4 className="text-xl font-bold mb-4 text-slate-800">{day.title}</h4>
+                          <h4 className="text-xl font-bold mb-4 text-soul-blue">{day.title}</h4>
                           <p className="text-slate-500 leading-relaxed font-medium">{day.description}</p>
                         </div>
                       </div>
@@ -234,12 +234,15 @@ const PackageDetails = () => {
               <div className="lg:col-span-1">
                 <div className="sticky top-24 space-y-8">
                   <div className="bg-white rounded-[32px] p-10 shadow-2xl border border-slate-50 text-center relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-2 bg-thrill-orange"></div>
+                    <div style={{ backgroundColor: '#2B4A8C' }} className="absolute top-0 left-0 w-full h-2"></div>
                     <span className="text-xs font-black text-slate-400 mb-2 block uppercase tracking-widest">Total Investment</span>
                     <h4 className="text-5xl font-black text-slate-800 mb-2">{selectedTier?.price}</h4>
-                    <span className="text-xs font-bold text-thrill-orange block mb-10">/ Person All Inclusive</span>
+                    <span className="text-xs font-bold text-soul-blue block mb-10">/ Person All Inclusive</span>
                     
-                    <button className="w-full bg-thrill-orange text-white py-6 rounded-2xl font-black text-lg shadow-xl shadow-orange-200 hover:bg-orange-600 transition-all mb-6 active:scale-95">
+                    <button 
+                      style={{ backgroundColor: '#2B4A8C' }}
+                      className="w-full text-white py-6 rounded-2xl font-black text-lg shadow-xl shadow-blue-200 hover:opacity-90 transition-all mb-6 active:scale-95"
+                    >
                       Reserve My Spot
                     </button>
                     

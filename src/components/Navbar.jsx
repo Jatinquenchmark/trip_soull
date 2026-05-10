@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Plane, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
+import logo from '../assets/download (2).png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,12 +47,12 @@ const Navbar = () => {
 
 
   return (
-    <nav className="fixed top-0 w-full z-50 transition-all duration-300 bg-white border-b border-slate-100 py-3 px-6">
+    <nav className="fixed top-0 w-full z-50 transition-all duration-300 bg-white border-b border-slate-100 py-2 px-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <Plane className="w-8 h-8 text-thrill-orange rotate-45" />
-          <span className="text-2xl font-bold tracking-tight text-slate-800">
-            Trip<span className="text-thrill-orange">Soul</span>
+          <img src={logo} alt="TripSoul" className="h-16 w-auto object-contain" />
+          <span className="text-2xl font-bold tracking-tight text-soul-blue hidden">
+            TripSoul
           </span>
         </Link>
 
@@ -61,17 +62,13 @@ const Navbar = () => {
             <Link 
               key={link.name} 
               to={link.href.startsWith('/') ? link.href : `/${link.href}`} 
-              className="text-sm font-medium text-slate-600 hover:text-thrill-orange transition-colors"
+              className="text-sm font-medium text-soul-blue/80 hover:text-soul-blue transition-colors"
             >
               {link.name}
             </Link>
           ))}
-          <div className="h-6 w-[1px] bg-slate-200 mx-2"></div>
-          <button className="text-sm font-bold text-slate-700 hover:text-thrill-orange px-4">
+          <button className="text-sm font-bold text-slate-700 hover:text-soul-blue px-4">
             Login
-          </button>
-          <button className="text-sm font-bold px-6 py-2 bg-thrill-orange text-white rounded-md hover:bg-orange-600 transition-all shadow-md">
-            Enquire
           </button>
         </div>
 
@@ -96,7 +93,6 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <button className="bg-thrill-orange text-white font-bold py-3 rounded-md mt-4">Enquire Now</button>
         </div>
       )}
     </nav>

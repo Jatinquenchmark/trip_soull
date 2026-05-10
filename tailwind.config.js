@@ -11,7 +11,8 @@ export default {
         'luxury-black': '#1A1A1A',
         'luxury-beige': '#F4F1EA',
         'luxury-white': '#FDFCFB',
-        'thrill-orange': '#FF6A00',
+        'thrill-orange': '#2B4A8C',
+        'soul-blue': '#2B4A8C',
 
       },
       fontFamily: {

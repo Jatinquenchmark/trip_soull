@@ -29,7 +29,7 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
             {searchQuery ? `Search Results for "${searchQuery}"` : selectedCountryId ? `${selectedCountryId} Packages` : 'Top Collections'}
           </h2>
           {showViewAll && !selectedCountryId && (
-            <Link to="/packages" className="text-thrill-orange font-bold flex items-center gap-2 hover:underline">
+            <Link to="/packages" className="text-soul-blue font-bold flex items-center gap-2 hover:underline">
               View All <ArrowRight className="w-4 h-4" />
             </Link>
           )}
@@ -61,7 +61,7 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
                   </div>
                   
                   <Link to={`/package/${pkg.id}`}>
-                    <h3 className="text-lg font-bold text-slate-800 mb-2 hover:text-thrill-orange transition-colors line-clamp-1">
+                    <h3 className="text-lg font-bold text-soul-blue mb-2 hover:text-blue-900 transition-colors line-clamp-1">
                       {pkg.name}
                     </h3>
                   </Link>
@@ -85,10 +85,13 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
                     </div>
 
                     <div className="flex gap-2">
-                      <button className="p-3 border border-slate-200 rounded-md hover:bg-slate-50 transition-colors text-thrill-orange">
-                        <Phone className="w-5 h-5 fill-thrill-orange/10" />
+                      <button className="p-3 border border-slate-200 rounded-md hover:bg-slate-50 transition-colors text-soul-blue">
+                        <Phone className="w-5 h-5 fill-soul-blue/10" />
                       </button>
-                      <button className="flex-1 bg-thrill-orange text-white font-bold py-3 rounded-md hover:bg-orange-600 transition-all shadow-md active:scale-95">
+                      <button 
+                        style={{ backgroundColor: '#2B4A8C' }}
+                        className="flex-1 text-white font-bold py-3 rounded-md hover:opacity-90 transition-all shadow-md active:scale-95"
+                      >
                         Request Callback
                       </button>
                     </div>
