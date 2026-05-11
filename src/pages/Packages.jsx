@@ -23,7 +23,7 @@ const Packages = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="pt-40 pb-12 px-6 bg-slate-50 border-b border-slate-100">
+      <section className="pt-32 lg:pt-40 pb-12 px-6 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -46,13 +46,13 @@ const Packages = () => {
       {/* Filter Section (Sticky like Home) */}
       <section className="py-4 border-b border-slate-100 bg-white sticky top-[56px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-center gap-16 overflow-x-auto no-scrollbar py-2">
+          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-2 px-2 md:px-0">
             <div 
               onClick={() => setSelectedCountry(null)}
               className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
             >
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
-                <Compass className="w-7 h-7" />
+              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
+                <Compass className="w-5 h-5 md:w-7 md:h-7" />
               </div>
               <span className="text-[11px] font-bold uppercase tracking-tight">All</span>
               {!selectedCountry && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
@@ -66,8 +66,8 @@ const Packages = () => {
                   onClick={() => setSelectedCountry(country)}
                   className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
                 >
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
-                    <IconComponent className="w-7 h-7" />
+                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
+                    <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
                   </div>
                   <span className="text-[11px] font-bold uppercase tracking-tight">{country.name}</span>
                   {selectedCountry?.id === country.id && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
