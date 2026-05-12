@@ -47,7 +47,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className="fixed top-0 w-full z-50 transition-all duration-300 bg-white border-b border-slate-100 py-1 px-6">
+    <nav className="fixed top-0 w-full z-[1000] transition-all duration-300 bg-white border-b border-slate-100 py-1 px-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <img src={logo} alt="TripSoul" className="h-16 w-auto object-contain" />

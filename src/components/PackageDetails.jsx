@@ -53,29 +53,10 @@ const PackageDetails = () => {
       </div>
 
       {/* Sticky Premium Header (Appears on Scroll) */}
-      <motion.div 
-        initial={{ y: -100 }}
-        whileInView={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 z-[100] bg-white/80 backdrop-blur-2xl border-b border-slate-100 px-8 py-4 flex items-center justify-between shadow-2xl shadow-blue-900/5 lg:px-20 hidden md:flex"
-      >
-        <div className="flex items-center gap-6">
-          <h4 className="text-xl font-black text-slate-900 tracking-tighter">{pkg.name} <span className="text-soul-blue italic serif">Soul</span></h4>
-          <div className="h-4 w-[1px] bg-slate-200"></div>
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{pkg.location}</span>
-        </div>
-        <div className="flex items-center gap-8">
-          <div className="text-right">
-            <span className="block text-[9px] font-black text-slate-400 uppercase tracking-widest">Current Selection</span>
-            <span className="text-lg font-black text-soul-blue">{selectedTier.price}</span>
-          </div>
-          <button onClick={handleBooking} className="bg-soul-blue text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-blue-200">
-            Start Journey
-          </button>
-        </div>
-      </motion.div>
+
 
       {/* Luxury Navigation Bar */}
-      <div className="relative z-50 pt-8 px-8 max-w-[1600px] mx-auto flex justify-between items-center">
+      <div className="relative z-40 pt-28 px-8 max-w-[1600px] mx-auto flex justify-between items-center">
         <button 
           onClick={handleBack}
           className="group flex items-center gap-4 bg-white/50 backdrop-blur-xl px-6 py-3 rounded-full border border-white shadow-sm hover:bg-soul-blue hover:text-white transition-all duration-500"
