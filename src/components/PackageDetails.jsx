@@ -75,50 +75,7 @@ const PackageDetails = () => {
         </div>
       </div>
 
-      {/* Cinematic Hero Section */}
-      <div className="relative z-10 pt-24 pb-20 px-8 text-center max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="w-12 h-[1px] bg-soul-blue/30"></span>
-            <span className="text-soul-blue font-black text-[10px] uppercase tracking-[0.6em]">Curated Luxury Experience</span>
-            <span className="w-12 h-[1px] bg-soul-blue/30"></span>
-          </div>
-          
-          <h1 className="text-[10vw] lg:text-[120px] font-black text-slate-900 tracking-tighter leading-[0.85] mb-12 relative inline-block">
-            {pkg.name}
-            <span className="text-soul-blue italic serif font-normal text-[6vw] lg:text-[70px] absolute -bottom-4 -right-12 lg:-right-20 drop-shadow-2xl">
-              Soul
-            </span>
-          </h1>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-12">
-            <div className="bg-white/80 backdrop-blur-xl px-10 py-5 rounded-[32px] border border-white shadow-2xl shadow-blue-900/5 flex items-center gap-6 group hover:bg-white transition-all duration-500">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center group-hover:bg-soul-blue group-hover:rotate-12 transition-all">
-                <MapPin className="w-6 h-6 text-soul-blue group-hover:text-white" />
-              </div>
-              <div className="text-left">
-                <span className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Destination</span>
-                <span className="text-base font-black text-slate-800">{pkg.location}</span>
-              </div>
-            </div>
-            {selectedExp && (
-              <div className="bg-white/80 backdrop-blur-xl px-10 py-5 rounded-[32px] border border-white shadow-2xl shadow-blue-900/5 flex items-center gap-6 group hover:bg-white transition-all duration-500">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center group-hover:bg-amber-500 group-hover:rotate-12 transition-all">
-                  <Star className="w-6 h-6 text-amber-500 group-hover:text-white" />
-                </div>
-                <div className="text-left">
-                  <span className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Travel Style</span>
-                  <span className="text-base font-black text-slate-800">{selectedExp.name}</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </div>
 
       <div className="max-w-[1600px] mx-auto px-8 relative z-10">
         <AnimatePresence mode="wait">
@@ -134,58 +91,52 @@ const PackageDetails = () => {
               <div className="inline-block mb-6">
                 <span className="text-xs font-black text-soul-blue uppercase tracking-[0.3em] bg-blue-50 px-4 py-2 rounded-full">Select Style</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black mb-4 text-slate-900">Who's <span className="text-soul-blue">Traveling?</span></h2>
-              <p className="text-slate-500 font-medium mb-16">Select your travel style for a perfectly personalised experience</p>
+              <h2 className="text-5xl md:text-7xl font-black mb-4 text-slate-900 tracking-tighter">
+                {pkg.name} <span className="text-soul-blue italic serif font-normal">Soul</span>
+              </h2>
+              <p className="text-slate-500 font-medium mb-12">Select your travel style for a perfectly personalised experience</p>
               
-              <div className="flex flex-col md:flex-row h-[500px] md:h-[700px] gap-5 max-w-7xl mx-auto pb-24 group/gallery">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto pb-24">
                 {experiences.map((exp, idx) => (
                   <button
                     key={exp.id}
                     onClick={() => handleExpSelect(exp)}
-                    className="relative flex-1 hover:flex-[2.5] transition-all duration-700 rounded-[60px] overflow-hidden group/card cursor-pointer border-0 shadow-3xl"
+                    className="group bg-white rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200/60 hover:shadow-soul-blue/10 transition-all duration-500 hover:-translate-y-2 border border-slate-100 flex flex-col text-left"
                   >
-                    <img 
-                      src={exp.image} 
-                      alt={exp.name} 
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover/card:scale-110" 
-                    />
-                    
-                    {/* Deep Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent group-hover/card:from-black/95 transition-all duration-700"></div>
-
-                    {/* Minimal Side Number (Visible when collapsed) */}
-                    <div className="absolute top-12 left-12 opacity-40 group-hover/card:opacity-100 transition-opacity duration-700">
-                      <span className="text-white text-7xl font-black tracking-tighter opacity-10">0{idx + 1}</span>
-                    </div>
-
-                    {/* Vertical Text (Visible when collapsed) */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover/card:opacity-0 transition-opacity duration-500">
-                      <span className="text-white/40 font-black text-2xl uppercase tracking-[0.5em] rotate-180 [writing-mode:vertical-lr]">
-                        {exp.name}
-                      </span>
-                    </div>
-
-                    {/* Full Content (Reveals on Hover) */}
-                    <div className="absolute inset-0 p-12 flex flex-col justify-end opacity-0 group-hover/card:opacity-100 transition-all duration-700 delay-100 translate-y-10 group-hover/card:translate-y-0">
-                      <div className="w-20 h-20 rounded-[32px] bg-soul-blue flex items-center justify-center mb-8 shadow-2xl shadow-soul-blue/40 rotate-12 group-hover/card:rotate-0 transition-transform duration-700">
-                        {exp.id === 'solo' && <User className="w-10 h-10 text-white" />}
-                        {exp.id === 'adventure' && <Compass className="w-10 h-10 text-white" />}
-                        {exp.id === 'couple' && <Heart className="w-10 h-10 text-white" />}
+                    {/* Top Image Section */}
+                    <div className="relative h-64 overflow-hidden">
+                      <img 
+                        src={exp.image} 
+                        alt={exp.name} 
+                        className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                      <div className="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center">
+                        {exp.id === 'solo' && <User className="w-6 h-6 text-white" />}
+                        {exp.id === 'adventure' && <Compass className="w-6 h-6 text-white" />}
+                        {exp.id === 'couple' && <Heart className="w-6 h-6 text-white" />}
                       </div>
+                    </div>
 
-                      <span className="text-xs font-black text-soul-blue uppercase tracking-[0.4em] mb-4 bg-blue-50/10 backdrop-blur-md w-fit px-5 py-2 rounded-full border border-white/10">
+                    {/* Bottom Content Section */}
+                    <div className="p-8 flex flex-col flex-1">
+                      <span className="text-[10px] font-black text-soul-blue uppercase tracking-[0.4em] mb-3 bg-blue-50 w-fit px-4 py-1.5 rounded-full">
                         {exp.tagline}
                       </span>
                       
-                      <h3 className="text-5xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter mb-8">
-                        {exp.name.split(' ')[0]} <br/>
-                        <span className="text-soul-blue italic serif text-4xl md:text-5xl">
-                          {exp.name.split(' ')[1] || 'Travel'}
-                        </span>
+                      <h3 className="text-3xl font-black text-slate-900 leading-tight tracking-tighter mb-4">
+                        {exp.name.split(' ')[0]} <span className="text-soul-blue italic serif font-normal">{exp.name.split(' ')[1] || 'Traveler'}</span>
                       </h3>
 
-                      <div className="flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest bg-white/20 backdrop-blur-md w-fit px-8 py-4 rounded-[24px] border border-white/20 hover:bg-white hover:text-soul-blue transition-all">
-                        Experience This <ChevronRight className="w-5 h-5" />
+                      <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8 flex-1">
+                        {exp.description || "Discover experiences perfectly tailored for your unique travel style and preferences."}
+                      </p>
+
+                      <div className="flex items-center justify-between group-hover:text-soul-blue transition-colors">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 group-hover:text-soul-blue transition-colors">Experience This</span>
+                        <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-soul-blue group-hover:text-white transition-all duration-500">
+                          <ChevronRight className="w-5 h-5" />
+                        </div>
                       </div>
                     </div>
                   </button>
