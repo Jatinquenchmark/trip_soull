@@ -9,7 +9,6 @@ import Footer from './components/Footer';
 
 function AppInner() {
   const location = useLocation();
-  const hideFooter = location.pathname.startsWith('/package/') || location.pathname.startsWith('/destination/');
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] selection:bg-luxury-gold selection:text-white">
@@ -20,7 +19,7 @@ function AppInner() {
         <Route path="/destination/:countryId" element={<DestinationDetails />} />
         <Route path="/package/:id" element={<PackageDetails />} />
       </Routes>
-      {!hideFooter && <Footer />}
+      <Footer />
     </div>
   );
 }

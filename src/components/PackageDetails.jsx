@@ -55,7 +55,7 @@ const PackageDetails = () => {
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen relative">
+    <div className="bg-[#F8FAFC] relative pb-12">
       {step === 1 && (
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden animate-in fade-in duration-1000">
           <img 

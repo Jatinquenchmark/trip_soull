@@ -4,12 +4,11 @@ import logo from '../assets/download (2).png';
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-white pt-20 pb-10 px-6">
+    <footer className="relative z-50 bg-slate-900 text-white pt-20 pb-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
         <div className="space-y-6">
-          <div className="flex items-center gap-2 group">
-            <img src={logo} alt="TripSoul" className="h-20 w-auto object-contain mb-6 brightness-0 invert" />
-            <span className="text-2xl font-bold tracking-tight text-white hidden">
+          <div className="flex items-center gap-2 group mb-6">
+            <span className="text-3xl font-black tracking-tight text-white">
               TripSoul
             </span>
           </div>
