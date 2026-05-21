@@ -25,7 +25,8 @@
 
 @layer base {
   body {
-    @apply bg-[#FDFCFB] text-[#1A1A1A] font-['Inter'] antialiased overflow-x-hidden;
+    @apply bg-[#FDFCFB] text-[#1A1A1A] font-['Inter'] antialiased;
+    overflow-x: clip;
   }
   
   h1, h2, h3, h4 {
@@ -88,4 +89,45 @@
 
 .luxury-nav-swiper .swiper-button-prev {
   @apply left-2;
+}
+
+/* ── 3D TACTILE FLOATING ICONS SYSTEM ── */
+.icon-3d-button {
+  background: linear-gradient(145deg, #ffffff, #f1f5f9) !important;
+  border: 1px solid #ffffff !important;
+  color: #475569 !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 
+    0 6px 0 #cbd5e1, 
+    0 12px 16px rgba(15, 23, 42, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 1) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.icon-3d-button:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 
+    0 8px 0 #cbd5e1,
+    0 16px 24px rgba(15, 23, 42, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 1) !important;
+  color: #2b4a8c !important;
+}
+
+.icon-3d-button:active {
+  transform: translateY(0) !important;
+  box-shadow: 
+    0 2px 0 #cbd5e1,
+    0 4px 8px rgba(15, 23, 42, 0.1),
+    inset 0 2px 4px rgba(255, 255, 255, 1) !important;
+}
+
+.icon-3d-button-active {
+  background: linear-gradient(145deg, #e2e8f0, #f8fafc) !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #2b4a8c !important;
+  transform: translateY(2px) !important;
+  box-shadow: 
+    inset 0 4px 8px rgba(15, 23, 42, 0.15),
+    inset 0 2px 4px rgba(15, 23, 42, 0.1) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }

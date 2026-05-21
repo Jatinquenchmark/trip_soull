@@ -54,30 +54,7 @@ const Navbar = () => {
             <img src={logo} alt="TripSoul" className="h-16 w-auto object-contain" />
           </Link>
  
-          {/* 3D Glassmorphism Service Navigation */}
-          <div className="hidden lg:flex items-center gap-8 border-l border-slate-100 ml-8 pl-8">
-            <Link to="#" className="flex flex-col items-center gap-1 group relative">
-              <div className="relative w-10 h-10 flex items-center justify-center transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-                {/* 3D Layers */}
-                <div className="absolute inset-0 bg-blue-600/10 rounded-xl blur-lg group-hover:bg-blue-600/20 transition-all duration-500"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-[2px_2px_5px_rgba(0,0,0,0.05),-2px_-2px_5px_rgba(255,255,255,0.8)] border border-white/50 group-hover:shadow-soul-blue/10"></div>
-                
-                <Plane className="relative z-10 w-5 h-5 text-soul-blue drop-shadow-[1px_2px_2px_rgba(0,0,0,0.1)] group-hover:rotate-12 transition-transform duration-500" />
-              </div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:text-soul-blue transition-colors">Flights</span>
-            </Link>
 
-            <Link to="#" className="flex flex-col items-center gap-1 group relative">
-              <div className="relative w-10 h-10 flex items-center justify-center transition-all duration-500 group-hover:-translate-y-1 group-hover:scale-105">
-                {/* 3D Layers */}
-                <div className="absolute inset-0 bg-indigo-600/10 rounded-xl blur-lg group-hover:bg-indigo-600/20 transition-all duration-500"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-50 rounded-xl shadow-[2px_2px_5px_rgba(0,0,0,0.05),-2px_-2px_5px_rgba(255,255,255,0.8)] border border-white/50 group-hover:shadow-indigo-500/10"></div>
-                
-                <Building2 className="relative z-10 w-5 h-5 text-indigo-500 drop-shadow-[1px_2px_2px_rgba(0,0,0,0.1)] group-hover:-rotate-12 transition-transform duration-500" />
-              </div>
-              <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:text-indigo-500 transition-colors">Hotels</span>
-            </Link>
-          </div>
         </div>
 
         {/* Desktop Menu */}

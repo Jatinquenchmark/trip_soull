@@ -11,8 +11,10 @@ import HomeHero5 from '../assets/verdant-mountain-valley-stockcake.webp';
 
 import HerocompLeft from '../assets/HerocompLeft.avif';
 import HerocompRight from '../assets/HerocompRight.avif';
+import flight3d from '../assets/flight_3d.png';
+import hotel3d from '../assets/hotel_3d.png';
 import { 
-  User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play,
+  User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play, Plane,
   Map, Palmtree, Building2, Ship, Waves, Landmark, Castle 
 } from 'lucide-react';
 import gsap from 'gsap';
@@ -61,12 +63,7 @@ const Home = () => {
   }, []);
 
   const handleCountrySelect = (country) => {
-    if (selectedCountry?.id === country.id) {
-      setSelectedCountry(null);
-    } else {
-      setSelectedCountry(country);
-      document.getElementById('packages').scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate(`/destination/${country.id}`);
   };
 
   return (
@@ -141,6 +138,28 @@ const Home = () => {
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-10 md:gap-16 mb-8 w-full"
+          >
+            {/* Transparent Floating 3D Flight Icon */}
+            <div className="flex flex-col items-center justify-center gap-3 cursor-pointer hover:-translate-y-2 transition-all duration-500 group min-w-[80px]">
+              <div className="flex items-center justify-center group-hover:scale-125 transition-transform duration-500">
+                <span className="text-[55px] md:text-[70px] drop-shadow-2xl" style={{ fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", sans-serif' }}>✈️</span>
+              </div>
+              <span className="text-[12px] md:text-sm font-black uppercase tracking-[0.2em] text-[#2D2D2D] group-hover:text-soul-blue transition-colors">Flights</span>
+            </div>
+
+            {/* Transparent Floating 3D Hotel Icon */}
+            <div className="flex flex-col items-center justify-center gap-3 cursor-pointer hover:-translate-y-2 transition-all duration-500 group min-w-[80px]">
+              <div className="flex items-center justify-center group-hover:scale-125 transition-transform duration-500">
+                <span className="text-[55px] md:text-[70px] drop-shadow-2xl" style={{ fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", sans-serif' }}>🏨</span>
+              </div>
+              <span className="text-[12px] md:text-sm font-black uppercase tracking-[0.2em] text-[#2D2D2D] group-hover:text-soul-blue transition-colors">Hotels</span>
+            </div>
+          </motion.div>
+
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -187,33 +206,36 @@ const Home = () => {
 
 
       {/* Layer 1: Destination Selection (Thrillophilia Style) */}
-      <section className="py-4 border-b border-slate-100 bg-white sticky top-[56px] z-40">
+      <section className="py-8 border-b border-slate-100 bg-white sticky top-[56px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-2 px-2 md:px-0">
+          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-4 px-2 md:px-0">
             <div 
-              onClick={() => setSelectedCountry(null)}
-              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
+              onClick={() => navigate('/packages')}
+              className="flex flex-col items-center gap-3 cursor-pointer min-w-fit group"
             >
-              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center icon-3d-button-active">
                 <Compass className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-tight">All</span>
-              {!selectedCountry && <motion.div layoutId="active" className="h-0.5 w-full bg-soul-blue" />}
+              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-soul-blue">All</span>
             </div>
 
             {destinations.map((country, i) => {
               const IconComponent = IconMap[country.icon] || Map;
+              const isActive = selectedCountry?.id === country.id;
               return (
                 <div 
                   key={country.id}
-                  onClick={() => setSelectedCountry(country)}
-                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
+                  onClick={() => handleCountrySelect(country)}
+                  className="flex flex-col items-center gap-3 cursor-pointer min-w-fit relative group"
                 >
-                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                    isActive ? 'icon-3d-button-active' : 'icon-3d-button'
+                  }`}>
                     <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
                   </div>
-                  <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-tight">{country.name}</span>
-                  {selectedCountry?.id === country.id && <motion.div layoutId="active" className="h-0.5 w-full bg-soul-blue" />}
+                  <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 ${
+                    isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
+                  }`}>{country.name}</span>
                 </div>
               );
             })}

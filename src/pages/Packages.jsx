@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { destinations } from '../data/trips';
 import PackagesSection from '../components/PackagesSection';
@@ -15,6 +16,7 @@ const IconMap = {
 
 const Packages = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,33 +46,40 @@ const Packages = () => {
       </section>
 
       {/* Filter Section (Sticky like Home) */}
-      <section className="py-4 border-b border-slate-100 bg-white sticky top-[56px] z-40">
+      <section className="py-8 border-b border-slate-100 bg-white sticky top-[56px] z-40">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-2 px-2 md:px-0">
+          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-4 px-2 md:px-0">
             <div 
               onClick={() => setSelectedCountry(null)}
-              className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit transition-all ${!selectedCountry ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
+              className="flex flex-col items-center gap-3 cursor-pointer min-w-fit group"
             >
-              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-blue-50/50 ${!selectedCountry ? 'bg-blue-50 text-soul-blue' : 'text-soul-blue/40'}`}>
+              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                !selectedCountry ? 'icon-3d-button-active' : 'icon-3d-button'
+              }`}>
                 <Compass className="w-5 h-5 md:w-7 md:h-7" />
               </div>
-              <span className="text-[11px] font-bold uppercase tracking-tight">All</span>
-              {!selectedCountry && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
+              <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 ${
+                !selectedCountry ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
+              }`}>All</span>
             </div>
 
             {destinations.map((country, i) => {
               const IconComponent = IconMap[country.icon] || Map;
+              const isActive = selectedCountry?.id === country.id;
               return (
                 <div 
                   key={country.id}
-                  onClick={() => setSelectedCountry(country)}
-                  className={`flex flex-col items-center gap-2 cursor-pointer min-w-fit relative group transition-all ${selectedCountry?.id === country.id ? 'text-soul-blue' : 'text-soul-blue/60 hover:text-soul-blue'}`}
+                  onClick={() => navigate(`/destination/${country.id}`)}
+                  className="flex flex-col items-center gap-3 cursor-pointer min-w-fit relative group"
                 >
-                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCountry?.id === country.id ? 'border-soul-blue bg-blue-50 text-soul-blue scale-110 shadow-lg' : 'border-blue-100 bg-blue-50/30 text-soul-blue/40'}`}>
+                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                    isActive ? 'icon-3d-button-active' : 'icon-3d-button'
+                  }`}>
                     <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
                   </div>
-                  <span className="text-[11px] font-bold uppercase tracking-tight">{country.name}</span>
-                  {selectedCountry?.id === country.id && <motion.div layoutId="active-p" className="h-0.5 w-full bg-soul-blue" />}
+                  <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 ${
+                    isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
+                  }`}>{country.name}</span>
                 </div>
               );
             })}

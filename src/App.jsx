@@ -2,14 +2,14 @@ import React from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Customize from './pages/Customize';
 import Packages from './pages/Packages';
+import DestinationDetails from './pages/DestinationDetails';
 import PackageDetails from './components/PackageDetails';
 import Footer from './components/Footer';
 
 function AppInner() {
   const location = useLocation();
-  const hideFooter = location.pathname.startsWith('/package/');
+  const hideFooter = location.pathname.startsWith('/package/') || location.pathname.startsWith('/destination/');
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] selection:bg-luxury-gold selection:text-white">
@@ -17,7 +17,7 @@ function AppInner() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/packages" element={<Packages />} />
-        <Route path="/customize/:countryId" element={<Customize />} />
+        <Route path="/destination/:countryId" element={<DestinationDetails />} />
         <Route path="/package/:id" element={<PackageDetails />} />
       </Routes>
       {!hideFooter && <Footer />}

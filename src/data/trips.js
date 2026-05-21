@@ -76,8 +76,8 @@ export const detailedPackages = [
     images: [
       'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&q=70',
       'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1200&q=70',
-      'https://images.unsplash.com/photo-1489514354504-1653aa9d63ad?auto=format&fit=crop&w=1200&q=70',
-      'https://images.unsplash.com/photo-1523374228107-6e44bd2b528e?auto=format&fit=crop&w=1200&q=70',
+      'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?auto=format&fit=crop&w=1200&q=70',
+      'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=70',
     ],
     itinerary: [
       { day: 1, title: 'Arrival & Marina Cruise', description: 'Private transfer to your 5-star hotel. Evening dinner cruise at Dubai Marina.' },
