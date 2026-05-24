@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
@@ -6,7 +6,7 @@ import {
   Compass, Palmtree, Building2, Ship, Waves, Landmark, Castle,
   Info, Sparkles, Calendar, Heart, Map
 } from 'lucide-react';
-import { destinations, detailedPackages } from '../data/trips';
+import { destinations } from '../data/trips';
 
 const IconMap = {
   Map, Palmtree, Building2, Ship, Waves, Landmark, Castle
@@ -15,12 +15,43 @@ const IconMap = {
 const DestinationDetails = () => {
   const { countryId } = useParams();
   const navigate = useNavigate();
+  const [countryPackages, setCountryPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [countryId]);
 
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:5000/api/packages')
+      .then(res => res.json())
+      .then(data => {
+        // Filter packages for this country from DB
+        const dbPackages = data.filter(pkg => pkg.countryId === countryId);
+        setCountryPackages(dbPackages);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching packages:', err);
+        setCountryPackages([]);
+        setLoading(false);
+      });
+  }, [countryId]);
+
   const destination = destinations.find(d => d.id === countryId);
+
+  const getCountryName = (cid) => {
+    const dest = destinations.find(d => d.id === cid);
+    return dest ? dest.name : cid;
+  };
+
+  const formatPrice = (price) => {
+    if (!price) return '₹0';
+    const clean = price.toString().replace(/[^\d]/g, '');
+    if (!clean) return price;
+    return `₹${parseInt(clean).toLocaleString('en-IN')}`;
+  };
 
   if (!destination) {
     return (
@@ -33,8 +64,17 @@ const DestinationDetails = () => {
     );
   }
 
-  // Get packages for this specific country
-  const countryPackages = detailedPackages.filter(pkg => pkg.countryId === countryId);
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-soul-blue/30 border-t-soul-blue rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600 font-semibold">Loading Bespoke Itineraries...</p>
+        </div>
+      </div>
+    );
+  }
+
   const IconComponent = IconMap[destination.icon] || Compass;
 
   // Curate some specific highlights based on countryId
@@ -161,74 +201,6 @@ const DestinationDetails = () => {
         </div>
       </section>
 
-      {/* Quick Facts & Highlights Panel */}
-      <section className="max-w-7xl mx-auto px-6 -translate-y-8 relative z-20">
-        <div className="bg-white rounded-[32px] border border-slate-100 p-8 md:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-3 gap-10">
-          
-          {/* Quick Info Grid */}
-          <div className="lg:col-span-1 border-b lg:border-b-0 lg:border-r border-slate-100 pb-8 lg:pb-0 lg:pr-10 flex flex-col justify-between">
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-wider text-soul-blue mb-6 flex items-center gap-2">
-                <Info className="w-4 h-4" /> Quick Overview
-              </h3>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-soul-blue">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Ideal Duration</span>
-                    <span className="text-base font-black text-slate-800">{highlights.duration}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
-                    <Calendar className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Best Time To Visit</span>
-                    <span className="text-base font-black text-slate-800">{highlights.season}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                    <Heart className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Vibe & Feel</span>
-                    <span className="text-base font-black text-slate-800">{highlights.vibe}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Experiences & Activities */}
-          <div className="lg:col-span-2 flex flex-col justify-between">
-            <div>
-              <h3 className="text-xs font-black uppercase tracking-wider text-soul-blue mb-6 flex items-center gap-2">
-                <Sparkles className="w-4 h-4" /> Must-Have Experiences in {destination.name}
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {highlights.activities.map((act, idx) => (
-                  <div key={idx} className="flex items-center gap-3 bg-slate-50 border border-slate-100 p-4 rounded-2xl hover:bg-blue-50/30 hover:border-blue-100/50 transition-all duration-300">
-                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-700">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    </div>
-                    <span className="text-sm font-bold text-slate-700">{act}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
 
       {/* Exquisite Curated Packages Section */}
       <section className="max-w-7xl mx-auto px-6 py-12">
@@ -244,17 +216,22 @@ const DestinationDetails = () => {
         {countryPackages.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {countryPackages.map((pkg) => {
-              const basePrice = parseInt(pkg.price.replace(/[^\d]/g, ''));
+              const basePrice = parseInt((pkg.price || '').toString().replace(/[^\d]/g, '')) || 0;
+              const packageId = pkg._id || pkg.id;
+              const displayDuration = pkg.days ? `${pkg.nights} Nights / ${pkg.days} Days` : (pkg.duration || 'Flexible');
+              const displayLocation = pkg.location || getCountryName(pkg.countryId);
+              const displayPrice = formatPrice(pkg.price);
+
               return (
                 <div 
-                  key={pkg.id} 
+                  key={packageId} 
                   className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative"
                 >
                   {/* Image Swiper/Top area */}
                   <div className="h-72 relative overflow-hidden bg-slate-900">
-                    <Link to={`/package/${pkg.id}`}>
+                    <Link to={`/package/${packageId}`}>
                       <img 
-                        src={pkg.images[0]} 
+                        src={pkg.images && pkg.images.length > 0 ? pkg.images[0] : 'https://placehold.co/600x400/png'} 
                         alt={pkg.name} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                       />
@@ -266,7 +243,7 @@ const DestinationDetails = () => {
                     </div>
 
                     <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] text-white font-black flex items-center gap-1.5 border border-white/10 shadow-md">
-                      <Star className="text-yellow-400 w-3 h-3 fill-yellow-400" /> {pkg.rating.toFixed(1)}
+                      <Star className="text-yellow-400 w-3 h-3 fill-yellow-400" /> {(pkg.rating || 5).toFixed(1)}
                     </div>
                   </div>
 
@@ -274,53 +251,32 @@ const DestinationDetails = () => {
                   <div className="p-6 flex-1 flex flex-col">
                     <div className="flex items-center gap-2 text-slate-500 text-xs mb-3 font-bold">
                       <Clock className="w-4 h-4 text-soul-blue" />
-                      <span>{pkg.duration}</span>
+                      <span>{displayDuration}</span>
                     </div>
 
-                    <Link to={`/package/${pkg.id}`}>
+                    <Link to={`/package/${packageId}`}>
                       <h3 className="text-xl font-black text-slate-800 mb-2 group-hover:text-soul-blue transition-colors line-clamp-1">
                         {pkg.name}
                       </h3>
                     </Link>
 
                     <p className="text-slate-500 text-xs font-semibold mb-4 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-red-500" /> {pkg.location}
+                      <MapPin className="w-3.5 h-3.5 text-red-500" /> {displayLocation}
                     </p>
 
                     <p className="text-slate-500 text-sm font-medium line-clamp-2 mb-6 leading-relaxed">
                       {pkg.overview}
                     </p>
 
-                    {/* Pricing with original cross discount details */}
-                    <div className="mt-auto pt-6 border-t border-slate-100">
-                      <div className="flex flex-col mb-4">
-                        <span className="text-[10px] text-slate-400 line-through font-bold">
-                          ₹{(basePrice * 1.25).toLocaleString()}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-black text-slate-900">{pkg.price}</span>
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">/Adult</span>
-                          
-                          <div className="ml-auto bg-green-50 text-green-700 px-3 py-1 rounded-full text-[10px] font-black border border-green-100 shadow-sm">
-                            SAVE ₹{(basePrice * 0.25).toLocaleString()}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* CTA Buttons */}
-                      <div className="flex gap-2">
-                        <button className="p-3.5 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors text-soul-blue active:scale-95">
-                          <Phone className="w-5 h-5 fill-soul-blue/10" />
-                        </button>
-                        <Link 
-                          to={`/package/${pkg.id}`}
-                          style={{ backgroundColor: '#2B4A8C' }}
-                          className="flex-1 text-center text-white font-black py-3.5 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-sm"
-                        >
-                          View Details & Book
-                        </Link>
-                      </div>
-
+                    {/* CTA Buttons */}
+                    <div className="mt-auto pt-6 border-t border-slate-100 flex">
+                      <Link 
+                        to={`/package/${packageId}`}
+                        style={{ backgroundColor: '#2B4A8C' }}
+                        className="w-full text-center text-white font-black py-3.5 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-sm"
+                      >
+                        View Details & Book
+                      </Link>
                     </div>
                   </div>
 

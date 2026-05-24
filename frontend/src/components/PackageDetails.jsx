@@ -5,13 +5,95 @@ import {
   Clock, Users, MapPin, Star, Check, X, ArrowLeft, Phone, 
   MessageCircle, User, Heart, Compass, Info, ChevronRight 
 } from 'lucide-react';
-import { detailedPackages, experiences, pricingTiers } from '../data/trips';
+import { destinations, experiences, pricingTiers } from '../data/trips';
 
 const PackageDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const pkg = detailedPackages.find(p => p.id === id) || detailedPackages[0];
-  
+  const [pkg, setPkg] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [step, setStep] = useState(1);
+  const [selectedExp, setSelectedExp] = useState(null);
+  const [pkgTiers, setPkgTiers] = useState(pricingTiers);
+  const [selectedTier, setSelectedTier] = useState(pricingTiers[1]);
+  const [activeImage, setActiveImage] = useState(null);
+
+  const availableExperiences = experiences.filter(exp => {
+    if (pkg && pkg.experiences) {
+      const hasAnyStyleChecked = Object.keys(pkg.experiences).some(k => {
+        const item = pkg.experiences[k];
+        return typeof item === 'object' ? item.active === true : item === true;
+      });
+      if (hasAnyStyleChecked) {
+        const item = pkg.experiences[exp.id];
+        return typeof item === 'object' ? item.active !== false : item !== false;
+      }
+    }
+    return true;
+  });
+
+  const activeOverview = (selectedExp && pkg?.experiences?.[selectedExp.id]?.overview)
+    ? pkg.experiences[selectedExp.id].overview
+    : (pkg?.overview || '');
+
+  const activeItinerary = (selectedExp && pkg?.experiences?.[selectedExp.id]?.itinerary && pkg.experiences[selectedExp.id].itinerary.length > 0)
+    ? pkg.experiences[selectedExp.id].itinerary
+    : (pkg?.itinerary || []);
+
+  const getCountryName = (cid) => {
+    const dest = destinations.find(d => d.id === cid);
+    return dest ? dest.name : cid;
+  };
+
+  const formatPrice = (price) => {
+    if (!price) return '₹0';
+    const clean = price.toString().replace(/[^\d]/g, '');
+    if (!clean) return price;
+    return `₹${parseInt(clean).toLocaleString('en-IN')}`;
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`http://localhost:5000/api/packages/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Not found in DB');
+        return res.json();
+      })
+      .then(data => {
+        setPkg(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching package details:', err);
+        setPkg(null);
+        setLoading(false);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    if (pkg) {
+      const activePricingSource = (selectedExp && pkg.experiences?.[selectedExp.id]?.pricingTiers && (pkg.experiences[selectedExp.id].pricingTiers.essential || pkg.experiences[selectedExp.id].pricingTiers.comfort || pkg.experiences[selectedExp.id].pricingTiers.luxury)) 
+        ? pkg.experiences[selectedExp.id].pricingTiers 
+        : pkg.pricingTiers;
+
+      const dynamicTiers = pricingTiers.map(tier => {
+        let price = tier.price;
+        if (activePricingSource) {
+          if (tier.id === 'basic' && activePricingSource.essential) price = formatPrice(activePricingSource.essential);
+          if (tier.id === 'medium' && activePricingSource.comfort) price = formatPrice(activePricingSource.comfort);
+          if (tier.id === 'luxury' && activePricingSource.luxury) price = formatPrice(activePricingSource.luxury);
+        }
+        return { ...tier, price };
+      });
+      setPkgTiers(dynamicTiers);
+      setSelectedTier(dynamicTiers[1]); // Default to Comfort Soul
+    }
+  }, [pkg, selectedExp]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
   const defaultTravelImages = [
     'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=70',
     'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=70',
@@ -19,21 +101,12 @@ const PackageDetails = () => {
     'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=70',
   ];
 
-  const displayImages = [
+  const displayImages = pkg ? [
     pkg.images?.[0] || defaultTravelImages[0],
     pkg.images?.[1] || pkg.images?.[0] || defaultTravelImages[1],
     pkg.images?.[2] || pkg.images?.[0] || defaultTravelImages[2],
     pkg.images?.[3] || pkg.images?.[0] || defaultTravelImages[3],
-  ];
-  
-  const [step, setStep] = useState(1);
-  const [selectedExp, setSelectedExp] = useState(null);
-  const [selectedTier, setSelectedTier] = useState(pricingTiers[1]); // Default to Comfort
-  const [activeImage, setActiveImage] = useState(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [step]);
+  ] : defaultTravelImages;
 
   const handleExpSelect = (exp) => {
     setSelectedExp(exp);
@@ -45,14 +118,36 @@ const PackageDetails = () => {
       setStep(step - 1);
       if (step === 2) setSelectedExp(null);
     } else {
-      navigate('/');
+      navigate(-1);
     }
   };
 
   const handleBooking = () => {
-    const message = `Hi TripSoul! I'm interested in the ${selectedTier.name} for ${pkg.name} (${selectedExp?.name} style).`;
-    window.open(`https://wa.me/1234567890?text=${encodeURIComponent(message)}`, '_blank');
+    const message = `Hi TripSoul! I'm interested in the ${selectedTier?.name || 'Comfort Soul'} for ${pkg?.name} (${selectedExp?.name || 'Luxury'} style).`;
+    window.open(`https://wa.me/918851484102?text=${encodeURIComponent(message)}`, '_blank');
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-soul-blue/30 border-t-soul-blue rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600 font-semibold">Loading Itinerary...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!pkg) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white px-6">
+        <h2 className="text-3xl font-black text-slate-800 mb-4">Package Not Found</h2>
+        <Link to="/" className="text-soul-blue font-bold hover:underline flex items-center gap-2">
+          <ArrowLeft className="w-5 h-5" /> Back to Home
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#F8FAFC] relative pb-12">
@@ -83,7 +178,7 @@ const PackageDetails = () => {
           <div className="absolute inset-x-0 bottom-12 px-8 lg:px-16 max-w-[1600px] mx-auto text-white flex flex-col justify-end h-full pb-4 z-10">
             <div className="flex items-center gap-3 mb-4">
               <span className="px-3.5 py-1 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded-full">
-                {pkg.location}
+                {pkg.location || getCountryName(pkg.countryId)}
               </span>
               <span className="px-3.5 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-amber-300 text-[10px] font-black uppercase tracking-widest rounded-full">
                 {selectedExp ? selectedExp.name : 'Premium'}
@@ -92,9 +187,6 @@ const PackageDetails = () => {
             <h2 className="text-4xl md:text-7xl font-black tracking-tight leading-[1.1] max-w-4xl text-white">
               {pkg.name} <span className="font-serif italic text-blue-300 font-normal">Soul Journey</span>
             </h2>
-            <p className="text-slate-300 font-medium text-xs md:text-sm max-w-2xl mt-4 leading-relaxed">
-              {selectedExp ? selectedExp.description || `A perfectly curated ${selectedExp.name.toLowerCase()} experience crafted to give you the most unforgettable memories.` : pkg.overview}
-            </p>
           </div>
         </div>
       )}
@@ -103,34 +195,24 @@ const PackageDetails = () => {
       <div className="relative z-40 pt-28 px-8 max-w-[1600px] mx-auto flex justify-between items-center">
         <button 
           onClick={handleBack}
-          className={`group flex items-center gap-4 px-6 py-3 rounded-full border shadow-sm transition-all duration-500 ${
-            step === 1 
-              ? 'bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white hover:text-slate-900' 
-              : 'bg-white/50 backdrop-blur-xl border-white text-slate-800 hover:bg-soul-blue hover:text-white'
-          }`}
+          className="group flex items-center gap-4 px-6 py-3 rounded-full border border-white/20 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-slate-900"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span className="text-[10px] font-black uppercase tracking-[0.3em]">Explore Others</span>
         </button>
 
-        <div className={`flex items-center gap-3 p-1.5 rounded-full border shadow-sm transition-all duration-500 ${
-          step === 1 
-            ? 'bg-white/10 backdrop-blur-md border-white/10' 
-            : 'bg-white/50 backdrop-blur-xl border-white'
-        }`}>
+        <div className="flex items-center gap-3 p-1.5 rounded-full border border-white/10 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md">
           <div className={`px-6 py-2.5 rounded-full flex items-center gap-3 transition-all duration-500 ${
             step === 1 
               ? 'bg-soul-blue text-white shadow-xl shadow-soul-blue/30' 
-              : 'text-slate-400'
+              : 'text-white/40'
           }`}>
             <span className="text-[10px] font-black uppercase tracking-[0.2em]">01 Selection</span>
           </div>
           <div className={`px-6 py-2.5 rounded-full flex items-center gap-3 transition-all duration-500 ${
             step === 2 
               ? 'bg-white text-slate-900 shadow-xl shadow-white/10' 
-              : step === 1 
-                ? 'text-white/40' 
-                : 'text-slate-400'
+              : 'text-white/40'
           }`}>
             <span className="text-[10px] font-black uppercase tracking-[0.2em]">02 Itinerary</span>
           </div>
@@ -158,8 +240,14 @@ const PackageDetails = () => {
               </h2>
               <p className="text-slate-300 font-medium mb-12">Select your travel style for a perfectly personalised experience</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto pb-24">
-                {experiences.map((exp, idx) => (
+              <div className={`grid grid-cols-1 ${
+                availableExperiences.length === 2 
+                  ? 'md:grid-cols-2 max-w-4xl' 
+                  : availableExperiences.length === 1 
+                    ? 'md:grid-cols-1 max-w-md' 
+                    : 'md:grid-cols-3 max-w-7xl'
+              } gap-10 mx-auto pb-24`}>
+                {availableExperiences.map((exp, idx) => (
                   <button
                     key={exp.id}
                     onClick={() => handleExpSelect(exp)}
@@ -240,7 +328,7 @@ const PackageDetails = () => {
                     <div className="rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 shadow-xl shadow-slate-200/60">
                       <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight">Overview</h3>
                       <p className="text-slate-600 text-base leading-relaxed mb-8 font-medium">
-                        {pkg.overview}
+                        {activeOverview}
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {/* Duration card */}
@@ -250,7 +338,7 @@ const PackageDetails = () => {
                           </div>
                           <div>
                             <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Duration</span>
-                            <span className="text-base font-black text-slate-800">{pkg.duration}</span>
+                            <span className="text-base font-black text-slate-800">{pkg.days ? `${pkg.nights} Nights / ${pkg.days} Days` : (pkg.duration || 'Flexible')}</span>
                           </div>
                         </div>
                         {/* Group capacity card */}
@@ -260,7 +348,7 @@ const PackageDetails = () => {
                           </div>
                           <div>
                             <span className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Group Capacity</span>
-                            <span className="text-base font-black text-slate-800">{pkg.groupSize || 'Customizable'}</span>
+                            <span className="text-base font-black text-slate-800">{pkg.groupCapacity || pkg.groupSize || 'Customizable'}</span>
                           </div>
                         </div>
                       </div>
@@ -278,7 +366,7 @@ const PackageDetails = () => {
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {pricingTiers.map((tier, idx) => {
+                        {pkgTiers.map((tier, idx) => {
                           const isSelected = selectedTier?.id === tier.id;
                           const configs = [
                             { bg: 'bg-white hover:bg-slate-50 border-slate-200', tag: 'text-slate-400', price: 'text-slate-900', glow: 'shadow-slate-200/80' },
@@ -329,12 +417,12 @@ const PackageDetails = () => {
                             <h3 className="text-xl font-black text-slate-900 tracking-tight">Day-by-Day Itinerary</h3>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{pkg.itinerary?.length} Days</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{activeItinerary?.length} Days</span>
                       </div>
 
                       {/* Day rows */}
                       <div>
-                        {pkg.itinerary?.map((day, i) => (
+                        {activeItinerary?.map((day, i) => (
                           <div
                             key={i}
                             className="group flex gap-6 px-10 py-7 border-b border-slate-100 last:border-0 hover:bg-blue-50/30 transition-all duration-300 cursor-default"
@@ -344,7 +432,7 @@ const PackageDetails = () => {
                               <div className="w-11 h-11 rounded-2xl bg-blue-50 border border-soul-blue/20 flex items-center justify-center group-hover:bg-soul-blue group-hover:border-soul-blue transition-all duration-500">
                                 <span className="text-[11px] font-black text-soul-blue group-hover:text-white transition-colors duration-300">{String(i + 1).padStart(2, '0')}</span>
                               </div>
-                              {i < (pkg.itinerary?.length ?? 0) - 1 && (
+                              {i < (activeItinerary?.length ?? 0) - 1 && (
                                 <div className="w-[1px] h-full bg-slate-200 flex-1 min-h-[20px]"></div>
                               )}
                             </div>
@@ -419,9 +507,9 @@ const PackageDetails = () => {
                       {/* Trip details */}
                       <div className="p-8 space-y-7">
                         {[
-                          { label: 'Destination', value: pkg.location },
+                          { label: 'Destination', value: pkg.location || getCountryName(pkg.countryId) },
                           { label: 'Travel Style', value: selectedExp?.name || 'Luxury' },
-                          { label: 'Duration', value: pkg.duration }
+                          { label: 'Duration', value: pkg.days ? `${pkg.nights} Nights / ${pkg.days} Days` : (pkg.duration || 'Flexible') }
                         ].map((item, idx) => (
                           <div key={idx} className="flex items-center justify-between">
                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{item.label}</span>
@@ -435,8 +523,8 @@ const PackageDetails = () => {
                           onClick={handleBooking}
                           className="w-full relative overflow-hidden bg-soul-blue text-white py-5 rounded-2xl font-black text-sm tracking-wider transition-all hover:bg-slate-900 hover:shadow-2xl hover:shadow-blue-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
                         >
-                          <span className="relative z-10">Start Your Journey</span>
-                          <ChevronRight className="w-4 h-4 relative z-10" />
+                          <span className="relative z-10">Contact Our Team</span>
+                          <MessageCircle className="w-4 h-4 relative z-10" />
                         </button>
 
                         <p className="text-center text-[10px] text-slate-400 font-medium">

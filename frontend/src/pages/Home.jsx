@@ -11,8 +11,7 @@ import HomeHero5 from '../assets/verdant-mountain-valley-stockcake.webp';
 
 import HerocompLeft from '../assets/HerocompLeft.avif';
 import HerocompRight from '../assets/HerocompRight.avif';
-import flight3d from '../assets/flight_3d.png';
-import hotel3d from '../assets/hotel_3d.png';
+
 import { 
   User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play, Plane,
   Map, Palmtree, Building2, Ship, Waves, Landmark, Castle 
@@ -26,7 +25,6 @@ const IconMap = {
 import PackagesSection from '../components/PackagesSection';
 import AboutSection from '../components/AboutSection';
 import FAQSection from '../components/FAQSection';
-import ContactSection from '../components/ContactSection';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -37,12 +35,21 @@ import { destinations, experiences, pricingTiers, itineraries } from '../data/tr
 
 const Home = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const [currentBg, setCurrentBg] = useState(0);
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setSearchQuery(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
   const handleSearch = () => {
-    if (searchQuery.trim()) {
+    if (searchTerm.trim()) {
       document.getElementById('packages').scrollIntoView({ behavior: 'smooth' });
     }
   };
@@ -138,27 +145,7 @@ const Home = () => {
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-10 md:gap-16 mb-8 w-full"
-          >
-            {/* Transparent Floating 3D Flight Icon */}
-            <div className="flex flex-col items-center justify-center gap-3 cursor-pointer hover:-translate-y-2 transition-all duration-500 group min-w-[80px]">
-              <div className="flex items-center justify-center group-hover:scale-125 transition-transform duration-500">
-                <span className="text-[55px] md:text-[70px] drop-shadow-2xl" style={{ fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", sans-serif' }}>✈️</span>
-              </div>
-              <span className="text-[12px] md:text-sm font-black uppercase tracking-[0.2em] text-[#2D2D2D] group-hover:text-soul-blue transition-colors">Flights</span>
-            </div>
 
-            {/* Transparent Floating 3D Hotel Icon */}
-            <div className="flex flex-col items-center justify-center gap-3 cursor-pointer hover:-translate-y-2 transition-all duration-500 group min-w-[80px]">
-              <div className="flex items-center justify-center group-hover:scale-125 transition-transform duration-500">
-                <span className="text-[55px] md:text-[70px] drop-shadow-2xl" style={{ fontFamily: '"Segoe UI Emoji", "Apple Color Emoji", sans-serif' }}>🏨</span>
-              </div>
-              <span className="text-[12px] md:text-sm font-black uppercase tracking-[0.2em] text-[#2D2D2D] group-hover:text-soul-blue transition-colors">Hotels</span>
-            </div>
-          </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -188,8 +175,8 @@ const Home = () => {
             <input 
               type="text" 
               placeholder="Search destinations..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
               className="flex-1 bg-transparent border-none outline-none text-slate-700 py-2 md:py-3 text-sm md:text-base font-poppins"
             />
@@ -251,7 +238,6 @@ const Home = () => {
       />
       <AboutSection />
       <FAQSection />
-      <ContactSection />
     </div>
   );
 };
