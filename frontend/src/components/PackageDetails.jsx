@@ -6,6 +6,7 @@ import {
   MessageCircle, User, Heart, Compass, Info, ChevronRight 
 } from 'lucide-react';
 import { destinations, experiences, pricingTiers } from '../data/trips';
+import { API_BASE_URL } from '../config';
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -54,7 +55,7 @@ const PackageDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/api/packages/${id}`)
+    fetch(`${API_BASE_URL}/api/packages/${id}`)
       .then(res => {
         if (!res.ok) throw new Error('Not found in DB');
         return res.json();

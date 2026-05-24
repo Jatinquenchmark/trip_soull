@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ArrowRight, Clock, MapPin, Compass } from 'lucide-react';
 import { destinations } from '../data/trips';
+import { API_BASE_URL } from '../config';
 
 const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAll = true }) => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/packages')
+    fetch(`${API_BASE_URL}/api/packages`)
       .then(res => res.json())
       .then(data => {
         setPackages(data);

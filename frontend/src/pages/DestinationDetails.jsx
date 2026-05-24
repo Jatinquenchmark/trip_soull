@@ -7,6 +7,7 @@ import {
   Info, Sparkles, Calendar, Heart, Map
 } from 'lucide-react';
 import { destinations } from '../data/trips';
+import { API_BASE_URL } from '../config';
 
 const IconMap = {
   Map, Palmtree, Building2, Ship, Waves, Landmark, Castle
@@ -24,7 +25,7 @@ const DestinationDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:5000/api/packages')
+    fetch(`${API_BASE_URL}/api/packages`)
       .then(res => res.json())
       .then(data => {
         // Filter packages for this country from DB

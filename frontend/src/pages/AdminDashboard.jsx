@@ -8,6 +8,7 @@ import { destinations } from '../data/trips';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { API_BASE_URL } from '../config';
 
 const AdminDashboard = () => {
   const { logout } = useAuth();
@@ -88,7 +89,7 @@ const AdminDashboard = () => {
   const fetchPackages = async () => {
     setLoadingPackages(true);
     try {
-      const response = await fetch('http://localhost:5000/api/packages');
+      const response = await fetch(`${API_BASE_URL}/api/packages`);
       if (response.ok) {
         const data = await response.json();
         setPackages(data);
@@ -173,7 +174,7 @@ const AdminDashboard = () => {
 
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5000/api/packages/${pkgId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/packages/${pkgId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -491,8 +492,8 @@ const AdminDashboard = () => {
       data.append('existingGallery', JSON.stringify(existingGallery));
 
       const url = isEdit 
-        ? `http://localhost:5000/api/packages/${editingPackageId}`
-        : 'http://localhost:5000/api/packages';
+        ? `${API_BASE_URL}/api/packages/${editingPackageId}`
+        : `${API_BASE_URL}/api/packages`;
       
       const method = isEdit ? 'PUT' : 'POST';
 
