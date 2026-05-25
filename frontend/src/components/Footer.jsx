@@ -1,65 +1,210 @@
 import React from 'react';
-import { Instagram, Globe, Linkedin, Mail, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { 
+  Instagram, Globe, Linkedin, Mail, Phone, MapPin, 
+  Send, ChevronRight, Facebook, Twitter 
+} from 'lucide-react';
 import logo from '../assets/download (2).png';
 
 const Footer = () => {
+  const handleSubmitNewsletter = (e) => {
+    e.preventDefault();
+    // Dummy submit logic
+  };
+
   return (
-    <footer className="relative z-50 bg-slate-900 text-white pt-20 pb-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-12">
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 group mb-6">
-            <span className="text-3xl font-black tracking-tight text-white">
-              TripSoul
-            </span>
+    <footer className="relative z-50 bg-[#080B11] text-white pt-24 pb-12 px-6 md:px-12 border-t border-slate-900 overflow-hidden font-sans">
+      {/* Premium Top Radial Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-[#2B4A8C]/50 to-transparent"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[150px] bg-[#2B4A8C]/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16">
+        
+        {/* Brand Column (Col Span: 4) */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="TripSoul Logo" className="h-14 w-auto object-contain brightness-110" />
+            <div className="flex flex-col">
+              <span className="text-2xl font-black tracking-tight text-white font-poppins leading-none">
+                TripSoul
+              </span>
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">
+                Perfectly Personalised
+              </span>
+            </div>
           </div>
-          <p className="text-slate-400 leading-relaxed font-medium">
-            Your Tour, Perfectly Personalised! We craft soul-stirring journeys across the globe's most breathtaking destinations.
+          <p className="text-slate-400 leading-relaxed font-medium text-sm">
+            We craft soul-stirring journeys and bespoke travel itineraries across the globe's most breathtaking destinations. Explore the world on your own terms.
           </p>
+          
+          {/* Social Icons Badge Grid */}
+          <div className="flex items-center gap-3 pt-2">
+            <a 
+              href="https://instagram.com" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a 
+              href="https://facebook.com" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
+            >
+              <Facebook className="w-4 h-4" />
+            </a>
+            <a 
+              href="https://twitter.com" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
+            >
+              <Twitter className="w-4 h-4" />
+            </a>
+            <a 
+              href="https://linkedin.com" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
-        <div>
-          <h4 className="text-lg font-bold mb-6 text-white">Destinations</h4>
-          <ul className="space-y-4 text-soul-blue/70 font-medium">
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Bali, Indonesia</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Dubai, UAE</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Maldives</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Turkey</li>
+        {/* Quick Links Column (Col Span: 2) */}
+        <div className="lg:col-span-2">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+            Quick Links
+          </h4>
+          <ul className="space-y-4 text-sm font-semibold">
+            <li>
+              <Link to="/packages" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">Packages</span>
+              </Link>
+            </li>
+            <li>
+              <a href="#about" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">About Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">Contact Us</span>
+              </a>
+            </li>
+            <li>
+              <a href="#faq" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">FAQs</span>
+              </a>
+            </li>
           </ul>
         </div>
 
-        <div>
-          <h4 className="text-lg font-bold mb-6 text-white">Quick Links</h4>
-          <ul className="space-y-4 text-soul-blue/70 font-medium">
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Packages</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">About Us</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">Contact</li>
-            <li className="hover:text-soul-blue cursor-pointer transition-colors">FAQ</li>
+        {/* Destinations Column (Col Span: 3) */}
+        <div className="lg:col-span-3">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+            Popular Destinations
+          </h4>
+          <ul className="space-y-4 text-sm font-semibold">
+            <li>
+              <Link to="/destination/bali" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">Bali, Indonesia</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/destination/dubai" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">Dubai, UAE</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/destination/maldives" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">The Maldives</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/destination/turkey" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
+                <span className="group-hover:translate-x-0.5 transition-transform duration-300">Istanbul & Turkey</span>
+              </Link>
+            </li>
           </ul>
         </div>
 
-        <div>
-          <h4 className="text-lg font-bold mb-6 text-white">Connect</h4>
-          <div className="flex gap-4 mb-6">
-            <Instagram className="w-5 h-5 cursor-pointer text-soul-blue/60 hover:text-soul-blue transition-colors" />
-            <Globe className="w-5 h-5 cursor-pointer text-soul-blue/60 hover:text-soul-blue transition-colors" />
-            <Linkedin className="w-5 h-5 cursor-pointer text-soul-blue/60 hover:text-soul-blue transition-colors" />
-          </div>
-          <div className="space-y-4 text-soul-blue/70 font-medium">
+        {/* Newsletter & Info Column (Col Span: 3) */}
+        <div className="lg:col-span-3 space-y-6">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+            Contact & Updates
+          </h4>
+          
+          <div className="space-y-4 text-sm font-semibold text-slate-400">
             <div className="flex items-center gap-3">
-              <Mail className="w-4 h-4 text-soul-blue" /> <span>hello@tripsoul.com</span>
+              <Mail className="w-4 h-4 text-[#2B4A8C]" />
+              <span className="hover:text-white transition-colors">hello@tripsoul.com</span>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-soul-blue" /> <span>+1 234 567 890</span>
+              <Phone className="w-4 h-4 text-[#2B4A8C]" />
+              <span className="hover:text-white transition-colors">+1 234 567 890</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <MapPin className="w-4 h-4 text-[#2B4A8C] shrink-0 mt-0.5" />
+              <span className="hover:text-white transition-colors leading-relaxed">
+                123 Travel Avenue, Suite 450, NY
+              </span>
             </div>
           </div>
+
+          {/* Newsletter Input Box */}
+          <div className="pt-2">
+            <p className="text-xs text-slate-500 font-bold mb-3 uppercase tracking-wider">
+              Subscribe to news & offers
+            </p>
+            <form onSubmit={handleSubmitNewsletter} className="relative group">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                className="w-full bg-[#05070B] border border-slate-800/80 rounded-2xl py-3 pl-4 pr-12 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:border-[#2B4A8C] focus:ring-1 focus:ring-[#2B4A8C] transition-all duration-300" 
+              />
+              <button 
+                type="submit" 
+                className="absolute right-2 top-2 w-8 h-8 rounded-xl bg-[#2B4A8C] hover:bg-opacity-95 text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <Send className="w-3.5 h-3.5" />
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Bottom Bar: Copyright & Legal */}
+      <div className="max-w-7xl mx-auto pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-500 text-sm font-medium">
+        <p className="text-center md:text-left text-xs">
+          © 2026 TripSoul. All rights reserved. Your Tour, Perfectly Personalised!
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-xs text-slate-400">
+          <Link to="/privacy-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+            Privacy Policy
+          </Link>
+          <Link to="/terms-conditions" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+            Terms & Conditions
+          </Link>
+          <Link to="/cookie-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+            Cookie Policy
+          </Link>
         </div>
       </div>
-      <p className="text-center mt-10 text-slate-500 text-sm font-medium">
-        © 2026 TripSoul. All rights reserved. Your Tour, Perfectly Personalised!
-      </p>
     </footer>
   );
 };
-
 
 export default Footer;

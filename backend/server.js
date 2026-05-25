@@ -18,7 +18,8 @@ const allowedOrigins = [
 ];
 
 if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
+  const origins = process.env.FRONTEND_URL.split(',').map(o => o.trim());
+  allowedOrigins.push(...origins);
 }
 
 app.use(cors({

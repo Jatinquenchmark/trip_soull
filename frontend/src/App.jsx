@@ -7,6 +7,9 @@ import DestinationDetails from './pages/DestinationDetails';
 import PackageDetails from './components/PackageDetails';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import DataSafety from './pages/DataSafety';
+import ServiceRules from './pages/ServiceRules';
+import SitePreferences from './pages/SitePreferences';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import Footer from './components/Footer';
@@ -24,6 +27,9 @@ function AppInner() {
         <Route path="/packages" element={<Packages />} />
         <Route path="/destination/:countryId" element={<DestinationDetails />} />
         <Route path="/package/:id" element={<PackageDetails />} />
+        <Route path="/privacy-policy" element={<DataSafety />} />
+        <Route path="/terms-conditions" element={<ServiceRules />} />
+        <Route path="/cookie-policy" element={<SitePreferences />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminDashboard />} />
