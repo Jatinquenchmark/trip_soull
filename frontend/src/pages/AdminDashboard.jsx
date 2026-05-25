@@ -173,12 +173,9 @@ const AdminDashboard = () => {
     }
 
     try {
-      const token = localStorage.getItem('adminToken');
       const response = await fetch(`${API_BASE_URL}/api/packages/${pkgId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        credentials: 'include'
       });
 
       if (response.status === 401) {
@@ -461,7 +458,6 @@ const AdminDashboard = () => {
 
     setIsSubmitting(true);
     try {
-      const token = localStorage.getItem('adminToken');
       const data = new FormData();
       
       data.append('name', formData.name);
@@ -499,10 +495,8 @@ const AdminDashboard = () => {
 
       const response = await fetch(url, {
         method: method,
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: data
+        body: data,
+        credentials: 'include'
       });
 
       if (response.status === 401) {

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext();
 
@@ -6,47 +7,42 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const logout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminTokenLoginTime');
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (err) {
+      console.error('Logout API call failed:', err);
+    } finally {
+      setIsAuthenticated(false);
+    }
   };
 
   useEffect(() => {
-    // Check for token in localStorage on mount
-    const token = localStorage.getItem('adminToken');
-    const loginTime = localStorage.getItem('adminTokenLoginTime');
-    
-    let timer;
-    if (token && loginTime) {
-      const oneDay = 24 * 60 * 60 * 1000;
-      const elapsed = Date.now() - parseInt(loginTime);
-      
-      if (elapsed > oneDay) {
-        // Session expired after 1 day
-        logout();
-      } else {
-        setIsAuthenticated(true);
-        // Setup timer to automatically logout when 1 day is complete
-        const remainingTime = oneDay - elapsed;
-        timer = setTimeout(() => {
-          logout();
-        }, remainingTime);
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+          credentials: 'include'
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setIsAuthenticated(!!data.isAuthenticated);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
-    } else if (token) {
-      // Fallback if token exists but no timestamp (older sessions)
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
-
-    return () => {
-      if (timer) clearTimeout(timer);
     };
+
+    checkAuth();
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem('adminToken', token);
-    localStorage.setItem('adminTokenLoginTime', Date.now().toString());
+  const login = () => {
     setIsAuthenticated(true);
   };
 

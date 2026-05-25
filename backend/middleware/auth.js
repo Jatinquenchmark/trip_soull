@@ -1,16 +1,22 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
-  // Get token from header
-  const authHeader = req.header('Authorization');
-  if (!authHeader) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
+  let token = null;
+
+  // 1. Try to get token from cookies
+  if (req.cookies && req.cookies.adminToken) {
+    token = req.cookies.adminToken;
+  } 
+  // 2. Fallback to Authorization header
+  else {
+    const authHeader = req.header('Authorization');
+    if (authHeader) {
+      token = authHeader.split(' ')[1]; // Bearer <token>
+    }
   }
 
-  const token = authHeader.split(' ')[1]; // Bearer <token>
-
   if (!token) {
-    return res.status(401).json({ message: 'No token format, authorization denied' });
+    return res.status(401).json({ message: 'No token, authorization denied' });
   }
 
   try {
