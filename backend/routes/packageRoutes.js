@@ -14,6 +14,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Helper to extract Cloudinary public ID from URL
+const getPublicIdFromUrl = (url) => {
+  try {
+    if (!url || !url.includes('cloudinary.com')) return null;
+    const parts = url.split('/upload/');
+    if (parts.length < 2) return null;
+    const pathAfterUpload = parts[1];
+    const withoutVersion = pathAfterUpload.replace(/^v\d+\//, '');
+    const publicId = withoutVersion.substring(0, withoutVersion.lastIndexOf('.'));
+    return publicId;
+  } catch (error) {
+    return null;
+  }
+};
+
 // Multer memory storage (no saving to disk)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -174,6 +189,19 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
       finalImages = [...existingImages, ...legacyUrls, ...galleryUrls];
     }
 
+    // Find and delete images removed from the package
+    const removedImages = (existingPackage.images || []).filter(url => !finalImages.includes(url));
+    for (const url of removedImages) {
+      const publicId = getPublicIdFromUrl(url);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+        } catch (err) {
+          console.error(`Failed to delete image from Cloudinary: ${url}`, err);
+        }
+      }
+    }
+
     const parsedItinerary = req.body.itinerary ? JSON.parse(req.body.itinerary) : existingPackage.itinerary;
     const parsedInclusions = req.body.inclusions ? JSON.parse(req.body.inclusions) : existingPackage.inclusions;
     const parsedExclusions = req.body.exclusions ? JSON.parse(req.body.exclusions) : existingPackage.exclusions;
@@ -207,10 +235,24 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
 // DELETE: Delete a package
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const deletedPackage = await Package.findByIdAndDelete(req.params.id);
-    if (!deletedPackage) {
+    const existingPackage = await Package.findById(req.params.id);
+    if (!existingPackage) {
       return res.status(404).json({ message: 'Package not found' });
     }
+
+    // Delete all images from Cloudinary before deleting the package
+    for (const url of existingPackage.images || []) {
+      const publicId = getPublicIdFromUrl(url);
+      if (publicId) {
+        try {
+          await cloudinary.uploader.destroy(publicId);
+        } catch (err) {
+          console.error(`Failed to delete image from Cloudinary: ${url}`, err);
+        }
+      }
+    }
+
+    await Package.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Package deleted successfully', id: req.params.id });
   } catch (error) {
     console.error('Error deleting package:', error);
