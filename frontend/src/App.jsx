@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Toaster, ToastBar, toast } from 'react-hot-toast';
+import { X } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Packages from './pages/Packages';
@@ -12,16 +14,46 @@ import ServiceRules from './pages/ServiceRules';
 import SitePreferences from './pages/SitePreferences';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import UserProfile from './pages/UserProfile';
+import UserDashboard from './pages/UserDashboard';
+import MyBookings from './pages/MyBookings';
+import Wishlist from './pages/Wishlist';
 import Footer from './components/Footer';
+import RefundPolicy from './pages/RefundPolicy';
 import WhatsAppButton from './components/WhatsAppButton';
 
 function AppInner() {
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isUserDashboard = ['/dashboard', '/profile', '/bookings', '/wishlist'].includes(location.pathname);
+  const hideNavAndFooter = isAdminPath || isAuthPage || isUserDashboard;
 
   return (
     <div className="min-h-screen bg-[#FDFCFB] selection:bg-luxury-gold selection:text-white">
-      {!isAdminPath && <Navbar />}
+      <Toaster position="top-center">
+        {(t) => (
+          <ToastBar toast={t}>
+            {({ icon, message }) => (
+              <>
+                {icon}
+                {message}
+                {t.type !== 'loading' && (
+                  <button 
+                    onClick={() => toast.dismiss(t.id)} 
+                    className="ml-2 p-1 rounded-full hover:bg-slate-100 transition-colors focus:outline-none"
+                  >
+                    <X className="w-4 h-4 text-slate-400 hover:text-slate-600" />
+                  </button>
+                )}
+              </>
+            )}
+          </ToastBar>
+        )}
+      </Toaster>
+      {!hideNavAndFooter && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/packages" element={<Packages />} />
@@ -30,14 +62,27 @@ function AppInner() {
         <Route path="/privacy-policy" element={<DataSafety />} />
         <Route path="/terms-conditions" element={<ServiceRules />} />
         <Route path="/cookie-policy" element={<SitePreferences />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route element={<ProtectedRoute />}>
+        
+        {/* Customer Auth Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        <Route element={<ProtectedRoute adminOnly={false} />}>
+          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/bookings" element={<MyBookings />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+        </Route>
+
+        <Route element={<ProtectedRoute adminOnly={true} />}>
           <Route path="/admin" element={<AdminDashboard />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      {!isAdminPath && <Footer />}
-      {!isAdminPath && <WhatsAppButton />}
+      {!hideNavAndFooter && <Footer />}
+      {!hideNavAndFooter && <WhatsAppButton />}
     </div>
   );
 }

@@ -12,13 +12,13 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, isAdmin } = useAuth();
 
   React.useEffect(() => {
-    if (isAuthenticated) {
+    if (isAdmin) {
       navigate('/admin');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAdmin, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const AdminLogin = () => {
       });
 
       if (response.ok) {
-        login();
+        await login();
         navigate('/admin');
       } else {
         const errData = await response.json();

@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { destinations, experiences, pricingTiers } from '../data/trips';
 import { API_BASE_URL } from '../config';
+import PackagesSection from './PackagesSection';
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -292,6 +293,23 @@ const PackageDetails = () => {
                     </div>
                   </button>
                 ))}
+              </div>
+
+              {/* Recommended Packages Section */}
+              <div className="mt-8 mb-12 border-t border-white/20 pt-16 relative z-20">
+                <div className="text-left mb-10">
+                  <h3 className="text-3xl font-black text-white tracking-tight">Recommended Packages For You</h3>
+                  <p className="text-slate-300 mt-2 text-lg">More premium experiences you might love in <span className="capitalize text-white font-semibold">{pkg.countryId}</span></p>
+                </div>
+                <PackagesSection 
+                  selectedCountryId={pkg.countryId}
+                  limit={3}
+                  showViewAll={false}
+                  excludePackageId={pkg._id || pkg.id}
+                  className="py-0 px-0 bg-transparent"
+                  headerColor="text-white"
+                  hideHeader={true}
+                />
               </div>
             </motion.div>
           )}

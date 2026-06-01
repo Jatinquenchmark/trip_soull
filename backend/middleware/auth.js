@@ -4,7 +4,9 @@ module.exports = function (req, res, next) {
   let token = null;
 
   // 1. Try to get token from cookies
-  if (req.cookies && req.cookies.adminToken) {
+  if (req.cookies && req.cookies.userToken) {
+    token = req.cookies.userToken;
+  } else if (req.cookies && req.cookies.adminToken) {
     token = req.cookies.adminToken;
   } 
   // 2. Fallback to Authorization header

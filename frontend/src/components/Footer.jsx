@@ -13,15 +13,15 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative z-50 bg-[#080B11] text-white pt-24 pb-12 px-6 md:px-12 border-t border-slate-900 overflow-hidden font-sans">
+    <footer className="relative z-50 bg-[#080B11] text-white pt-12 pb-6 px-4 md:px-8 border-t border-slate-900 overflow-hidden font-sans">
       {/* Premium Top Radial Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-[#2B4A8C]/50 to-transparent"></div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[150px] bg-[#2B4A8C]/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-8">
         
         {/* Brand Column (Col Span: 4) */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center gap-3">
             <img src={logo} alt="TripSoul Logo" className="h-14 w-auto object-contain brightness-110" />
             <div className="flex flex-col">
@@ -40,46 +40,22 @@ const Footer = () => {
           {/* Social Icons Badge Grid */}
           <div className="flex items-center gap-3 pt-2">
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/trip_.soul?igsh=NTIwanM3Z3dtYzNq" 
               target="_blank" 
               rel="noreferrer" 
               className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
             >
               <Instagram className="w-4 h-4" />
             </a>
-            <a 
-              href="https://facebook.com" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
-            >
-              <Facebook className="w-4 h-4" />
-            </a>
-            <a 
-              href="https://twitter.com" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
-            >
-              <Twitter className="w-4 h-4" />
-            </a>
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
           </div>
         </div>
 
         {/* Quick Links Column (Col Span: 2) */}
         <div className="lg:col-span-2">
-          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-2 mb-4">
             Quick Links
           </h4>
-          <ul className="space-y-4 text-sm font-semibold">
+          <ul className="space-y-2 text-sm font-semibold">
             <li>
               <Link to="/packages" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
                 <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
@@ -109,10 +85,10 @@ const Footer = () => {
 
         {/* Destinations Column (Col Span: 3) */}
         <div className="lg:col-span-3">
-          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-2 mb-4">
             Popular Destinations
           </h4>
-          <ul className="space-y-4 text-sm font-semibold">
+          <ul className="space-y-2 text-sm font-semibold">
             <li>
               <Link to="/destination/bali" className="group flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors duration-300">
                 <ChevronRight className="w-3.5 h-3.5 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 text-[#2B4A8C] transition-all duration-300" />
@@ -141,24 +117,24 @@ const Footer = () => {
         </div>
 
         {/* Newsletter & Info Column (Col Span: 3) */}
-        <div className="lg:col-span-3 space-y-6">
-          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-3 mb-6">
+        <div className="lg:col-span-3 space-y-4">
+          <h4 className="text-sm font-black text-white uppercase tracking-widest border-b border-slate-800/60 pb-2 mb-4">
             Contact & Updates
           </h4>
           
-          <div className="space-y-4 text-sm font-semibold text-slate-400">
+          <div className="space-y-2 text-sm font-semibold text-slate-400">
             <div className="flex items-center gap-3">
               <Mail className="w-4 h-4 text-[#2B4A8C]" />
-              <span className="hover:text-white transition-colors">hello@tripsoul.com</span>
+              <span className="hover:text-white transition-colors">official@tripsoul.org</span>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-4 h-4 text-[#2B4A8C]" />
-              <span className="hover:text-white transition-colors">+1 234 567 890</span>
+              <span className="hover:text-white transition-colors">+91 8851484102</span>
             </div>
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 text-[#2B4A8C] shrink-0 mt-0.5" />
               <span className="hover:text-white transition-colors leading-relaxed">
-                123 Travel Avenue, Suite 450, NY
+                Suncity sector 54 chowk
               </span>
             </div>
           </div>
@@ -187,11 +163,11 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar: Copyright & Legal */}
-      <div className="max-w-7xl mx-auto pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-500 text-sm font-medium">
+      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm font-medium">
         <p className="text-center md:text-left text-xs">
           © 2026 TripSoul. All rights reserved. Your Tour, Perfectly Personalised!
         </p>
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-xs text-slate-400">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs text-slate-400">
           <Link to="/privacy-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
             Privacy Policy
           </Link>
@@ -200,6 +176,9 @@ const Footer = () => {
           </Link>
           <Link to="/cookie-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
             Cookie Policy
+          </Link>
+          <Link to="/refund-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+            Refund Policy
           </Link>
         </div>
       </div>

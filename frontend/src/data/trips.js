@@ -19,6 +19,15 @@ export const destinations = [
   { id: 'maldives', name: 'Maldives', image: maldivesLogo, icon: 'Waves', description: 'Azure waters and private villas.' },
   { id: 'thailand', name: 'Thailand', image: thailandLogo, icon: 'Landmark', description: 'Land of smiles and vibrant culture.' },
   { id: 'turkey', name: 'Turkey', image: turkeyLogo, icon: 'Castle', description: 'Where East meets West in grandeur.' },
+  { id: 'malaysia', name: 'Malaysia', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=500&q=60', icon: 'Map', description: 'Tropical rainforests and modern cities.' },
+  { id: 'srilanka', name: 'Sri Lanka', image: 'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=500&q=60', icon: 'Palmtree', description: 'Pearl of the Indian Ocean.' },
+  { id: 'nepal', name: 'Nepal', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=60', icon: 'Landmark', description: 'The roof of the world.' },
+  { id: 'bhutan', name: 'Bhutan', image: 'https://images.unsplash.com/photo-1570535384666-3d2319c5c2d3?auto=format&fit=crop&w=500&q=60', icon: 'Castle', description: 'The land of the thunder dragon.' },
+  { id: 'mauritius', name: 'Mauritius', image: 'https://images.unsplash.com/photo-1569429486333-6a978f14f243?auto=format&fit=crop&w=500&q=60', icon: 'Waves', description: 'Sapphire waters and pristine beaches.' },
+  { id: 'seychelles', name: 'Seychelles', image: 'https://images.unsplash.com/photo-1589136777351-fdc9c9cb15c4?auto=format&fit=crop&w=500&q=60', icon: 'Waves', description: 'A tropical paradise archipelago.' },
+  { id: 'kazakhstan', name: 'Kazakhstan', image: 'https://images.unsplash.com/photo-1558509893-6c845b596d92?auto=format&fit=crop&w=500&q=60', icon: 'Map', description: 'Vast steppes and modern architecture.' },
+  { id: 'hongkong', name: 'Hong Kong', image: 'https://images.unsplash.com/photo-1529141065171-460d3fc29ce4?auto=format&fit=crop&w=500&q=60', icon: 'Building2', description: 'Where East meets West.' },
+  { id: 'qatar', name: 'Qatar', image: 'https://images.unsplash.com/photo-1582650507316-56a84f5bc938?auto=format&fit=crop&w=500&q=60', icon: 'Building2', description: 'Desert charm and futuristic skyline.' },
 ];
 
 export const experiences = [

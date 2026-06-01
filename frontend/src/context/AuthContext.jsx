@@ -5,11 +5,42 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState(null); // the customer data
   const [loading, setLoading] = useState(true);
+
+  const checkAuth = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(!!data.isAuthenticated);
+        setIsAdmin(!!data.isAdmin || data.role === 'admin');
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } else {
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setUser(null);
+      }
+    } catch (err) {
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const logout = async () => {
     try {
-      await fetch(`${API_BASE_URL}/api/auth/logout`, {
+      const endpoint = isAdmin ? '/api/auth/logout' : '/api/auth/user-logout';
+      await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -17,37 +48,22 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout API call failed:', err);
     } finally {
       setIsAuthenticated(false);
+      setIsAdmin(false);
+      setUser(null);
     }
   };
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-          credentials: 'include'
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setIsAuthenticated(!!data.isAuthenticated);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (err) {
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     checkAuth();
   }, []);
 
-  const login = () => {
-    setIsAuthenticated(true);
+  const login = async () => {
+    // Calling checkAuth to sync latest state from backend cookie
+    await checkAuth();
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, loading }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, user, login, logout, loading, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );

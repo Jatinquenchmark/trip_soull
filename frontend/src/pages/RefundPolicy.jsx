@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Lock, Eye, Calendar, ArrowLeft, Mail, Phone, ChevronRight } from 'lucide-react';
+import { Shield, Calendar, ArrowLeft, Mail, ChevronRight, CreditCard } from 'lucide-react';
 
-const DataSafety = () => {
+const RefundPolicy = () => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('intro');
+  const [activeSection, setActiveSection] = useState('general');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const sections = [
-    { id: 'intro', label: '1. Introduction' },
-    { id: 'collect', label: '2. Information We Collect' },
-    { id: 'use', label: '3. How We Use Information' },
-    { id: 'share', label: '4. Data Sharing & Disclosure' },
-    { id: 'security', label: '5. Data Security' },
-    { id: 'rights', label: '6. Your Legal Rights' },
-    { id: 'cookies', label: '7. Cookies & Analytics' },
-    { id: 'contact', label: '8. Contact Information' },
+    { id: 'general', label: '1. General Refund Terms' },
+    { id: 'flights', label: '2. Cancellation - Flights' },
+    { id: 'hotels', label: '3. Hotels & Stays' },
+    { id: 'packages', label: '4. Tour Packages & Activities' },
+    { id: 'tripsoul', label: '5. Cancellation by TripSoul' },
+    { id: 'force_majeure', label: '6. Force Majeure' },
+    { id: 'timeline', label: '7. Refund Processing Timeline' },
+    { id: 'no_refund', label: '8. No Refund Situations' },
+    { id: 'contact', label: '9. Contact Us' },
   ];
 
   const scrollToSection = (id) => {
     setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
-      const offset = 100; // Account for fixed navbar
+      const offset = 100;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -53,19 +54,19 @@ const DataSafety = () => {
           <div className="flex items-center gap-2 text-slate-400 text-sm mb-6">
             <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/')}>Home</span>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-white font-medium">Privacy Policy</span>
+            <span className="text-white font-medium">Refund Policy</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full text-soul-blue text-xs font-semibold tracking-wider uppercase mb-4 border border-white/10 text-blue-400">
-                <Shield className="w-3.5 h-3.5" /> Privacy & Protection
+                <CreditCard className="w-3.5 h-3.5" /> Cancellations & Refunds
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 font-poppins">
-                Privacy <span className="text-blue-400">Policy</span>
+                Refund <span className="text-blue-400">Policy</span>
               </h1>
               <p className="text-slate-300 max-w-2xl text-base md:text-lg font-medium">
-                At TripSoul, we protect your personal space as much as we value your journeys. Learn how we handle your data.
+                Understand the terms for refunds, cancellations, and credits for bookings made through our platform.
               </p>
             </div>
             
@@ -73,7 +74,7 @@ const DataSafety = () => {
               <Calendar className="w-5 h-5 text-blue-400" />
               <div className="text-left">
                 <p className="text-slate-400 text-xs uppercase font-bold tracking-wider">Last Updated</p>
-                <p className="text-white text-sm font-semibold">May 25, 2026</p>
+                <p className="text-white text-sm font-semibold">May 29, 2026</p>
               </div>
             </div>
           </div>
@@ -124,141 +125,133 @@ const DataSafety = () => {
           <div className="lg:col-span-3 space-y-8">
             <div className="bg-white border border-slate-100 shadow-2xl rounded-[32px] p-8 md:p-12 space-y-12">
               
-              {/* Introduction */}
-              <section id="intro" className="scroll-mt-28 space-y-4">
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
-                  <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  1. Introduction
-                </h2>
-                <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    Welcome to TripSoul ("we", "our", "us"). We craft soul-stirring journeys and perfectly personalized multi-day tours across the globe's most beautiful destinations.
-                  </p>
-                  <p>
-                    Your privacy is of paramount importance to us. This Privacy Policy describes how TripSoul collects, uses, stores, and protects your personal information when you visit our website and use our custom trip planning services.
-                  </p>
-                  <p className="bg-slate-50 p-4 border-l-4 border-slate-300 rounded-r-xl text-slate-500 italic text-sm">
-                    <strong>Note for our visitors:</strong> Account creation on TripSoul is completely optional. You can explore all our travel packages, itineraries, and design requests as a guest. Creating an account simply allows you to manage your bookings and save your personalized travel history.
-                  </p>
-                </div>
-              </section>
+              <div className="text-slate-600 leading-relaxed font-medium space-y-4">
+                <p>
+                  Welcome to TripSoul. This Refund Policy explains the terms under which refunds, cancellations, and credits are handled for bookings, travel packages, activities, and services purchased through our platform.
+                </p>
+              </div>
 
-              {/* Information We Collect */}
-              <section id="collect" className="scroll-mt-28 space-y-4">
+              {/* General Refund Terms */}
+              <section id="general" className="scroll-mt-28 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  2. Information We Collect
+                  1. General Refund Terms
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    We collect information when you actively interact with our services, such as creating an optional account, requesting a customized itinerary, or contacting us. This includes:
-                  </p>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>
-                      <strong className="text-slate-800">Account & Contact Details:</strong> When you create an account or fill out an inquiry form, we collect your name, email address, phone/WhatsApp number, travel destination interest, estimated travel dates, budget preference, and specific requests.
-                    </li>
-                    <li>
-                      <strong className="text-slate-800">Communication History:</strong> Records of your emails, WhatsApp conversations, and other communication with our trip designers to help coordinate your bookings.
-                    </li>
-                    <li>
-                      <strong className="text-slate-800">Technical Device Data:</strong> Basic usage data (IP address, operating system, browser type, referral pages) collected through essential website tools and cookies to optimize website performance.
-                    </li>
+                    <li>Refund eligibility depends on the type of booking, supplier policies, cancellation timing, and payment status.</li>
+                    <li>Certain bookings may be non-refundable or partially refundable.</li>
+                    <li>Refunds are processed only to the original payment method unless otherwise agreed.</li>
+                    <li>Convenience fees, payment gateway charges, visa fees, taxes, and processing charges may be non-refundable.</li>
                   </ul>
                 </div>
               </section>
 
-              {/* How We Use Information */}
-              <section id="use" className="scroll-mt-28 space-y-4">
+              {/* Cancellation by Customer – Flights */}
+              <section id="flights" className="scroll-mt-28 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  3. How We Use Your Information
+                  2. Cancellation by Customer – Flights
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    We collect your information to serve your travel needs and ensure you have a seamless experience. Specifically, we use it to:
-                  </p>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>Design and personalize your requested travel itineraries.</li>
-                    <li>Provide pricing estimates and coordinate bookings with partner airlines, hotels, and local ground handlers.</li>
-                    <li>Communicate directly with you regarding tour updates, scheduling, or customization requests.</li>
-                    <li>Send relevant administrative notifications regarding your ongoing inquiries.</li>
-                    <li>Maintain website security, prevent fraud, and optimize our pages.</li>
+                    <li>Flight cancellations and refunds are subject to the airline's policies.</li>
+                    <li>Domestic flights may allow partial refunds.</li>
+                    <li>International flights often have stricter cancellation rules.</li>
+                    <li>Promotional or discounted fares may be non-refundable.</li>
+                    <li>Airline-approved refunds typically take 7–21 business days after confirmation.</li>
                   </ul>
                 </div>
               </section>
 
-              {/* Data Sharing & Disclosure */}
-              <section id="share" className="scroll-mt-28 space-y-4">
+              {/* Hotels & Stays */}
+              <section id="hotels" className="scroll-mt-28 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  4. Data Sharing & Disclosure
+                  3. Hotels & Stays
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    We respect your privacy. We do not sell, rent, or trade your personal data to third parties. We share your information only in the following limited circumstances:
-                  </p>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>
-                      <strong className="text-slate-800">Travel Vendors:</strong> We share essential traveler details (such as names and dietary or accessibility preferences) with hotels, activity operators, airlines, and transport coordinators only as required to reserve your services.
-                    </li>
-                    <li>
-                      <strong className="text-slate-800">Legal Compliance:</strong> If required by law, regulation, or legal process to protect our rights, your safety, or the safety of others.
-                    </li>
+                    <li>Hotel refund eligibility depends on the cancellation policy selected during booking.</li>
+                    <li>Free cancellation may be available before the allowed deadline.</li>
+                    <li>Partial refunds may apply for late cancellations.</li>
+                    <li>No refund for no-shows, early check-outs, or non-refundable bookings.</li>
                   </ul>
                 </div>
               </section>
 
-              {/* Data Security */}
-              <section id="security" className="scroll-mt-28 space-y-4">
+              {/* Tour Packages & Activities */}
+              <section id="packages" className="scroll-mt-28 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  5. Data Security
+                  4. Tour Packages & Activities
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    We prioritize protecting your data and use robust administrative and technical security measures to prevent unauthorized access, alteration, or deletion of your information.
-                  </p>
-                  <p>
-                    Please be aware that while we use industry-standard measures (SSL encryption, secure servers) to protect your transmission, no transmission of information over the internet is completely risk-free.
-                  </p>
-                </div>
-              </section>
-
-              {/* Your Legal Rights */}
-              <section id="rights" className="scroll-mt-28 space-y-4">
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
-                  <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  6. Your Legal Rights
-                </h2>
-                <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    Depending on your location, you have certain legal rights regarding your personal information. You have the right to:
-                  </p>
                   <ul className="list-disc pl-6 space-y-2">
-                    <li>Request access to the personal data we hold about you.</li>
-                    <li>Request correction of any incomplete or inaccurate data.</li>
-                    <li>Request the deletion or removal of your personal information from our databases.</li>
-                    <li>Withdraw consent for us to contact you at any time.</li>
+                    <li><strong>30+ days before trip:</strong> 90% refund</li>
+                    <li><strong>15–29 days before trip:</strong> 70% refund</li>
+                    <li><strong>7–14 days before trip:</strong> 50% refund</li>
+                    <li><strong>Less than 7 days before trip:</strong> No refund</li>
                   </ul>
+                </div>
+              </section>
+
+              {/* Cancellation by TripSoul */}
+              <section id="tripsoul" className="scroll-mt-28 space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                  <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
+                  5. Cancellation by TripSoul
+                </h2>
+                <div className="text-slate-600 leading-relaxed font-medium space-y-4">
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>TripSoul may cancel bookings due to operational issues, supplier/vendor cancellation, weather conditions, government restrictions, or force majeure events.</li>
+                    <li>Users may receive a full refund, travel credit, or alternative booking options.</li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* Force Majeure */}
+              <section id="force_majeure" className="scroll-mt-28 space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                  <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
+                  6. Force Majeure
+                </h2>
+                <div className="text-slate-600 leading-relaxed font-medium space-y-4">
                   <p>
-                    To exercise any of these rights, please contact us at <span className="text-blue-600 font-semibold underline">privacy@tripsoul.com</span>. We will respond to your request within 30 days.
+                    No refunds or compensation may be provided for disruptions caused by events beyond reasonable control such as natural disasters, pandemics, political unrest, or airport shutdowns.
                   </p>
                 </div>
               </section>
 
-              {/* Cookies & Analytics */}
-              <section id="cookies" className="scroll-mt-28 space-y-4">
+              {/* Refund Processing Timeline */}
+              <section id="timeline" className="scroll-mt-28 space-y-4">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  7. Cookies & Analytics
+                  7. Refund Processing Timeline
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    Our website uses small text files called "cookies" to enhance your browsing experience. These files store basic metadata about your preferences, which keeps the website responsive and remembers your search inputs.
-                  </p>
-                  <p>
-                    For detailed info on how cookies are deployed and how you can opt-out, please review our separate <span className="text-blue-600 font-semibold underline cursor-pointer hover:text-blue-800" onClick={() => navigate('/cookie-policy')}>Cookie Policy</span>.
-                  </p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong>UPI/Wallet refunds:</strong> 3–7 business days</li>
+                    <li><strong>Debit/Credit card refunds:</strong> 5–15 business days</li>
+                    <li><strong>Bank transfers:</strong> 5–10 business days</li>
+                  </ul>
+                </div>
+              </section>
+
+              {/* No Refund Situations */}
+              <section id="no_refund" className="scroll-mt-28 space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
+                  <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
+                  8. No Refund Situations
+                </h2>
+                <div className="text-slate-600 leading-relaxed font-medium space-y-4">
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Visa rejections</li>
+                    <li>Incorrect traveler information submitted by the user</li>
+                    <li>Failure to carry valid documents</li>
+                    <li>Missed flights or transport</li>
+                    <li>Personal schedule changes</li>
+                  </ul>
                 </div>
               </section>
 
@@ -266,12 +259,10 @@ const DataSafety = () => {
               <section id="contact" className="scroll-mt-28 space-y-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-slate-800 flex items-center gap-3">
                   <span className="w-1.5 h-6 bg-blue-600 rounded-full block"></span>
-                  8. Contact Information
+                  9. Contact Us
                 </h2>
                 <div className="text-slate-600 leading-relaxed font-medium space-y-4">
-                  <p>
-                    If you have any questions or concerns about this Privacy Policy or our practices, you can contact our privacy officer:
-                  </p>
+                  <p>TripSoul may update this Refund Policy at any time without prior notice. Users are encouraged to review the policy periodically.</p>
                 </div>
                 <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3">
@@ -280,16 +271,16 @@ const DataSafety = () => {
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Email Us</p>
-                      <p className="text-slate-800 text-sm font-semibold">privacy@tripsoul.com</p>
+                      <p className="text-slate-800 text-sm font-semibold">support@tripsoul.in</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                      <Phone className="w-5 h-5" />
+                      <Shield className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Phone Support</p>
-                      <p className="text-slate-800 text-sm font-semibold">+1 234 567 890</p>
+                      <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Website</p>
+                      <p className="text-slate-800 text-sm font-semibold">https://tripsoul.in</p>
                     </div>
                   </div>
                 </div>
@@ -304,4 +295,4 @@ const DataSafety = () => {
   );
 };
 
-export default DataSafety;
+export default RefundPolicy;

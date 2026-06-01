@@ -14,7 +14,7 @@ import HerocompRight from '../assets/HerocompRight.avif';
 
 import { 
   User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play, Plane,
-  Map, Palmtree, Building2, Ship, Waves, Landmark, Castle 
+  Map, Palmtree, Building2, Ship, Waves, Landmark, Castle, ChevronLeft, ChevronRight 
 } from 'lucide-react';
 import gsap from 'gsap';
 
@@ -194,39 +194,68 @@ const Home = () => {
 
       {/* Layer 1: Destination Selection (Thrillophilia Style) */}
       <section className="py-8 border-b border-slate-100 bg-white sticky top-[56px] z-40">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-start md:justify-center gap-8 md:gap-16 overflow-x-auto no-scrollbar py-4 px-2 md:px-0">
-            <div 
-              onClick={() => navigate('/packages')}
-              className="flex flex-col items-center gap-3 cursor-pointer min-w-fit group"
-            >
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center icon-3d-button-active">
-                <Compass className="w-5 h-5 md:w-7 md:h-7" />
+        <div className="max-w-7xl mx-auto px-10 relative">
+          <button 
+            className="dest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-lg flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <Swiper
+            modules={[Navigation]}
+            navigation={{
+              prevEl: '.dest-prev',
+              nextEl: '.dest-next',
+            }}
+            spaceBetween={20}
+            slidesPerView={4}
+            breakpoints={{
+              640: { slidesPerView: 5, spaceBetween: 30 },
+              768: { slidesPerView: 7, spaceBetween: 40 },
+              1024: { slidesPerView: 8, spaceBetween: 50 },
+            }}
+            className="w-full"
+          >
+            <SwiperSlide>
+              <div 
+                onClick={() => navigate('/packages')}
+                className="flex flex-col items-center gap-3 cursor-pointer group"
+              >
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center icon-3d-button-active">
+                  <Compass className="w-5 h-5 md:w-7 md:h-7" />
+                </div>
+                <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-soul-blue">All</span>
               </div>
-              <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-soul-blue">All</span>
-            </div>
+            </SwiperSlide>
 
             {destinations.map((country, i) => {
               const IconComponent = IconMap[country.icon] || Map;
               const isActive = selectedCountry?.id === country.id;
               return (
-                <div 
-                  key={country.id}
-                  onClick={() => handleCountrySelect(country)}
-                  className="flex flex-col items-center gap-3 cursor-pointer min-w-fit relative group"
-                >
-                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
-                    isActive ? 'icon-3d-button-active' : 'icon-3d-button'
-                  }`}>
-                    <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
+                <SwiperSlide key={country.id}>
+                  <div 
+                    onClick={() => handleCountrySelect(country)}
+                    className="flex flex-col items-center gap-3 cursor-pointer relative group"
+                  >
+                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                      isActive ? 'icon-3d-button-active' : 'icon-3d-button'
+                    }`}>
+                      <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
+                    </div>
+                    <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-center w-full truncate px-1 ${
+                      isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
+                    }`}>{country.name}</span>
                   </div>
-                  <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 ${
-                    isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
-                  }`}>{country.name}</span>
-                </div>
+                </SwiperSlide>
               );
             })}
-          </div>
+          </Swiper>
+
+          <button 
+            className="dest-next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-lg flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
       </section>
 

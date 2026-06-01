@@ -229,7 +229,7 @@ const DestinationDetails = () => {
                   className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative"
                 >
                   {/* Image Swiper/Top area */}
-                  <div className="h-72 relative overflow-hidden bg-slate-900">
+                  <div className="h-48 relative overflow-hidden bg-slate-900">
                     <Link to={`/package/${packageId}`}>
                       <img 
                         src={pkg.images && pkg.images.length > 0 ? pkg.images[0] : 'https://placehold.co/600x400/png'} 
@@ -249,32 +249,32 @@ const DestinationDetails = () => {
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 text-slate-500 text-xs mb-3 font-bold">
-                      <Clock className="w-4 h-4 text-soul-blue" />
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="flex items-center gap-2 text-slate-500 text-[11px] mb-2 font-bold">
+                      <Clock className="w-3.5 h-3.5 text-soul-blue" />
                       <span>{displayDuration}</span>
                     </div>
 
                     <Link to={`/package/${packageId}`}>
-                      <h3 className="text-xl font-black text-slate-800 mb-2 group-hover:text-soul-blue transition-colors line-clamp-1">
+                      <h3 className="text-base font-black text-slate-800 mb-1 group-hover:text-soul-blue transition-colors line-clamp-1">
                         {pkg.name}
                       </h3>
                     </Link>
 
-                    <p className="text-slate-500 text-xs font-semibold mb-4 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-red-500" /> {displayLocation}
+                    <p className="text-slate-500 text-[11px] font-semibold mb-2 flex items-center gap-1.5">
+                      <MapPin className="w-3 h-3 text-red-500" /> {displayLocation}
                     </p>
 
-                    <p className="text-slate-500 text-sm font-medium line-clamp-2 mb-6 leading-relaxed">
+                    <p className="text-slate-500 text-xs font-medium line-clamp-2 mb-3 leading-relaxed">
                       {pkg.overview}
                     </p>
 
                     {/* CTA Buttons */}
-                    <div className="mt-auto pt-6 border-t border-slate-100 flex">
+                    <div className="mt-auto pt-3 border-t border-slate-100 flex">
                       <Link 
                         to={`/package/${packageId}`}
                         style={{ backgroundColor: '#2B4A8C' }}
-                        className="w-full text-center text-white font-black py-3.5 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-sm"
+                        className="w-full text-center text-white font-black py-2 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-xs"
                       >
                         View Details & Book
                       </Link>

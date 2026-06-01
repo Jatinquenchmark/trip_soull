@@ -7,7 +7,7 @@ import {
 import { destinations } from '../data/trips';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { API_BASE_URL } from '../config';
 
 const AdminDashboard = () => {
@@ -409,6 +409,15 @@ const AdminDashboard = () => {
     }));
   };
 
+  const removeItineraryDay = (index) => {
+    setFormData(prev => {
+      let updatedItinerary = [...prev.itinerary];
+      updatedItinerary.splice(index, 1);
+      updatedItinerary = updatedItinerary.map((item, i) => ({ ...item, day: i + 1 }));
+      return { ...prev, itinerary: updatedItinerary };
+    });
+  };
+
   const handleItineraryChange = (index, field, value) => {
     const updatedItinerary = [...formData.itinerary];
     updatedItinerary[index][field] = value;
@@ -446,7 +455,7 @@ const AdminDashboard = () => {
           <X size={16} />
         </button>
       </div>
-    ), { duration: 4000 });
+    ), { duration: 4000, id: message });
   };
 
   const handleSubmit = async () => {
@@ -524,7 +533,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex font-poppins">
-      <Toaster position="top-right" />
       {/* Sidebar */}
       <aside className="w-64 bg-[#0F172A] text-slate-300 flex flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-slate-800">
@@ -943,7 +951,14 @@ const AdminDashboard = () => {
                         <Card title="Itinerary" action={<button type="button" onClick={addItineraryDay} className="text-blue-600 hover:text-blue-700 text-sm font-semibold flex items-center gap-1"><Plus size={16}/> Add Day</button>}>
                           <div className="space-y-4">
                             {formData.itinerary.map((item, idx) => (
-                              <div key={idx} className="border border-slate-200 rounded-xl p-5 bg-slate-50/50">
+                              <div key={idx} className="border border-slate-200 rounded-xl p-5 bg-slate-50/50 relative group">
+                                <button
+                                  type="button"
+                                  onClick={() => removeItineraryDay(idx)}
+                                  className="absolute top-3 right-3 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                  <X size={16} />
+                                </button>
                                 <div className="flex items-center gap-3 mb-4">
                                   <div className="w-8 h-8 rounded-lg bg-slate-800 text-white flex items-center justify-center text-xs font-bold">
                                     D{item.day}
