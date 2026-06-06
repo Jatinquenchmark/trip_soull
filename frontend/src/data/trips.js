@@ -12,13 +12,13 @@ import adventureImg from '../assets/adventure-seekers-1.jpg';
 import coupleImg from '../assets/a-couple-of-1694334_640.webp';
 
 export const destinations = [
-  { id: 'vietnam', name: 'Vietnam', image: vietnamLogo, icon: 'Map', description: 'Ancient temples and emerald bays.' },
-  { id: 'bali', name: 'Bali', image: baliLogo, icon: 'Palmtree', description: 'Tropical paradise and spiritual heart.' },
-  { id: 'dubai', name: 'Dubai', image: dubaiLogo, icon: 'Building2', description: 'Modern luxury and golden sands.' },
-  { id: 'singapore', name: 'Singapore', image: singaporeLogo, icon: 'Ship', description: 'The garden city of the future.' },
-  { id: 'maldives', name: 'Maldives', image: maldivesLogo, icon: 'Waves', description: 'Azure waters and private villas.' },
-  { id: 'thailand', name: 'Thailand', image: thailandLogo, icon: 'Landmark', description: 'Land of smiles and vibrant culture.' },
-  { id: 'turkey', name: 'Turkey', image: turkeyLogo, icon: 'Castle', description: 'Where East meets West in grandeur.' },
+  { id: 'vietnam', name: 'Vietnam', image: vietnamLogo, icon: 'FaSailboat', description: 'Ancient temples and emerald bays.' },
+  { id: 'bali', name: 'Bali', image: baliLogo, icon: 'GiPalmTree', description: 'Tropical paradise and spiritual heart.' },
+  { id: 'dubai', name: 'Dubai', image: dubaiLogo, icon: 'TbBuildingSkyscraper', description: 'Modern luxury and golden sands.' },
+  { id: 'singapore', name: 'Singapore', image: singaporeLogo, icon: 'FaCity', description: 'The garden city of the future.' },
+  { id: 'maldives', name: 'Maldives', image: maldivesLogo, icon: 'FaUmbrellaBeach', description: 'Azure waters and private villas.' },
+  { id: 'thailand', name: 'Thailand', image: thailandLogo, icon: 'FaVihara', description: 'Land of smiles and vibrant culture.' },
+  { id: 'turkey', name: 'Turkey', image: turkeyLogo, icon: 'FaMosque', description: 'Where East meets West in grandeur.' },
   { id: 'malaysia', name: 'Malaysia', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=500&q=60', icon: 'Map', description: 'Tropical rainforests and modern cities.' },
   { id: 'srilanka', name: 'Sri Lanka', image: 'https://images.unsplash.com/photo-1586227740560-8cf2732c1531?auto=format&fit=crop&w=500&q=60', icon: 'Palmtree', description: 'Pearl of the Indian Ocean.' },
   { id: 'nepal', name: 'Nepal', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=60', icon: 'Landmark', description: 'The roof of the world.' },

@@ -88,6 +88,17 @@ const PackageDetails = () => {
         return { ...tier, price };
       });
       setPkgTiers(dynamicTiers);
+      
+      // Parse query parameter for initial tier selection
+      const params = new URLSearchParams(window.location.search);
+      const tierParam = params.get('tier');
+      if (tierParam) {
+        const foundTier = dynamicTiers.find(t => t.id === tierParam);
+        if (foundTier) {
+          setSelectedTier(foundTier);
+          return;
+        }
+      }
       setSelectedTier(dynamicTiers[1]); // Default to Comfort Soul
     }
   }, [pkg, selectedExp]);
@@ -295,21 +306,70 @@ const PackageDetails = () => {
                 ))}
               </div>
 
-              {/* Recommended Packages Section */}
+              {/* Available Tiers Section */}
               <div className="mt-8 mb-12 border-t border-white/20 pt-16 relative z-20">
                 <div className="text-left mb-10">
-                  <h3 className="text-3xl font-black text-white tracking-tight">Recommended Packages For You</h3>
-                  <p className="text-slate-300 mt-2 text-lg">More premium experiences you might love in <span className="capitalize text-white font-semibold">{pkg.countryId}</span></p>
+                  <h3 className="text-3xl font-black text-white tracking-tight">Available Travel Tiers</h3>
+                  <p className="text-slate-300 mt-2 text-lg">Explore different premium tier options for <span className="capitalize text-white font-semibold">{pkg.name}</span></p>
                 </div>
-                <PackagesSection 
-                  selectedCountryId={pkg.countryId}
-                  limit={3}
-                  showViewAll={false}
-                  excludePackageId={pkg._id || pkg.id}
-                  className="py-0 px-0 bg-transparent"
-                  headerColor="text-white"
-                  hideHeader={true}
-                />
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {pkgTiers.map((tier) => {
+                    return (
+                      <div 
+                        key={tier.id} 
+                        className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative"
+                      >
+                        <div className="h-48 relative overflow-hidden bg-slate-900">
+                          <img 
+                            src={pkg.images && pkg.images.length > 0 ? pkg.images[0] : 'https://placehold.co/600x400/png'} 
+                            alt={pkg.name} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                          />
+                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-soul-blue font-black px-3.5 py-1.5 rounded-full text-[10px] uppercase tracking-wider border border-white/20 shadow-md">
+                            {tier.name} Soul
+                          </div>
+                          <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] text-white font-black flex items-center gap-1.5 border border-white/10 shadow-md">
+                            <Star className="text-yellow-400 w-3 h-3 fill-yellow-400" /> {(pkg.rating || 5).toFixed(1)}
+                          </div>
+                        </div>
+
+                        <div className="p-4 flex-1 flex flex-col">
+                          <div className="flex items-center gap-2 text-slate-500 text-[11px] mb-2 font-bold">
+                            <Clock className="w-3.5 h-3.5 text-soul-blue" />
+                            <span>{pkg.days ? `${pkg.nights} Nights / ${pkg.days} Days` : (pkg.duration || 'Flexible')}</span>
+                          </div>
+
+                          <h3 className="text-base font-black text-slate-800 mb-1 group-hover:text-soul-blue transition-colors line-clamp-1">
+                            {pkg.name} - {tier.name}
+                          </h3>
+
+                          <p className="text-slate-500 text-[11px] font-semibold mb-2 flex items-center gap-1.5">
+                            <MapPin className="w-3 h-3 text-red-500" /> {pkg.location || getCountryName(pkg.countryId)}
+                          </p>
+
+                          <div className="mt-2 mb-4 bg-slate-50 border border-slate-100 rounded-lg p-3 text-center">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{tier.name} Tier Price</span>
+                            <span className="block text-lg font-black text-slate-800">{tier.price} <span className="text-[10px] text-slate-400 font-medium lowercase">per person</span></span>
+                          </div>
+
+                          <div className="mt-auto pt-3 border-t border-slate-100 flex">
+                            <button 
+                              onClick={() => {
+                                setSelectedTier(tier);
+                                handleExpSelect(availableExperiences[0]);
+                              }}
+                              style={{ backgroundColor: '#2B4A8C' }}
+                              className="w-full text-center text-white font-black py-2 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-xs"
+                            >
+                              Select & Customize
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </motion.div>
           )}

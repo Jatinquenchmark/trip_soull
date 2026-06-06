@@ -14,12 +14,16 @@ import HerocompRight from '../assets/HerocompRight.avif';
 
 import { 
   User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play, Plane,
-  Map, Palmtree, Building2, Ship, Waves, Landmark, Castle, ChevronLeft, ChevronRight 
+  ChevronLeft, ChevronRight 
 } from 'lucide-react';
+import { GiPalmTree } from 'react-icons/gi';
+import { FaUmbrellaBeach, FaVihara, FaCity, FaMosque, FaSailboat } from 'react-icons/fa6';
+import { TbBuildingSkyscraper } from 'react-icons/tb';
+
 import gsap from 'gsap';
 
 const IconMap = {
-  Map, Palmtree, Building2, Ship, Waves, Landmark, Castle
+  GiPalmTree, FaUmbrellaBeach, FaVihara, FaCity, TbBuildingSkyscraper, FaMosque, FaSailboat
 };
 
 import PackagesSection from '../components/PackagesSection';
@@ -221,15 +225,15 @@ const Home = () => {
                 onClick={() => navigate('/packages')}
                 className="flex flex-col items-center gap-3 cursor-pointer group"
               >
-                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center icon-3d-button-active">
-                  <Compass className="w-5 h-5 md:w-7 md:h-7" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center icon-3d-button-active">
+                  <Compass className="w-4 h-4 md:w-5 md:h-5" />
                 </div>
                 <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-soul-blue">All</span>
               </div>
             </SwiperSlide>
 
             {destinations.map((country, i) => {
-              const IconComponent = IconMap[country.icon] || Map;
+              const IconComponent = IconMap[country.icon] || Compass;
               const isActive = selectedCountry?.id === country.id;
               return (
                 <SwiperSlide key={country.id}>
@@ -237,10 +241,10 @@ const Home = () => {
                     onClick={() => handleCountrySelect(country)}
                     className="flex flex-col items-center gap-3 cursor-pointer relative group"
                   >
-                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center ${
                       isActive ? 'icon-3d-button-active' : 'icon-3d-button'
                     }`}>
-                      <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
+                      <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
                     <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-center w-full truncate px-1 ${
                       isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'

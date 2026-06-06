@@ -187,6 +187,31 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
                       {pkg.overview}
                     </p>
 
+                    {/* Pricing Tiers Section */}
+                    {pkg.pricingTiers && (pkg.pricingTiers.essential || pkg.pricingTiers.comfort || pkg.pricingTiers.luxury) && (
+                      <div className="mt-2 mb-3 grid grid-cols-3 gap-2">
+                        {pkg.pricingTiers.essential && (
+                          <Link to={`/package/${packageId}?tier=basic`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md">
+                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Essential</span>
+                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.essential.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                          </Link>
+                        )}
+                        {pkg.pricingTiers.comfort && (
+                          <Link to={`/package/${packageId}?tier=medium`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-8 h-8 bg-soul-blue/5 rounded-full blur-md"></div>
+                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Comfort</span>
+                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.comfort.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                          </Link>
+                        )}
+                        {pkg.pricingTiers.luxury && (
+                          <Link to={`/package/${packageId}?tier=luxury`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md">
+                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Luxury</span>
+                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.luxury.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                          </Link>
+                        )}
+                      </div>
+                    )}
+
                     {/* CTA Buttons */}
                     <div className="mt-auto pt-3 border-t border-slate-100 flex">
                       <Link 
