@@ -59,14 +59,26 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // If coming back from Google login, browser sometimes needs a moment to register the cookie
-    if (window.location.search.includes('login=success')) {
+    const searchParams = new URLSearchParams(window.location.search);
+    const token = searchParams.get('token');
+    const isLoginSuccess = searchParams.get('login') === 'success';
+
+    // If coming back from Google login, grab the token from URL to bypass third-party cookie blocks
+    if (token) {
+      document.cookie = `userToken=${token}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=lax`;
+      
       setTimeout(() => {
         checkAuth().then(() => {
           // Clean up the URL
           window.history.replaceState({}, document.title, window.location.pathname);
         });
       }, 500); // 500ms delay gives browser time to settle the cookie
+    } else if (isLoginSuccess) {
+      setTimeout(() => {
+        checkAuth().then(() => {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        });
+      }, 500);
     } else {
       checkAuth();
     }
