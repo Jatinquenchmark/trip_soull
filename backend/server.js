@@ -22,7 +22,7 @@ const allowedOrigins = [
 ];
 
 if (process.env.FRONTEND_URL) {
-  const origins = process.env.FRONTEND_URL.split(',').map(o => o.trim());
+  const origins = process.env.FRONTEND_URL.split(',').map(o => o.trim().replace(/\/$/, ''));
   allowedOrigins.push(...origins);
 }
 
