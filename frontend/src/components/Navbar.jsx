@@ -11,7 +11,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, user, isAdmin, logout } = useAuth();
+  const { isAuthenticated, user, isAdmin, logout, loading } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -89,7 +89,9 @@ const Navbar = () => {
             </Link>
           ))}
           
-          {isAuthenticated && user && !isAdmin ? (
+          {loading ? (
+            <div className="w-20 h-10 bg-slate-100 animate-pulse rounded-full"></div>
+          ) : isAuthenticated && user && !isAdmin ? (
             <div className="relative" ref={dropdownRef}>
               <button 
                 onClick={() => setShowProfileMenu(!showProfileMenu)}

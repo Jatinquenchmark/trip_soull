@@ -91,8 +91,8 @@ router.get('/google/callback', async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
-    // Redirect to profile or dashboard
-    res.redirect(`${frontendUrl}/profile`);
+    // Redirect to home page with success flag
+    res.redirect(`${frontendUrl}/?login=success`);
 
   } catch (error) {
     console.error('Google Auth Error:', error);

@@ -11,8 +11,13 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-        credentials: 'include'
+      const response = await fetch(`${API_BASE_URL}/api/auth/verify?t=${new Date().getTime()}`, {
+        credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
       });
       if (response.ok) {
         const data = await response.json();
@@ -54,7 +59,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkAuth();
+    // If coming back from Google login, browser sometimes needs a moment to register the cookie
+    if (window.location.search.includes('login=success')) {
+      setTimeout(() => {
+        checkAuth().then(() => {
+          // Clean up the URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        });
+      }, 500); // 500ms delay gives browser time to settle the cookie
+    } else {
+      checkAuth();
+    }
   }, []);
 
   const login = async () => {
