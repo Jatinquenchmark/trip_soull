@@ -25,7 +25,8 @@ router.get('/google', (req, res) => {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email',
     ],
-    prompt: 'consent'
+    prompt: 'consent',
+    redirect_uri: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback'
   });
   
   res.redirect(authorizeUrl);
