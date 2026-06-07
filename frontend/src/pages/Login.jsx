@@ -79,6 +79,20 @@ const Login = () => {
     }
   }, [isAuthenticated, user, navigate, from]);
 
+  React.useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const error = searchParams.get('error');
+    if (error) {
+      if (error === 'no_email') {
+        toast.error('Please share your email to continue with Google.');
+      } else if (error === 'auth_failed' || error === 'server_error') {
+        toast.error('Google Authentication failed. Please try again.');
+      }
+      // Remove error from URL without refreshing
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location.search, navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -218,7 +232,27 @@ const Login = () => {
             </div>
           </form>
 
+          {/* Divider */}
+          <div className="relative mt-8 mb-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-slate-500 font-medium">Or continue with</span>
+            </div>
+          </div>
 
+          {/* Social Logins */}
+          <div className="flex justify-center">
+            <button
+              type="button"
+              onClick={() => { window.location.href = `${API_BASE_URL}/api/auth/google`; }}
+              className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 hover:bg-slate-50 transition-colors shadow-sm"
+            >
+              <GoogleIcon />
+              <span className="text-sm font-semibold text-slate-700">Continue with Google</span>
+            </button>
+          </div>
 
           {/* Register Link */}
           <p className="text-center text-xs font-medium text-slate-500 mt-8">

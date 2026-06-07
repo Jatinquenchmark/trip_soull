@@ -7,6 +7,7 @@ const rateLimit = require('express-rate-limit');
 dotenv.config();
 const packageRoutes = require('./routes/packageRoutes');
 const authRoutes = require('./routes/authRoutes');
+const googleAuthRoutes = require('./routes/googleAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 
@@ -47,6 +48,7 @@ app.use('/api', globalLimiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', googleAuthRoutes);
 app.use('/api/packages', packageRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/bookings', bookingRoutes);
