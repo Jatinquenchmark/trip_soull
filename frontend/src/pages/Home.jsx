@@ -241,10 +241,10 @@ const Home = () => {
                     onClick={() => handleCountrySelect(country)}
                     className="flex flex-col items-center gap-3 cursor-pointer relative group"
                   >
-                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center ${
+                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center p-0.5 ${
                       isActive ? 'icon-3d-button-active' : 'icon-3d-button'
                     }`}>
-                      <IconComponent className="w-4 h-4 md:w-5 md:h-5" />
+                      <img src={country.image} alt={country.name} className="w-full h-full object-cover rounded-full" />
                     </div>
                     <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-center w-full truncate px-1 ${
                       isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'

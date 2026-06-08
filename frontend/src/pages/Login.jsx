@@ -143,7 +143,7 @@ const Login = () => {
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="w-full md:w-1/2 relative flex flex-col justify-center items-center p-8 bg-white">
+      <div className="w-full md:w-1/2 relative flex flex-col justify-center items-center px-8 pt-12 pb-32 md:pb-20 bg-white">
         
         {/* Back to Home Button */}
         <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-[#0095f6] transition-colors group z-20">

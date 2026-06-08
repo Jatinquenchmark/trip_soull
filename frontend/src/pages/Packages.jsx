@@ -94,10 +94,10 @@ const Packages = () => {
                     onClick={() => navigate(`/destination/${country.id}`)}
                     className="flex flex-col items-center gap-3 cursor-pointer relative group"
                   >
-                    <div className={`w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center ${
+                    <div className={`w-14 h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center p-0.5 ${
                       isActive ? 'icon-3d-button-active' : 'icon-3d-button'
                     }`}>
-                      <IconComponent className="w-5 h-5 md:w-7 md:h-7" />
+                      <img src={country.image} alt={country.name} className="w-full h-full object-cover rounded-full" />
                     </div>
                     <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-center w-full truncate px-1 ${
                       isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'

@@ -12,6 +12,7 @@ import AdminLogin from './pages/AdminLogin';
 import DataSafety from './pages/DataSafety';
 import ServiceRules from './pages/ServiceRules';
 import SitePreferences from './pages/SitePreferences';
+import Contact from './pages/Contact';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
@@ -63,6 +64,7 @@ function AppInner() {
         <Route path="/terms-conditions" element={<ServiceRules />} />
         <Route path="/cookie-policy" element={<SitePreferences />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         
         {/* Customer Auth Routes */}
