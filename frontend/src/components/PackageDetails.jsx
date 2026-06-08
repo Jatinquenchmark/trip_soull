@@ -188,53 +188,53 @@ const PackageDetails = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-slate-950/20"></div>
           
           {/* Hero Content aligned bottom inside the max-width boundary */}
-          <div className="absolute inset-x-0 bottom-12 px-8 lg:px-16 max-w-[1600px] mx-auto text-white flex flex-col justify-end h-full pb-4 z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-3.5 py-1 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded-full">
+          <div className="absolute inset-x-0 bottom-4 md:bottom-12 px-4 md:px-8 lg:px-16 max-w-[1600px] mx-auto text-white flex flex-col justify-end h-full pb-4 z-10">
+            <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-3 md:mb-4">
+              <span className="px-3 md:px-3.5 py-1 bg-white/20 backdrop-blur-md border border-white/20 text-white text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-full">
                 {pkg.location || getCountryName(pkg.countryId)}
               </span>
-              <span className="px-3.5 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-amber-300 text-[10px] font-black uppercase tracking-widest rounded-full">
+              <span className="px-3 md:px-3.5 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-500/30 text-amber-300 text-[9px] md:text-[10px] font-black uppercase tracking-widest rounded-full">
                 {selectedExp ? selectedExp.name : 'Premium'}
               </span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-black tracking-tight leading-[1.1] max-w-4xl text-white">
-              {pkg.name} <span className="font-serif italic text-blue-300 font-normal">Soul Journey</span>
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-[1.1] max-w-4xl text-white">
+              {pkg.name} <span className="font-serif italic text-blue-300 font-normal block sm:inline mt-1 sm:mt-0">Soul Journey</span>
             </h2>
           </div>
         </div>
       )}
 
       {/* Luxury Navigation Bar */}
-      <div className="relative z-40 pt-28 px-8 max-w-[1600px] mx-auto flex justify-between items-center">
+      <div className="relative z-40 pt-20 md:pt-28 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col md:flex-row gap-3 md:gap-0 justify-between items-center">
         <button 
           onClick={handleBack}
-          className="group flex items-center gap-4 px-6 py-3 rounded-full border border-white/20 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-slate-900"
+          className="group flex items-center justify-center gap-2 md:gap-4 px-4 md:px-6 py-2.5 md:py-3 rounded-full border border-white/20 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-slate-900 w-full md:w-auto"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           <span className="text-[10px] font-black uppercase tracking-[0.3em]">Explore Others</span>
         </button>
 
-        <div className="flex items-center gap-3 p-1.5 rounded-full border border-white/10 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md">
-          <div className={`px-6 py-2.5 rounded-full flex items-center gap-3 transition-all duration-500 ${
+        <div className="flex items-center justify-center gap-1.5 md:gap-3 p-1.5 rounded-full border border-white/10 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md w-full md:w-auto">
+          <div className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-full flex items-center justify-center gap-2 transition-all duration-500 ${
             step === 1 
               ? 'bg-soul-blue text-white shadow-xl shadow-soul-blue/30' 
               : 'text-white/40'
           }`}>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">01 Selection</span>
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">01 Selection</span>
           </div>
-          <div className={`px-6 py-2.5 rounded-full flex items-center gap-3 transition-all duration-500 ${
+          <div className={`flex-1 md:flex-none px-4 md:px-6 py-2.5 rounded-full flex items-center justify-center gap-2 transition-all duration-500 ${
             step === 2 
               ? 'bg-white text-slate-900 shadow-xl shadow-white/10' 
               : 'text-white/40'
           }`}>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">02 Itinerary</span>
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.1em] md:tracking-[0.2em] whitespace-nowrap">02 Itinerary</span>
           </div>
         </div>
       </div>
 
 
 
-      <div className="max-w-[1600px] mx-auto px-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-8 relative z-10 mt-6 md:mt-0">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div 
@@ -248,8 +248,8 @@ const PackageDetails = () => {
               <div className="inline-block mb-6">
                 <span className="text-xs font-black text-blue-300 uppercase tracking-[0.3em] bg-soul-blue/20 px-5 py-2.5 rounded-full border border-soul-blue/30 backdrop-blur-md">Select Style</span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black mb-4 text-white tracking-tighter">
-                {pkg.name.split(' ')[0]} <span className="text-blue-300 italic serif font-normal">{pkg.name.split(' ')[1] || 'Soul'}</span>
+              <h2 className="text-4xl md:text-7xl font-black mb-4 text-white tracking-tighter">
+                {pkg.name.split(' ')[0]} <span className="text-blue-300 italic serif font-normal block sm:inline">{pkg.name.split(' ')[1] || 'Soul'}</span>
               </h2>
               <p className="text-slate-300 font-medium mb-12">Select your travel style for a perfectly personalised experience</p>
               
@@ -264,7 +264,7 @@ const PackageDetails = () => {
                   <button
                     key={exp.id}
                     onClick={() => handleExpSelect(exp)}
-                    className="group bg-white rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200/60 hover:shadow-soul-blue/15 transition-all duration-500 hover:-translate-y-2 border border-slate-100 flex flex-col text-left"
+                    className="group bg-white rounded-[32px] md:rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200/60 hover:shadow-soul-blue/15 transition-all duration-500 hover:-translate-y-2 border border-slate-100 flex flex-col text-left w-full max-w-sm mx-auto md:max-w-none"
                   >
                     {/* Top Image Section */}
                     <div className="relative h-64 overflow-hidden">
@@ -388,8 +388,8 @@ const PackageDetails = () => {
                 <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-blue-50/80 rounded-full blur-[120px]"></div>
               </div>
 
-              <div className="relative z-10 px-8 lg:px-16 pb-40 max-w-[1600px] mx-auto -mt-24">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              <div className="relative z-10 px-4 md:px-8 lg:px-16 pb-20 md:pb-40 max-w-[1600px] mx-auto -mt-16 md:-mt-24">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-start">
 
                   {/* ── LEFT COLUMN ── */}
                   <div className="lg:col-span-8 space-y-8">
@@ -400,11 +400,11 @@ const PackageDetails = () => {
                         <div className="h-[1px] w-8 bg-soul-blue/40"></div>
                         <span className="text-[10px] font-black text-soul-blue uppercase tracking-[0.5em]">Step 02 · Customize Journey</span>
                       </div>
-                      <h2 className="text-5xl font-black text-slate-900 tracking-tighter">Your Travel <span className="font-serif italic text-soul-blue">Blueprint</span></h2>
+                      <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter">Your Travel <br className="md:hidden" /><span className="font-serif italic text-soul-blue">Blueprint</span></h2>
                     </div>
 
                     {/* ── OVERVIEW SECTION ── */}
-                    <div className="rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 shadow-xl shadow-slate-200/60">
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
                       <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight">Overview</h3>
                       <p className="text-slate-600 text-base leading-relaxed mb-8 font-medium">
                         {activeOverview}
@@ -434,10 +434,10 @@ const PackageDetails = () => {
                     </div>
 
                     {/* ── PRICING CARDS ── */}
-                    <div className="rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 shadow-xl shadow-slate-200/60">
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                         <div>
-                          <h3 className="text-3xl font-black text-slate-900 tracking-tight">Choose Your Travel Tier</h3>
+                          <h3 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Choose Your Travel Tier</h3>
                         </div>
                         <span className="px-4 py-1.5 bg-blue-50 text-soul-blue text-[10px] font-black uppercase tracking-wider rounded-full border border-blue-100 w-fit">
                           Tailored Experiences
@@ -484,9 +484,9 @@ const PackageDetails = () => {
                     </div>
 
                     {/* ── ITINERARY ── */}
-                    <div className="rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-xl shadow-slate-200/60">
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-xl shadow-slate-200/60">
                       {/* Itinerary header */}
-                      <div className="px-10 py-7 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+                      <div className="px-6 md:px-10 py-5 md:py-7 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 bg-slate-50/80">
                         <div className="flex items-center gap-4">
                           <div className="w-8 h-8 rounded-xl bg-blue-50 border border-soul-blue/20 flex items-center justify-center">
                             <div className="w-3 h-3 rounded-full bg-soul-blue"></div>
@@ -504,7 +504,7 @@ const PackageDetails = () => {
                         {activeItinerary?.map((day, i) => (
                           <div
                             key={i}
-                            className="group flex gap-6 px-10 py-7 border-b border-slate-100 last:border-0 hover:bg-blue-50/30 transition-all duration-300 cursor-default"
+                            className="group flex gap-4 md:gap-6 px-6 md:px-10 py-6 md:py-7 border-b border-slate-100 last:border-0 hover:bg-blue-50/30 transition-all duration-300 cursor-default"
                           >
                             {/* Day pill */}
                             <div className="flex-shrink-0 flex flex-col items-center gap-2">
@@ -528,7 +528,7 @@ const PackageDetails = () => {
                     </div>
 
                     {/* ── VISUAL JOURNEY ── */}
-                    <div className="rounded-[32px] border border-slate-200 bg-white p-8 md:p-10 shadow-xl shadow-slate-200/60">
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
                       <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight">Visual Journey</h3>
                       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
                         {/* Left side: Large vertical image */}
@@ -571,7 +571,7 @@ const PackageDetails = () => {
 
                   {/* ── STICKY SIDEBAR ── */}
                   <div className="lg:col-span-4 lg:sticky lg:top-40 z-20 self-start">
-                    <div className="rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-2xl shadow-slate-200/70">
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-2xl shadow-slate-200/70">
 
                       {/* Price header */}
                       <div className="relative p-8 border-b border-slate-100 bg-gradient-to-br from-blue-50/80 to-white">
