@@ -87,8 +87,8 @@ router.get('/google/callback', async (req, res) => {
     // Set cookie
     res.cookie('userToken', token, {
       httpOnly: true,
-      secure: true, // Always true for cross-origin / production
-      sameSite: 'none', // Always 'none' for cross-origin
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });

@@ -25,8 +25,8 @@ router.post('/login', authLimiter, (req, res) => {
     
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
@@ -41,8 +41,8 @@ router.post('/login', authLimiter, (req, res) => {
 router.post('/logout', (req, res) => {
   res.clearCookie('adminToken', {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     path: '/'
   });
   return res.json({ message: 'Logged out successfully' });
@@ -77,8 +77,8 @@ router.post('/register', authLimiter, async (req, res) => {
     
     res.cookie('userToken', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -116,8 +116,8 @@ router.post('/user-login', authLimiter, async (req, res) => {
     
     res.cookie('userToken', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -136,8 +136,8 @@ router.post('/user-login', authLimiter, async (req, res) => {
 router.post('/user-logout', (req, res) => {
   res.clearCookie('userToken', {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     path: '/'
   });
   return res.json({ message: 'Logged out successfully' });
