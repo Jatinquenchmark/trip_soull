@@ -25,6 +25,8 @@ import Footer from './components/Footer';
 import RefundPolicy from './pages/RefundPolicy';
 import Reviews from './pages/Reviews';
 import OurTeam from './pages/OurTeam';
+import Blogs from './pages/Blogs';
+import BlogPost from './pages/BlogPost';
 import WhatsAppButton from './components/WhatsAppButton';
 
 function AppInner() {
@@ -62,6 +64,8 @@ function AppInner() {
         <Route path="/packages" element={<Packages />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/team" element={<OurTeam />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/destination/:countryId" element={<DestinationDetails />} />
         <Route path="/package/:id" element={<PackageDetails />} />
         <Route path="/privacy-policy" element={<DataSafety />} />
