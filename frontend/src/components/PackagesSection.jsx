@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAll = true, excludePackageId = null, title = null, hideHeader = false, className = "py-20 px-6 bg-[#F8F9FA]", headerColor = "text-slate-800" }) => {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, fetchWithAuth } = useAuth();
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
 
   const fetchWishlist = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/user/wishlist`, { credentials: 'include' });
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/user/wishlist`);
       if (res.ok) {
         const data = await res.json();
         setWishlist(data.map(item => item._id || item));
@@ -40,11 +40,10 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
     }
     
     try {
-      const res = await fetch(`${API_BASE_URL}/api/user/wishlist/toggle`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/user/wishlist/toggle`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ packageId }),
-        credentials: 'include'
+        body: JSON.stringify({ packageId })
       });
       if (res.ok) {
         if (wishlist.includes(packageId)) {

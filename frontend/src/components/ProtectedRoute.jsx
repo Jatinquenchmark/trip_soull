@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { RedirectToSignIn } from '@clerk/react';
 
 const ProtectedRoute = ({ adminOnly = false }) => {
   const { isAuthenticated, isAdmin, loading } = useAuth();
@@ -18,7 +19,7 @@ const ProtectedRoute = ({ adminOnly = false }) => {
   return isAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <RedirectToSignIn />
   );
 };
 

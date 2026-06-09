@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { User, Mail, Lock, Phone, Plane, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { SignUp } from '@clerk/react';
+import { Plane, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { API_BASE_URL } from '../config';
 
@@ -62,42 +63,7 @@ const SkylineSilhouette = () => (
 );
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const navigate = useNavigate();
   const { login } = useAuth();
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, password }),
-        credentials: 'include'
-      });
-
-      if (response.ok) {
-        toast.success('Registration successful!');
-        login(); // update auth context state
-        navigate('/profile');
-      } else {
-        const errData = await response.json();
-        throw new Error(errData.message || 'Registration failed');
-      }
-    } catch (err) {
-      toast.error(err.message || 'Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans overflow-hidden">
@@ -139,137 +105,8 @@ const Register = () => {
         </div>
 
         {/* Form Container */}
-        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0">
-          <div className="text-center mb-10">
-            <h2 className="text-5xl font-black text-[#0095f6] tracking-tight mb-2">
-              Create Account
-            </h2>
-            <p className="text-slate-400 font-medium">
-              Join us to save your bookings
-            </p>
-          </div>
-
-          <form onSubmit={handleRegister} className="space-y-6">
-            
-            {/* Name Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Full Name
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type="text"
-                required
-                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            {/* Email Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Email Id
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type="email"
-                required
-                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
-                placeholder="thisuix@mail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            {/* Phone Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Phone Number
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Phone className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type="tel"
-                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
-                placeholder="+91 98765 43210"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Password
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                minLength="6"
-                className="w-full pl-11 pr-12 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium tracking-widest"
-                placeholder="•••••••••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-[#0095f6] transition-colors focus:outline-none"
-              >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-            </div>
-
-            <div className="flex justify-center pt-2">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="bg-[#0095f6] hover:bg-[#007bcf] text-white px-12 py-3 rounded-lg font-bold tracking-wide transition-all shadow-[0_4px_14px_0_rgba(0,149,246,0.39)] disabled:opacity-70"
-              >
-                {isLoading ? 'SIGNING UP...' : 'SIGN UP'}
-              </button>
-            </div>
-          </form>
-
-          {/* Divider */}
-          <div className="relative mt-8 mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-slate-500 font-medium">Or continue with</span>
-            </div>
-          </div>
-
-          {/* Social Logins */}
-          <div className="flex justify-center">
-            <button
-              type="button"
-              onClick={() => { window.location.href = `${API_BASE_URL}/api/auth/google`; }}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 hover:bg-slate-50 transition-colors shadow-sm"
-            >
-              <GoogleIcon />
-              <span className="text-sm font-semibold text-slate-700">Continue with Google</span>
-            </button>
-          </div>
-
-          {/* Login Link */}
-          <p className="text-center text-xs font-medium text-slate-500 mt-8">
-            Already have an account?{' '}
-            <Link to="/login" className="text-slate-800 font-bold hover:underline">
-              Login Now
-            </Link>
-          </p>
+        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0 flex justify-center">
+          <SignUp signInUrl="/login" forceRedirectUrl="/dashboard" />
         </div>
 
         {/* Bottom Skyline Illustration */}

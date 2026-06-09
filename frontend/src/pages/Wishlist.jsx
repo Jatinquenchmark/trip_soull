@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../config';
 import DashboardLayout from '../components/DashboardLayout';
 
 const Wishlist = () => {
-  const { user } = useAuth();
+  const { user, fetchWithAuth } = useAuth();
   const [wishlist, setWishlist] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -18,7 +18,7 @@ const Wishlist = () => {
 
   const fetchWishlist = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/user/wishlist`, { credentials: 'include' });
+      const response = await fetchWithAuth(`${API_BASE_URL}/api/user/wishlist`);
       if (response.ok) {
         const data = await response.json();
         setWishlist(data);

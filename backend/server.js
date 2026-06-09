@@ -10,6 +10,8 @@ const authRoutes = require('./routes/authRoutes');
 const googleAuthRoutes = require('./routes/googleAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
+const webhookRoutes = require('./routes/webhookRoutes');
+const { clerkMiddleware } = require('@clerk/express');
 
 const app = express();
 
@@ -31,6 +33,13 @@ app.use(cors({
   credentials: true
 }));
 app.use(cookieParser());
+
+// Clerk middleware
+app.use(clerkMiddleware());
+
+// Webhook route needs to bypass express.json(), so we place it here
+app.use('/api/webhooks', webhookRoutes);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

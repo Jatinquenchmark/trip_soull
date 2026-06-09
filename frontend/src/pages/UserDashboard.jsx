@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../config';
 import DashboardLayout from '../components/DashboardLayout';
 
 const UserDashboard = () => {
-  const { user } = useAuth();
+  const { user, fetchWithAuth } = useAuth();
   const [stats, setStats] = useState({ totalBookings: 0, savedTrips: 0 });
   const [recentBookings, setRecentBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,8 +21,8 @@ const UserDashboard = () => {
     try {
       // We can fetch bookings and wishlist to compute stats
       const [bookingsRes, wishlistRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/bookings/my-bookings`, { credentials: 'include' }),
-        fetch(`${API_BASE_URL}/api/user/wishlist`, { credentials: 'include' })
+        fetchWithAuth(`${API_BASE_URL}/api/bookings/my-bookings`),
+        fetchWithAuth(`${API_BASE_URL}/api/user/wishlist`)
       ]);
 
       let bookings = [];

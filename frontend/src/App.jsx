@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { Toaster, ToastBar, toast } from 'react-hot-toast';
 import { X } from 'lucide-react';
 import Navbar from './components/Navbar';
@@ -23,6 +23,8 @@ import MyBookings from './pages/MyBookings';
 import Wishlist from './pages/Wishlist';
 import Footer from './components/Footer';
 import RefundPolicy from './pages/RefundPolicy';
+import Reviews from './pages/Reviews';
+import OurTeam from './pages/OurTeam';
 import WhatsAppButton from './components/WhatsAppButton';
 
 function AppInner() {
@@ -58,6 +60,8 @@ function AppInner() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/packages" element={<Packages />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/team" element={<OurTeam />} />
         <Route path="/destination/:countryId" element={<DestinationDetails />} />
         <Route path="/package/:id" element={<PackageDetails />} />
         <Route path="/privacy-policy" element={<DataSafety />} />
@@ -69,7 +73,7 @@ function AppInner() {
         
         {/* Customer Auth Routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Login />} />
         
         <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/dashboard" element={<UserDashboard />} />
@@ -89,14 +93,25 @@ function AppInner() {
   );
 }
 
+import { ClerkProvider } from '@clerk/react';
+
 function App() {
+  const navigate = useNavigate();
+  const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
   return (
-    <AuthProvider>
-      <Router>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} navigate={(to) => navigate(to)}>
+      <AuthProvider>
         <AppInner />
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </ClerkProvider>
   );
 }
 
-export default App;
+export default function Root() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}

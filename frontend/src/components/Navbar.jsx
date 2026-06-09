@@ -8,6 +8,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,11 +23,19 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      // If scrolled down more than 100px and scrolling down
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setShowNavbar(false);
+      } else {
+        setShowNavbar(true);
+      }
+      setLastScrollY(currentScrollY);
+      setScrolled(currentScrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,8 +50,10 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Packages', href: '/packages' },
+    { name: 'Reviews', href: '/reviews' },
+    { name: 'Our Team', href: '/team' },
     { name: 'Philosophy', href: '#faq' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact Us', href: '/contact' },
   ];
 
 
@@ -66,7 +78,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className="fixed top-0 w-full z-[1000] transition-all duration-300 bg-white border-b border-slate-100 py-1 px-6">
+    <nav className={`fixed top-0 w-full z-[1000] transition-transform duration-300 bg-white border-b border-slate-100 py-1 px-6 ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2 group">
@@ -82,6 +94,11 @@ const Navbar = () => {
             <Link 
               key={link.name} 
               to={link.href.startsWith('/') ? link.href : `/${link.href}`} 
+              onClick={(e) => {
+                if (link.href.startsWith('#')) {
+                  handleScroll(e, link.href);
+                }
+              }}
               className="text-sm font-medium text-soul-blue/80 hover:text-soul-blue transition-colors"
             >
               {link.name}

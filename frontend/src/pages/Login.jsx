@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, Plane, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { SignIn, SignUp } from '@clerk/react';
+import { Plane, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { API_BASE_URL } from '../config';
 
@@ -61,63 +62,10 @@ const SkylineSilhouette = () => (
   </svg>
 );
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const navigate = useNavigate();
+const Login = ({ initialMode = 'login' }) => {
   const location = useLocation();
-  const { login, isAuthenticated, user } = useAuth();
-
   const from = location.state?.from?.pathname || '/profile';
-
-  React.useEffect(() => {
-    if (isAuthenticated && user) {
-      navigate(from, { replace: true });
-    }
-  }, [isAuthenticated, user, navigate, from]);
-
-  React.useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const error = searchParams.get('error');
-    if (error) {
-      if (error === 'no_email') {
-        toast.error('Please share your email to continue with Google.');
-      } else if (error === 'auth_failed' || error === 'server_error') {
-        toast.error('Google Authentication failed. Please try again.');
-      }
-      // Remove error from URL without refreshing
-      navigate(location.pathname, { replace: true });
-    }
-  }, [location.search, navigate]);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/user-login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include'
-      });
-
-      if (response.ok) {
-        toast.success('Login successful!');
-        await login();
-      } else {
-        const errData = await response.json();
-        throw new Error(errData.message || 'Invalid credentials');
-      }
-    } catch (err) {
-      toast.error(err.message || 'Login failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const isRegister = location.pathname === '/register';
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans overflow-hidden">
@@ -160,107 +108,12 @@ const Login = () => {
         </div>
 
         {/* Form Container */}
-        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0">
-          <div className="text-center mb-10">
-            <h2 className="text-5xl font-black text-[#0095f6] tracking-tight mb-2">
-              Welcome
-            </h2>
-            <p className="text-slate-400 font-medium">
-              Login with Email
-            </p>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-6">
-            
-            {/* Email Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Email Id
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type="email"
-                required
-                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
-                placeholder="thisuix@mail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="relative">
-              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
-                Password
-              </label>
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Lock className="h-5 w-5 text-slate-700" />
-              </div>
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                className="w-full pl-11 pr-12 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium tracking-widest"
-                placeholder="•••••••••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-[#0095f6] transition-colors focus:outline-none"
-              >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-            </div>
-
-            <div className="flex justify-end">
-              <button type="button" className="text-xs font-semibold text-slate-400 hover:text-slate-600">
-                Forgot your password?
-              </button>
-            </div>
-
-            <div className="flex justify-center pt-2">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="bg-[#0095f6] hover:bg-[#007bcf] text-white px-12 py-3 rounded-lg font-bold tracking-wide transition-all shadow-[0_4px_14px_0_rgba(0,149,246,0.39)] disabled:opacity-70"
-              >
-                {isLoading ? 'LOGIN...' : 'LOGIN'}
-              </button>
-            </div>
-          </form>
-
-          {/* Divider */}
-          <div className="relative mt-8 mb-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-slate-500 font-medium">Or continue with</span>
-            </div>
-          </div>
-
-          {/* Social Logins */}
-          <div className="flex justify-center">
-            <button
-              type="button"
-              onClick={() => { window.location.href = `${API_BASE_URL}/api/auth/google`; }}
-              className="w-full flex items-center justify-center gap-3 bg-white border border-slate-200 rounded-lg px-4 py-3 hover:bg-slate-50 transition-colors shadow-sm"
-            >
-              <GoogleIcon />
-              <span className="text-sm font-semibold text-slate-700">Continue with Google</span>
-            </button>
-          </div>
-
-          {/* Register Link */}
-          <p className="text-center text-xs font-medium text-slate-500 mt-8">
-            Don't have account?{' '}
-            <Link to="/register" className="text-slate-800 font-bold hover:underline">
-              Register Now
-            </Link>
-          </p>
+        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0 flex justify-center min-h-[500px]">
+          {isRegister ? (
+            <SignUp signInUrl="/login" forceRedirectUrl="/" />
+          ) : (
+            <SignIn signUpUrl="/register" forceRedirectUrl="/" />
+          )}
         </div>
 
         {/* Bottom Skyline Illustration */}

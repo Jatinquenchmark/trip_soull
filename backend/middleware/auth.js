@@ -1,31 +1,29 @@
-const jwt = require('jsonwebtoken');
+const { requireAuth } = require('@clerk/express');
+const User = require('../models/User');
 
-module.exports = function (req, res, next) {
-  let token = null;
-
-  // 1. Try to get token from cookies
-  if (req.cookies && req.cookies.userToken) {
-    token = req.cookies.userToken;
-  } else if (req.cookies && req.cookies.adminToken) {
-    token = req.cookies.adminToken;
-  } 
-  // 2. Fallback to Authorization header
-  else {
-    const authHeader = req.header('Authorization');
-    if (authHeader) {
-      token = authHeader.split(' ')[1]; // Bearer <token>
-    }
-  }
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
-  }
-
+const loadUser = async (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    if (!req.auth || !req.auth.userId) {
+      return res.status(401).json({ message: 'No token, authorization denied' });
+    }
+    
+    // Find the user in MongoDB using the Clerk ID
+    const user = await User.findOne({ clerkId: req.auth.userId });
+    
+    if (user) {
+      req.user = user;
+      // Also map id so req.user.id works for downstream routes
+      req.user.id = user._id; 
+    }
+    
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
+    console.error('Auth middleware error:', err);
+    res.status(500).json({ message: 'Server error in auth middleware' });
   }
 };
+
+// This middleware array ensures that a valid Clerk user is making the request,
+// and then loads their corresponding MongoDB user object into req.user.
+module.exports = [requireAuth(), loadUser];
+

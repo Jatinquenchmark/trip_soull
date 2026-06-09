@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,16 +14,37 @@ import HerocompRight from '../assets/HerocompRight.avif';
 
 import { 
   User, Compass, Heart, Check, ArrowRight, X, Clock, MapPin, Play, Plane,
-  ChevronLeft, ChevronRight 
+  ChevronLeft, ChevronRight, Palmtree, Building2, Castle, Mountain, Ship, Map, Landmark, Waves
 } from 'lucide-react';
-import { GiPalmTree } from 'react-icons/gi';
-import { FaUmbrellaBeach, FaVihara, FaCity, FaMosque, FaSailboat } from 'react-icons/fa6';
-import { TbBuildingSkyscraper } from 'react-icons/tb';
 
-import gsap from 'gsap';
+import {
+  DubaiIcon, JapanIcon, MaldivesIcon, ThailandIcon, VietnamIcon, SingaporeIcon, EuropeIcon, TurkeyIcon
+} from '../components/CustomDestinationIcons';
 
 const IconMap = {
-  GiPalmTree, FaUmbrellaBeach, FaVihara, FaCity, TbBuildingSkyscraper, FaMosque, FaSailboat
+  FaSailboat: VietnamIcon,
+  GiPalmTree: Palmtree, // Default fallback
+  TbBuildingSkyscraper: DubaiIcon,
+  FaCity: SingaporeIcon,
+  FaUmbrellaBeach: MaldivesIcon,
+  FaVihara: ThailandIcon,
+  FaMosque: TurkeyIcon,
+  Map: EuropeIcon,
+  Palmtree: Palmtree,
+  Landmark: Landmark,
+  Castle: JapanIcon,
+  Waves: MaldivesIcon,
+  Building2: DubaiIcon,
+  // Let's directly map by country ID for precision
+  dubai: DubaiIcon,
+  japan: JapanIcon,
+  maldives: MaldivesIcon,
+  thailand: ThailandIcon,
+  vietnam: VietnamIcon,
+  singapore: SingaporeIcon,
+  europe: EuropeIcon,
+  turkey: TurkeyIcon,
+  bali: Palmtree // Bali keeps Palmtree
 };
 
 import PackagesSection from '../components/PackagesSection';
@@ -42,7 +63,37 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentBg, setCurrentBg] = useState(0);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsScrollingDown(true);
+      } else {
+        setIsScrollingDown(false);
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -197,12 +248,12 @@ const Home = () => {
 
 
       {/* Layer 1: Destination Selection (Thrillophilia Style) */}
-      <section className="py-8 border-b border-slate-100 bg-white sticky top-[56px] z-40">
+      <section className={`py-3 md:py-4 border-b border-slate-100 bg-white sticky z-40 shadow-sm transition-all duration-300 ${isScrollingDown ? 'top-0' : 'top-[72px]'}`}>
         <div className="max-w-7xl mx-auto px-10 relative">
           <button 
-            className="dest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-lg flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="dest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={16} />
           </button>
 
           <Swiper
@@ -211,44 +262,53 @@ const Home = () => {
               prevEl: '.dest-prev',
               nextEl: '.dest-next',
             }}
-            spaceBetween={20}
-            slidesPerView={4}
+            spaceBetween={15}
+            slidesPerView={5}
             breakpoints={{
-              640: { slidesPerView: 5, spaceBetween: 30 },
-              768: { slidesPerView: 7, spaceBetween: 40 },
-              1024: { slidesPerView: 8, spaceBetween: 50 },
+              640: { slidesPerView: 6, spaceBetween: 20 },
+              768: { slidesPerView: 8, spaceBetween: 25 },
+              1024: { slidesPerView: 10, spaceBetween: 30 },
             }}
             className="w-full"
           >
             <SwiperSlide>
               <div 
                 onClick={() => navigate('/packages')}
-                className="flex flex-col items-center gap-3 cursor-pointer group"
+                className="flex flex-col items-center gap-2 cursor-pointer group pt-2 pb-1"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center icon-3d-button-active">
-                  <Compass className="w-4 h-4 md:w-5 md:h-5" />
+                <div className="transition-all duration-300 text-slate-500 group-hover:text-orange-500">
+                  <Compass className="w-8 h-8 md:w-9 md:h-9 stroke-[1.5]" />
                 </div>
-                <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-soul-blue">All</span>
+                <span className="text-[11px] md:text-[12px] font-semibold transition-colors duration-300 text-slate-600 group-hover:text-orange-500">Explore</span>
               </div>
             </SwiperSlide>
 
             {destinations.map((country, i) => {
-              const IconComponent = IconMap[country.icon] || Compass;
+              const IconComponent = IconMap[country.id] || IconMap[country.icon] || Map;
               const isActive = selectedCountry?.id === country.id;
+              // Hardcode trending for a few popular ones to match the screenshot
+              const isTrending = ['maldives', 'japan', 'dubai', 'bali'].includes(country.id);
+              
               return (
                 <SwiperSlide key={country.id}>
                   <div 
                     onClick={() => handleCountrySelect(country)}
-                    className="flex flex-col items-center gap-3 cursor-pointer relative group"
+                    className="flex flex-col items-center gap-2 cursor-pointer relative group pt-2 pb-1"
                   >
-                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center p-0.5 ${
-                      isActive ? 'icon-3d-button-active' : 'icon-3d-button'
+                    <div className={`transition-all duration-300 ${
+                      isActive ? 'text-orange-500 scale-110' : 'text-slate-500 group-hover:text-orange-500'
                     }`}>
-                      <img src={country.image} alt={country.name} className="w-full h-full object-cover rounded-full" />
+                      <IconComponent className="w-8 h-8 md:w-9 md:h-9 stroke-[1.5]" />
                     </div>
-                    <span className={`text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] transition-colors duration-500 text-center w-full truncate px-1 ${
-                      isActive ? 'text-soul-blue' : 'text-slate-500 group-hover:text-soul-blue'
+                    <span className={`text-[11px] md:text-[12px] font-semibold transition-colors duration-300 text-center w-full truncate px-1 ${
+                      isActive ? 'text-orange-500' : 'text-slate-600 group-hover:text-orange-500'
                     }`}>{country.name}</span>
+                    
+                    {isTrending && (
+                      <span className="absolute top-0 right-0 md:right-2 bg-orange-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded shadow-sm">
+                        Trending
+                      </span>
+                    )}
                   </div>
                 </SwiperSlide>
               );
@@ -256,9 +316,9 @@ const Home = () => {
           </Swiper>
 
           <button 
-            className="dest-next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-slate-200 rounded-full shadow-lg flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="dest-next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={16} />
           </button>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { API_BASE_URL } from '../config';
 import DashboardLayout from '../components/DashboardLayout';
 
 const MyBookings = () => {
-  const { user } = useAuth();
+  const { user, fetchWithAuth } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -18,7 +18,7 @@ const MyBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/bookings/my-bookings`, { credentials: 'include' });
+      const response = await fetchWithAuth(`${API_BASE_URL}/api/bookings/my-bookings`);
       if (response.ok) {
         const data = await response.json();
         setBookings(data);

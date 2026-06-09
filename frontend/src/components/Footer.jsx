@@ -163,23 +163,32 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar: Copyright & Legal */}
-      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-sm font-medium">
-        <p className="text-center md:text-left text-xs">
-          © 2026 TripSoul. All rights reserved. Your Tour, Perfectly Personalised!
-        </p>
-        <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs text-slate-400">
-          <Link to="/privacy-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
-            Privacy Policy
-          </Link>
-          <Link to="/terms-conditions" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
-            Terms & Conditions
-          </Link>
-          <Link to="/cookie-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
-            Cookie Policy
-          </Link>
-          <Link to="/refund-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
-            Refund Policy
-          </Link>
+      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-900 flex flex-col items-center gap-4 text-slate-500 text-sm font-medium">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
+          <p className="text-center md:text-left text-xs">
+            © 2026 TripSoul. All rights reserved. Your Tour, Perfectly Personalised!
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-xs text-slate-400">
+            <Link to="/privacy-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-conditions" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+              Terms & Conditions
+            </Link>
+            <Link to="/cookie-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+              Cookie Policy
+            </Link>
+            <Link to="/refund-policy" className="hover:text-[#2B4A8C] hover:underline underline-offset-4 transition-all duration-300">
+              Refund Policy
+            </Link>
+          </div>
+        </div>
+        
+        {/* Secured By text */}
+        <div className="w-full text-center mt-2 border-t border-slate-900/50 pt-4">
+          <p className="text-xs text-slate-500 tracking-[0.2em] font-semibold uppercase flex items-center justify-center gap-1.5">
+            Secured by <span className="text-white font-black tracking-normal">Parameter X</span>
+          </p>
         </div>
       </div>
     </footer>
