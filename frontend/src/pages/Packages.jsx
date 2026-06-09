@@ -42,6 +42,22 @@ const IconMap = {
 const Packages = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const navigate = useNavigate();
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsScrollingDown(true);
+      } else {
+        setIsScrollingDown(false);
+      }
+      setLastScrollY(currentScrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -71,7 +87,7 @@ const Packages = () => {
       </section>
 
       {/* Filter Section (Sticky like Home) */}
-      <section className="py-3 md:py-4 border-b border-slate-100 bg-white sticky top-[72px] z-40 shadow-sm transition-all duration-300">
+      <section className={`py-3 md:py-4 border-b border-slate-100 bg-white sticky z-40 shadow-sm transition-all duration-300 ${isScrollingDown ? 'top-0' : 'top-[72px]'}`}>
         <div className="max-w-7xl mx-auto px-10 relative">
           <button 
             className="dest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-orange-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
