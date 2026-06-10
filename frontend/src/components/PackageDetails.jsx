@@ -318,7 +318,11 @@ const PackageDetails = () => {
                     return (
                       <div 
                         key={tier.id} 
-                        className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative"
+                        onClick={() => {
+                          setSelectedTier(tier);
+                          handleExpSelect(availableExperiences[0]);
+                        }}
+                        className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative cursor-pointer"
                       >
                         <div className="h-48 relative overflow-hidden bg-slate-900">
                           <img 

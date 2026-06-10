@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { SignUp } from '@clerk/react';
-import { Plane, ArrowLeft } from 'lucide-react';
+import { User, Mail, Lock, Phone, Plane, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { API_BASE_URL } from '../config';
 
@@ -16,20 +15,10 @@ const GoogleIcon = () => (
   </svg>
 );
 
-const FacebookIcon = () => (
-  <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
-    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-  </svg>
-);
 
-const AppleIcon = () => (
-  <svg className="w-5 h-5" fill="#000000" viewBox="0 0 24 24">
-    <path d="M12 20.25c-1.635 0-3.136-.504-4.502-1.512-.916-.672-1.782-1.572-2.598-2.7-.816-1.128-1.442-2.316-1.878-3.564-.436-1.248-.654-2.52-.654-3.816 0-2.352.55-4.272 1.65-5.76C5.118 1.41 6.646.666 8.602.666c1.176 0 2.228.336 3.156 1.008.928.672 1.488.948 1.68.828.192.12.752-.156 1.68-.828.928-.672 1.98-1.008 3.156-1.008 1.584 0 2.916.48 3.996 1.44 1.08.96 1.788 2.304 2.124 4.032-1.92.96-2.88 2.472-2.88 4.536 0 1.968.96 3.528 2.88 4.68-.576 1.776-1.488 3.24-2.736 4.392-1.248 1.152-2.616 1.728-4.104 1.728-1.296 0-2.484-.444-3.564-1.332-1.08-.888-1.704-.972-1.872-.252-.168-.72-.792-.636-1.872.252-1.08.888-2.268 1.332-3.564 1.332zM15.48 6.426c0-1.248.42-2.328 1.26-3.24.84-.912 1.848-1.416 3.024-1.512.048 1.248-.36 2.328-1.224 3.24-.864.912-1.884 1.416-3.06 1.512z"/>
-  </svg>
-);
 
 const SkylineSilhouette = () => (
-  <svg viewBox="0 0 1000 200" className="absolute bottom-0 left-0 w-full h-auto text-[#0095f6]" fill="currentColor" preserveAspectRatio="none">
+  <svg viewBox="0 0 1000 200" className="absolute bottom-0 left-0 w-full h-auto text-[#0095f6] pointer-events-none" fill="currentColor" preserveAspectRatio="none">
     {/* Taj Mahal inspired */}
     <path d="M100,200 L100,140 C100,100 140,80 150,60 C160,80 200,100 200,140 L200,200 Z" />
     <rect x="80" y="140" width="10" height="60" />
@@ -63,7 +52,46 @@ const SkylineSilhouette = () => (
 );
 
 const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const navigate = useNavigate();
   const { login } = useAuth();
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_BASE_URL}/api/auth/google`;
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, password }),
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        toast.success('Registration successful!');
+        login(); // update auth context state
+        navigate('/profile');
+      } else {
+        const errData = await response.json();
+        throw new Error(errData.message || 'Registration failed');
+      }
+    } catch (err) {
+      toast.error(err.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans overflow-hidden">
@@ -88,7 +116,7 @@ const Register = () => {
       </div>
 
       {/* Right Panel - Register Form */}
-      <div className="w-full md:w-1/2 relative flex flex-col justify-center items-center px-8 pt-12 pb-36 md:pb-24 bg-white overflow-y-auto">
+      <div className="w-full md:w-1/2 relative flex flex-col justify-center items-center p-8 bg-white">
         
         {/* Back to Home Button */}
         <Link to="/" className="absolute top-8 left-8 flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-[#0095f6] transition-colors group z-20">
@@ -105,8 +133,138 @@ const Register = () => {
         </div>
 
         {/* Form Container */}
-        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0 flex justify-center">
-          <SignUp signInUrl="/login" forceRedirectUrl="/dashboard" />
+        <div className="w-full max-w-sm z-10 relative mt-16 md:mt-0">
+          <div className="text-center mb-10">
+            <h2 className="text-5xl font-black text-[#0095f6] tracking-tight mb-2">
+              Create Account
+            </h2>
+            <p className="text-slate-400 font-medium">
+              Join us to save your bookings
+            </p>
+          </div>
+
+          <form onSubmit={handleRegister} className="space-y-6">
+            
+            {/* Name Input */}
+            <div className="relative">
+              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
+                Full Name
+              </label>
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-slate-700" />
+              </div>
+              <input
+                type="text"
+                required
+                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            {/* Email Input */}
+            <div className="relative">
+              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
+                Email Id
+              </label>
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-slate-700" />
+              </div>
+              <input
+                type="email"
+                required
+                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
+                placeholder="thisuix@mail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            {/* Phone Input */}
+            <div className="relative">
+              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
+                Phone Number
+              </label>
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Phone className="h-5 w-5 text-slate-700" />
+              </div>
+              <input
+                type="tel"
+                className="w-full pl-11 pr-4 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium"
+                placeholder="+91 98765 43210"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+
+            {/* Password Input */}
+            <div className="relative">
+              <label className="absolute -top-2.5 left-4 bg-white px-1 text-[11px] font-bold text-[#0095f6]">
+                Password
+              </label>
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Lock className="h-5 w-5 text-slate-700" />
+              </div>
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                minLength="6"
+                className="w-full pl-11 pr-12 py-3.5 bg-transparent border-2 border-[#b3dfff] rounded-xl text-slate-800 focus:outline-none focus:border-[#0095f6] transition-colors font-medium tracking-widest"
+                placeholder="•••••••••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-[#0095f6] transition-colors focus:outline-none"
+              >
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
+
+            <div className="flex justify-center pt-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-[#0095f6] hover:bg-[#007bcf] text-white px-12 py-3 rounded-lg font-bold tracking-wide transition-all shadow-[0_4px_14px_0_rgba(0,149,246,0.39)] disabled:opacity-70"
+              >
+                {isLoading ? 'SIGNING UP...' : 'SIGN UP'}
+              </button>
+            </div>
+          </form>
+
+          {/* Google Login */}
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-slate-500 font-medium">Or continue with</span>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="flex items-center justify-center gap-3 w-full border-2 border-slate-200 hover:border-[#0095f6] hover:bg-slate-50 text-slate-700 px-6 py-3 rounded-xl font-bold transition-all"
+              >
+                <GoogleIcon />
+                Google
+              </button>
+            </div>
+          </div>
+
+          {/* Login Link */}
+          <p className="text-center text-xs font-medium text-slate-500 mt-8 relative z-20">
+            Already have an account?{' '}
+            <Link to="/login" className="text-slate-800 font-bold hover:underline">
+              Login Now
+            </Link>
+          </p>
         </div>
 
         {/* Bottom Skyline Illustration */}

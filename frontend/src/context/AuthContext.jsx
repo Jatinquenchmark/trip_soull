@@ -1,64 +1,72 @@
-import React, { createContext, useContext, useCallback } from 'react';
-import { useAuth as useClerkAuth, useUser } from '@clerk/react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const { isLoaded, isSignedIn, getToken, signOut } = useClerkAuth();
-  const { user: clerkUser } = useUser();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState(null); // the customer data
+  const [loading, setLoading] = useState(true);
 
-  // Map Clerk user to our existing app's expected shape
-  const user = clerkUser ? {
-    id: clerkUser.id,
-    name: clerkUser.fullName || clerkUser.firstName || 'User',
-    email: clerkUser.primaryEmailAddress?.emailAddress || '',
-    profilePicture: clerkUser.imageUrl || '',
-  } : null;
-
-  // Instead of isAdmin coming from token initially, you can set rules based on emails
-  // For production, you should use Clerk Public Metadata to store roles
-  const isAdmin = user?.email === 'admin@tripsoul.com'; // Replace with real admin check
-
-  const fetchWithAuth = useCallback(async (url, options = {}) => {
-    const token = await getToken();
-    const headers = {
-      ...options.headers,
-    };
-    
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
+  const checkAuth = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(!!data.isAuthenticated);
+        setIsAdmin(!!data.isAdmin || data.role === 'admin');
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      } else {
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        setUser(null);
+      }
+    } catch (err) {
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-
-    return fetch(url, {
-      ...options,
-      headers
-    });
-  }, [getToken]);
-
-  const logout = async () => {
-    await signOut();
   };
 
-  const login = () => {
-    // With Clerk, login is handled by <SignInButton /> in the UI, 
-    // so this might not be needed, but we provide it for compatibility.
-    console.log("Login triggered - should be handled by Clerk UI");
+  const logout = async () => {
+    try {
+      const endpoint = isAdmin ? '/api/auth/logout' : '/api/auth/user-logout';
+      await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (err) {
+      console.error('Logout API call failed:', err);
+    } finally {
+      setIsAuthenticated(false);
+      setIsAdmin(false);
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const login = async () => {
+    // Calling checkAuth to sync latest state from backend cookie
+    await checkAuth();
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      isAuthenticated: !!isSignedIn, 
-      isAdmin, 
-      user, 
-      login, 
-      logout, 
-      loading: !isLoaded, 
-      fetchWithAuth 
-    }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, user, login, logout, loading, checkAuth }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
-

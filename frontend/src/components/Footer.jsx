@@ -21,19 +21,21 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-8">
         
         {/* Brand Column (Col Span: 4) */}
-        <div className="lg:col-span-4 space-y-4">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="TripSoul Logo" className="h-14 w-auto object-contain brightness-110" />
+        <div className="lg:col-span-4 space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="bg-white p-2.5 rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] flex-shrink-0">
+              <img src={logo} alt="TripSoul Logo" className="h-12 w-auto object-contain" />
+            </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tight text-white font-poppins leading-none">
+              <span className="text-3xl font-black tracking-tight text-white font-poppins leading-none drop-shadow-md">
                 TripSoul
               </span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">
+              <span className="text-[10px] text-[#4F80FF] font-black uppercase tracking-[0.25em] mt-1.5 drop-shadow-sm">
                 Perfectly Personalised
               </span>
             </div>
           </div>
-          <p className="text-slate-400 leading-relaxed font-medium text-sm">
+          <p className="text-slate-400 leading-relaxed font-medium text-sm pr-4">
             We craft soul-stirring journeys and bespoke travel itineraries across the globe's most breathtaking destinations. Explore the world on your own terms.
           </p>
           
@@ -43,7 +45,7 @@ const Footer = () => {
               href="https://www.instagram.com/trip_.soul?igsh=NTIwanM3Z3dtYzNq" 
               target="_blank" 
               rel="noreferrer" 
-              className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-[#2B4A8C] hover:bg-[#2B4A8C]/10 hover:-translate-y-1 transition-all duration-300"
+              className="w-10 h-10 rounded-full border border-slate-700/50 bg-slate-800/30 flex items-center justify-center text-slate-300 hover:text-white hover:border-[#4F80FF] hover:bg-[#4F80FF]/20 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(79,128,255,0.4)] transition-all duration-300"
             >
               <Instagram className="w-4 h-4" />
             </a>

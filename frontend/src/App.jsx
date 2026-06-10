@@ -77,7 +77,7 @@ function AppInner() {
         
         {/* Customer Auth Routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         
         <Route element={<ProtectedRoute adminOnly={false} />}>
           <Route path="/dashboard" element={<UserDashboard />} />
@@ -97,18 +97,12 @@ function AppInner() {
   );
 }
 
-import { ClerkProvider } from '@clerk/react';
-
 function App() {
-  const navigate = useNavigate();
-  const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
+  console.log("App component rendered");
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} navigate={(to) => navigate(to)}>
-      <AuthProvider>
-        <AppInner />
-      </AuthProvider>
-    </ClerkProvider>
+    <AuthProvider>
+      <AppInner />
+    </AuthProvider>
   );
 }
 
