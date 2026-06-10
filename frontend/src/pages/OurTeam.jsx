@@ -2,8 +2,7 @@ import React from 'react';
 import { Linkedin, Twitter, Mail, MapPin, Globe, Target, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Temporary placeholder, the user can replace with Tarundeep's actual photo
-const founderImage = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1000&fit=crop";
+import founderImage from '../assets/WhatsApp Image 2026-06-10 at 9.19.06 PM.jpeg';
 
 const OurTeam = () => {
   return (
@@ -50,7 +49,7 @@ const OurTeam = () => {
                 alt="Tarundeep Kamboj" 
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2B4A8C]/80 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-6 right-6">
                 <h3 className="text-3xl font-black text-white mb-1">Tarundeep Kamboj</h3>
                 <p className="text-blue-100 font-medium text-sm">Founder & Director, TripSoul</p>

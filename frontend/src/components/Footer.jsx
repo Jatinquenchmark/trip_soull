@@ -187,10 +187,24 @@ const Footer = () => {
         </div>
         
         {/* Secured By text */}
-        <div className="w-full text-center mt-2 border-t border-slate-900/50 pt-4">
-          <p className="text-xs text-slate-500 tracking-[0.2em] font-semibold uppercase flex items-center justify-center gap-1.5">
-            Secured by <span className="text-white font-black tracking-normal">Parameter X</span>
-          </p>
+        <div className="w-full flex justify-start mt-6 border-t border-slate-900/50 pt-8 pb-4">
+          <a 
+            href="https://www.parameterx.org/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center gap-3 bg-white/5 border border-slate-800 px-4 py-2.5 rounded-2xl hover:bg-white/10 transition-all duration-300 group"
+          >
+            <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center shadow-inner">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="transform group-hover:scale-110 transition-transform duration-300">
+                <path d="M5 19L19 5" stroke="#0095f6" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M5 5L19 19" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div className="text-left flex flex-col justify-center">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight mb-0.5">Secured By</span>
+              <span className="text-sm font-black text-white leading-tight tracking-wide">ParameterX</span>
+            </div>
+          </a>
         </div>
       </div>
     </footer>
