@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Clock, Users, MapPin, Star, Check, X, ArrowLeft, Phone, 
-  MessageCircle, User, Heart, Compass, Info, ChevronRight 
+  MessageCircle, User, Heart, Compass, Info, ChevronRight, ChevronDown, ChevronUp 
 } from 'lucide-react';
 import { destinations, experiences, pricingTiers } from '../data/trips';
 import { API_BASE_URL } from '../config';
@@ -19,6 +19,7 @@ const PackageDetails = () => {
   const [pkgTiers, setPkgTiers] = useState(pricingTiers);
   const [selectedTier, setSelectedTier] = useState(pricingTiers[1]);
   const [activeImage, setActiveImage] = useState(null);
+  const [expandedDay, setExpandedDay] = useState(0);
 
   const availableExperiences = experiences.filter(exp => {
     if (pkg && pkg.experiences) {
@@ -487,56 +488,70 @@ const PackageDetails = () => {
                       </div>
                     </div>
 
-                    {/* ── ITINERARY ── */}
-                    <div className="mb-12 mt-12">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-3 h-3 rounded-full bg-soul-blue"></div>
-                        <h3 className="text-3xl font-black text-slate-900 tracking-tight">Day-by-Day Itinerary</h3>
+                    {/* ── ITINERARY (Luxury Dossier Style) ── */}
+                    <div className="mb-20 mt-16 max-w-5xl mx-auto">
+                      <div className="text-center mb-16">
+                        <span className="text-soul-blue text-xs font-black tracking-[0.3em] uppercase mb-4 block">The Journey</span>
+                        <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Your Day-by-Day Itinerary</h3>
+                        <div className="w-16 h-1 bg-soul-blue mx-auto mt-6 rounded-full"></div>
                       </div>
-                      <p className="text-slate-500 text-sm font-medium mb-8 pl-6">Detailed travel flow for your {pkg.name}</p>
 
-                      <div className="space-y-6">
+                      <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 md:before:ml-[8.5rem] before:-translate-x-px md:before:translate-x-0 before:h-full before:w-[2px] before:bg-gradient-to-b before:from-soul-blue/0 before:via-soul-blue/20 before:to-soul-blue/0">
                         {activeItinerary?.map((day, i) => (
-                          <div
-                            key={i}
-                            className="flex flex-col md:flex-row border border-blue-100/60 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white"
-                          >
-                            {/* Left Side: Day Indicator */}
-                            <div className="bg-soul-blue text-white w-full md:w-48 flex flex-col items-center justify-center py-6 md:py-8 shrink-0">
-                              <span className="text-lg font-black uppercase tracking-widest mb-1">DAY {i + 1}</span>
-                              <span className="text-xs font-medium text-blue-100">
-                                {day.date || `Experience`}
-                              </span>
+                          <div key={i} className="relative flex flex-col md:flex-row gap-6 md:gap-12 items-start group">
+                            
+                            {/* Left: Day Number */}
+                            <div className="flex items-center md:items-start md:flex-col md:w-32 shrink-0 z-10">
+                              <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white border-4 border-slate-50 flex items-center justify-center shadow-lg shadow-soul-blue/10 group-hover:border-blue-50 group-hover:scale-110 transition-all duration-500">
+                                <span className="text-sm md:text-xl font-black text-soul-blue">{i + 1}</span>
+                              </div>
+                              <div className="hidden md:block mt-4 text-center w-16">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">Day</span>
+                                <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">{day.date || 'Experience'}</span>
+                              </div>
+                              {/* Mobile day info next to dot */}
+                              <div className="md:hidden ml-4">
+                                <span className="text-xs font-black uppercase tracking-widest text-soul-blue">Day {i + 1}</span>
+                                <span className="text-xs font-medium text-slate-500 ml-2 block">{day.date || 'Experience'}</span>
+                              </div>
                             </div>
 
-                            {/* Right Side: Content */}
-                            <div className="p-6 md:p-8 flex-1">
-                              {/* Title & Pace Badge */}
+                            {/* Right: Content Card */}
+                            <div className="flex-1 w-full bg-white rounded-[32px] p-6 md:p-10 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 group-hover:-translate-y-1">
+                              
                               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                                <h4 className="text-xl font-bold text-slate-900 leading-snug">{day.title}</h4>
-                                <span className="bg-blue-50 text-soul-blue px-5 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap w-fit">
-                                  {day.pace || 'Relaxed'}
-                                </span>
+                                <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-snug">{day.title}</h4>
+                                {day.pace && (
+                                  <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-50 text-slate-500 text-[11px] font-black uppercase tracking-widest border border-slate-100 whitespace-nowrap">
+                                    {day.pace} Pace
+                                  </span>
+                                )}
                               </div>
 
-                              {/* Description Points */}
-                              <div className="text-slate-600 text-sm leading-relaxed mb-8 space-y-3">
+                              <div className="text-slate-600 leading-loose space-y-4 text-[15px]">
                                 {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
-                                  <div key={idx} className="flex gap-3 items-start">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-soul-blue mt-2 shrink-0"></div>
-                                    <p>{line.replace(/^- /, '')}</p>
-                                  </div>
+                                  <p key={idx} className="flex gap-4">
+                                    <span className="text-soul-blue font-serif text-xl leading-none mt-1">~</span>
+                                    <span>{line.replace(/^- /, '')}</span>
+                                  </p>
                                 ))}
                               </div>
 
-                              {/* Why this works */}
-                              <div className="bg-[#FDF8F3] rounded-2xl p-4 md:p-5 flex gap-4 items-center border border-orange-50">
-                                <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0"></div>
-                                <p className="text-sm text-slate-700">
-                                  <span className="font-bold mr-2">Why this works:</span>
-                                  {day.whyThisWorks || "Carefully curated to provide the perfect balance of exploration and comfort for your journey."}
-                                </p>
-                              </div>
+                              {(day.whyThisWorks || i === 0) && (
+                                <div className="mt-8 pt-6 border-t border-slate-100">
+                                  <div className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-blue-50/50 to-transparent border border-blue-100/50">
+                                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                                      <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                                    </div>
+                                    <div>
+                                      <span className="block text-[10px] font-black uppercase tracking-widest text-soul-blue mb-1">Highlight</span>
+                                      <p className="text-sm font-medium text-slate-700 leading-relaxed">
+                                        {day.whyThisWorks || "Perfectly curated to give you an immersive and relaxing experience, blending local culture with ultimate comfort."}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         ))}
