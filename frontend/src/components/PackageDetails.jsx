@@ -488,43 +488,55 @@ const PackageDetails = () => {
                     </div>
 
                     {/* ── ITINERARY ── */}
-                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-xl shadow-slate-200/60">
-                      {/* Itinerary header */}
-                      <div className="px-6 md:px-10 py-5 md:py-7 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 bg-slate-50/80">
-                        <div className="flex items-center gap-4">
-                          <div className="w-8 h-8 rounded-xl bg-blue-50 border border-soul-blue/20 flex items-center justify-center">
-                            <div className="w-3 h-3 rounded-full bg-soul-blue"></div>
-                          </div>
-                          <div>
-                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] block">Your Journey</span>
-                            <h3 className="text-xl font-black text-slate-900 tracking-tight">Day-by-Day Itinerary</h3>
-                          </div>
-                        </div>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{activeItinerary?.length} Days</span>
+                    <div className="mb-12 mt-12">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-3 h-3 rounded-full bg-soul-blue"></div>
+                        <h3 className="text-3xl font-black text-slate-900 tracking-tight">Day-by-Day Itinerary</h3>
                       </div>
+                      <p className="text-slate-500 text-sm font-medium mb-8 pl-6">Detailed travel flow for your {pkg.name}</p>
 
-                      {/* Day rows */}
-                      <div>
+                      <div className="space-y-6">
                         {activeItinerary?.map((day, i) => (
                           <div
                             key={i}
-                            className="group flex gap-4 md:gap-6 px-6 md:px-10 py-6 md:py-7 border-b border-slate-100 last:border-0 hover:bg-blue-50/30 transition-all duration-300 cursor-default"
+                            className="flex flex-col md:flex-row border border-blue-100/60 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white"
                           >
-                            {/* Day pill */}
-                            <div className="flex-shrink-0 flex flex-col items-center gap-2">
-                              <div className="w-11 h-11 rounded-2xl bg-blue-50 border border-soul-blue/20 flex items-center justify-center group-hover:bg-soul-blue group-hover:border-soul-blue transition-all duration-500">
-                                <span className="text-[11px] font-black text-soul-blue group-hover:text-white transition-colors duration-300">{String(i + 1).padStart(2, '0')}</span>
-                              </div>
-                              {i < (activeItinerary?.length ?? 0) - 1 && (
-                                <div className="w-[1px] h-full bg-slate-200 flex-1 min-h-[20px]"></div>
-                              )}
+                            {/* Left Side: Day Indicator */}
+                            <div className="bg-soul-blue text-white w-full md:w-48 flex flex-col items-center justify-center py-6 md:py-8 shrink-0">
+                              <span className="text-lg font-black uppercase tracking-widest mb-1">DAY {i + 1}</span>
+                              <span className="text-xs font-medium text-blue-100">
+                                {day.date || `Experience`}
+                              </span>
                             </div>
 
-                            {/* Content */}
-                            <div className="space-y-2 flex-1 pb-2">
-                              <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em]">Day {i + 1}</span>
-                              <h4 className="text-lg font-black text-slate-800 tracking-tight group-hover:text-slate-900 transition-colors duration-300">{day.title}</h4>
-                              <p className="text-slate-500 text-sm leading-relaxed group-hover:text-slate-700 transition-colors duration-300">{day.description}</p>
+                            {/* Right Side: Content */}
+                            <div className="p-6 md:p-8 flex-1">
+                              {/* Title & Pace Badge */}
+                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                                <h4 className="text-xl font-bold text-slate-900 leading-snug">{day.title}</h4>
+                                <span className="bg-blue-50 text-soul-blue px-5 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap w-fit">
+                                  {day.pace || 'Relaxed'}
+                                </span>
+                              </div>
+
+                              {/* Description Points */}
+                              <div className="text-slate-600 text-sm leading-relaxed mb-8 space-y-3">
+                                {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
+                                  <div key={idx} className="flex gap-3 items-start">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-soul-blue mt-2 shrink-0"></div>
+                                    <p>{line.replace(/^- /, '')}</p>
+                                  </div>
+                                ))}
+                              </div>
+
+                              {/* Why this works */}
+                              <div className="bg-[#FDF8F3] rounded-2xl p-4 md:p-5 flex gap-4 items-center border border-orange-50">
+                                <div className="w-2 h-2 rounded-full bg-orange-400 shrink-0"></div>
+                                <p className="text-sm text-slate-700">
+                                  <span className="font-bold mr-2">Why this works:</span>
+                                  {day.whyThisWorks || "Carefully curated to provide the perfect balance of exploration and comfort for your journey."}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         ))}
