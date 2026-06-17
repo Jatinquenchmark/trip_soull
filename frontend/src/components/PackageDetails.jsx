@@ -488,73 +488,103 @@ const PackageDetails = () => {
                       </div>
                     </div>
 
-                    {/* ── ITINERARY (Luxury Dossier Style) ── */}
-                    <div className="mb-20 mt-16 max-w-5xl mx-auto">
-                      <div className="text-center mb-16">
-                        <span className="text-soul-blue text-xs font-black tracking-[0.3em] uppercase mb-4 block">The Journey</span>
-                        <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Your Day-by-Day Itinerary</h3>
-                        <div className="w-16 h-1 bg-soul-blue mx-auto mt-6 rounded-full"></div>
+                    {/* ── ITINERARY (Vibrant Highlighted Accordion) ── */}
+                    <div className="mb-20 mt-16 max-w-5xl mx-auto bg-white rounded-[40px] shadow-[0_10px_40px_rgb(43,74,140,0.08)] border border-blue-50/50 p-6 md:p-12 relative overflow-hidden">
+                      {/* Decorative background elements */}
+                      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-100/40 to-purple-100/40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 z-0 pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-amber-100/40 to-orange-50/40 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 z-0 pointer-events-none"></div>
+
+                      <div className="relative z-10 text-center mb-16">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-soul-blue text-xs font-black uppercase tracking-widest border border-blue-100 shadow-sm mb-6">
+                          <Compass className="w-4 h-4" /> The Masterplan
+                        </div>
+                        <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                          Your Exclusive <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-soul-blue to-purple-600">Day-by-Day Journey</span>
+                        </h3>
                       </div>
 
-                      <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 md:before:ml-[8.5rem] before:-translate-x-px md:before:translate-x-0 before:h-full before:w-[2px] before:bg-gradient-to-b before:from-soul-blue/0 before:via-soul-blue/20 before:to-soul-blue/0">
-                        {activeItinerary?.map((day, i) => (
-                          <div key={i} className="relative flex flex-col md:flex-row gap-6 md:gap-12 items-start group">
-                            
-                            {/* Left: Day Number */}
-                            <div className="flex items-center md:items-start md:flex-col md:w-32 shrink-0 z-10">
-                              <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-white border-4 border-slate-50 flex items-center justify-center shadow-lg shadow-soul-blue/10 group-hover:border-blue-50 group-hover:scale-110 transition-all duration-500">
-                                <span className="text-sm md:text-xl font-black text-soul-blue">{i + 1}</span>
-                              </div>
-                              <div className="hidden md:block mt-4 text-center w-16">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">Day</span>
-                                <span className="text-xs font-semibold text-slate-500 whitespace-nowrap">{day.date || 'Experience'}</span>
-                              </div>
-                              {/* Mobile day info next to dot */}
-                              <div className="md:hidden ml-4">
-                                <span className="text-xs font-black uppercase tracking-widest text-soul-blue">Day {i + 1}</span>
-                                <span className="text-xs font-medium text-slate-500 ml-2 block">{day.date || 'Experience'}</span>
-                              </div>
-                            </div>
+                      <div className="relative z-10">
+                        {/* Timeline background line */}
+                        <div className="absolute left-6 md:left-[3.25rem] top-8 bottom-12 w-[3px] bg-gradient-to-b from-soul-blue/20 via-soul-blue/10 to-transparent rounded-full"></div>
 
-                            {/* Right: Content Card */}
-                            <div className="flex-1 w-full bg-white rounded-[32px] p-6 md:p-10 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 group-hover:-translate-y-1">
-                              
-                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                                <h4 className="text-2xl font-black text-slate-900 tracking-tight leading-snug">{day.title}</h4>
-                                {day.pace && (
-                                  <span className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-slate-50 text-slate-500 text-[11px] font-black uppercase tracking-widest border border-slate-100 whitespace-nowrap">
-                                    {day.pace} Pace
-                                  </span>
-                                )}
-                              </div>
+                        <div className="space-y-10">
+                          {activeItinerary?.map((day, i) => {
+                            return (
+                              <div key={i} className="relative pl-12 md:pl-24">
+                                {/* Glowing Timeline Dot */}
+                                <div className="absolute left-[13px] md:left-[35px] top-8 w-6 h-6 rounded-full border-[5px] border-white shadow-lg z-10 bg-soul-blue">
+                                  <div className="absolute inset-0 rounded-full animate-ping bg-soul-blue/30"></div>
+                                </div>
 
-                              <div className="text-slate-600 leading-loose space-y-4 text-[15px]">
-                                {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
-                                  <p key={idx} className="flex gap-4">
-                                    <span className="text-soul-blue font-serif text-xl leading-none mt-1">~</span>
-                                    <span>{line.replace(/^- /, '')}</span>
-                                  </p>
-                                ))}
-                              </div>
-
-                              {(day.whyThisWorks || i === 0) && (
-                                <div className="mt-8 pt-6 border-t border-slate-100">
-                                  <div className="flex items-start gap-4 p-5 rounded-2xl bg-gradient-to-br from-blue-50/50 to-transparent border border-blue-100/50">
-                                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
-                                      <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                                {/* Main Card Container (Static, No Accordion) */}
+                                <div className="rounded-3xl border border-soul-blue/20 bg-white shadow-[0_15px_40px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)] transition-all duration-500 overflow-hidden">
+                                  {/* Header */}
+                                  <div className="p-6 md:p-8 flex items-center justify-between gap-4">
+                                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 flex-1">
+                                      {/* Bright Day Badge */}
+                                      <div className="shrink-0 px-5 py-3 rounded-2xl text-center font-black bg-gradient-to-br from-soul-blue to-blue-600 text-white shadow-xl shadow-blue-200">
+                                        <span className="block text-[11px] uppercase tracking-widest opacity-90 mb-1">Day</span>
+                                        <span className="block text-2xl leading-none">{i + 1}</span>
+                                      </div>
+                                      
+                                      <div className="flex-1">
+                                        <h4 className="text-xl md:text-2xl font-bold text-soul-blue">
+                                          {day.title}
+                                        </h4>
+                                        <p className="text-sm font-semibold text-slate-500 mt-2 uppercase tracking-widest">{day.date || 'Scheduled Experience'}</p>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <span className="block text-[10px] font-black uppercase tracking-widest text-soul-blue mb-1">Highlight</span>
-                                      <p className="text-sm font-medium text-slate-700 leading-relaxed">
-                                        {day.whyThisWorks || "Perfectly curated to give you an immersive and relaxing experience, blending local culture with ultimate comfort."}
-                                      </p>
+                                  </div>
+
+                                  {/* Content */}
+                                  <div className="p-6 md:p-8 pt-0 md:pt-0">
+                                    {/* Divider */}
+                                    <div className="h-px w-full bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 mb-8"></div>
+                                    
+                                    {/* Pace Tag */}
+                                    {day.pace && (
+                                      <div className="mb-6 flex gap-2">
+                                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wide">
+                                          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                          {day.pace} Pace
+                                        </span>
+                                      </div>
+                                    )}
+
+                                    {/* Description Points */}
+                                    <div className="space-y-4 mb-8">
+                                      {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
+                                        <div key={idx} className="flex gap-4 items-start bg-slate-50/50 p-4 rounded-2xl border border-slate-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors">
+                                          <div className="w-7 h-7 rounded-full bg-white border border-blue-100 shadow-sm flex items-center justify-center shrink-0 text-soul-blue mt-0.5">
+                                            <Check className="w-4 h-4" />
+                                          </div>
+                                          <p className="text-slate-600 text-base leading-relaxed pt-0.5">{line.replace(/^- /, '')}</p>
+                                        </div>
+                                      ))}
+                                    </div>
+
+                                    {/* Highlight Box */}
+                                    <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100 relative overflow-hidden shadow-sm">
+                                      {/* Decorative icon background */}
+                                      <Star className="absolute -right-6 -bottom-6 w-32 h-32 text-orange-200/40 rotate-12" />
+                                      <div className="relative z-10 flex gap-5 items-start">
+                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-200 flex items-center justify-center shrink-0">
+                                          <Star className="w-6 h-6 fill-white" />
+                                        </div>
+                                        <div>
+                                          <span className="block text-xs font-black text-orange-800 uppercase tracking-[0.2em] mb-2">Special Highlight</span>
+                                          <p className="text-slate-700 text-[15px] font-medium leading-relaxed">
+                                            {day.whyThisWorks || "Experience the absolute best of the destination with thoughtfully planned moments of magic and comfort."}
+                                          </p>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
 
@@ -601,9 +631,22 @@ const PackageDetails = () => {
                   </div>
 
                   {/* ── STICKY SIDEBAR ── */}
-                  <div className="lg:col-span-4 lg:sticky lg:top-40 z-20 self-start">
-                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-2xl shadow-slate-200/70">
+                  <div className="lg:col-span-4 lg:sticky lg:top-40 z-20 self-start space-y-6">
+                    {/* Glowing Offer Badge */}
+                    <div className="bg-gradient-to-r from-orange-500 to-amber-500 rounded-[24px] p-4 text-white shadow-lg shadow-orange-500/30 flex items-center justify-between animate-pulse-slow relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+                      <div className="flex items-center gap-3 relative z-10">
+                        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                          <Star className="w-5 h-5 fill-white text-white" />
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-orange-100">Limited Time Offer</p>
+                          <p className="text-sm font-bold">Free Premium Photoshoot</p>
+                        </div>
+                      </div>
+                    </div>
 
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white overflow-hidden shadow-2xl shadow-slate-200/70">
                       {/* Price header */}
                       <div className="relative p-8 border-b border-slate-100 bg-gradient-to-br from-blue-50/80 to-white">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-soul-blue/5 rounded-full blur-2xl"></div>
@@ -631,25 +674,38 @@ const PackageDetails = () => {
 
                         <button
                           onClick={handleBooking}
-                          className="w-full relative overflow-hidden bg-soul-blue text-white py-5 rounded-2xl font-black text-sm tracking-wider transition-all hover:bg-slate-900 hover:shadow-2xl hover:shadow-blue-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
+                          className="group w-full relative overflow-hidden bg-soul-blue text-white py-5 rounded-2xl font-black text-sm tracking-wider transition-all hover:bg-slate-900 hover:shadow-2xl hover:shadow-blue-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
                         >
-                          <span className="relative z-10">Contact Our Team</span>
-                          <MessageCircle className="w-4 h-4 relative z-10" />
+                          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                          <span className="relative z-10">Lock This Price</span>
+                          <Check className="w-5 h-5 relative z-10" />
                         </button>
 
-                        <p className="text-center text-[10px] text-slate-400 font-medium">
-                          Free cancellation · 24/7 concierge support
-                        </p>
-
-                        <div className="flex items-center justify-center gap-3">
-                          <div className="flex -space-x-2">
-                            {[1,2,3].map(n => (
-                              <div key={n} className="w-7 h-7 rounded-full border-2 border-white bg-slate-100 overflow-hidden shadow-sm">
-                                <img src={`https://i.pravatar.cc/100?u=trip${n}`} alt="" className="w-full h-full object-cover" />
-                              </div>
-                            ))}
+                        <div className="flex flex-col gap-4">
+                          <div className="bg-green-50 text-green-700 px-4 py-3 rounded-xl flex items-center gap-3 border border-green-100">
+                            <Check className="w-4 h-4 shrink-0 text-green-600" />
+                            <p className="text-xs font-bold">100% Fully Customizable Itinerary</p>
                           </div>
-                          <span className="text-[10px] text-slate-400 font-bold">+120 booked this month</span>
+                          <div className="bg-blue-50 text-soul-blue px-4 py-3 rounded-xl flex items-center gap-3 border border-blue-100">
+                            <Phone className="w-4 h-4 shrink-0 text-soul-blue" />
+                            <p className="text-xs font-bold">24/7 Dedicated Trip Concierge</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-4 border-t border-slate-100">
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="flex -space-x-2">
+                              {[1,2,3,4].map(n => (
+                                <div key={n} className="w-8 h-8 rounded-full border-2 border-white bg-slate-100 overflow-hidden shadow-sm">
+                                  <img src={`https://i.pravatar.cc/100?u=trip${n+10}`} alt="" className="w-full h-full object-cover" />
+                                </div>
+                              ))}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-[11px] text-slate-800 font-bold">Highly Popular</span>
+                              <span className="text-[10px] text-slate-400 font-medium">120+ booked this month</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
