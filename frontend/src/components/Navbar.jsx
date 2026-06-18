@@ -105,6 +105,15 @@ const Navbar = () => {
             </Link>
           ))}
           
+          {/* Professional Flights Icon */}
+          <Link 
+            to="/flights" 
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm border border-blue-100"
+            title="Search Flights"
+          >
+            <Plane className="w-5 h-5" />
+          </Link>
+          
           {loading ? (
             <div className="w-20 h-10 bg-slate-100 animate-pulse rounded-full"></div>
           ) : isAuthenticated && user && !isAdmin ? (
@@ -173,6 +182,15 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+          
+          {/* Mobile Flights Link */}
+          <Link 
+            to="/flights" 
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 text-lg font-bold text-blue-600 py-3 border-b border-slate-50 bg-blue-50/50 px-4 rounded-xl mt-2"
+          >
+            <Plane className="w-6 h-6" /> Search Flights
+          </Link>
           
           {isAuthenticated && user && !isAdmin ? (
             <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-slate-50">
