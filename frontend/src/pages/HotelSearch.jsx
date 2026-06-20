@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Calendar, CreditCard, Shield, Globe2, Star } from 'lucide-react';
-import TravelpayoutsHotelWidget from '../components/TravelpayoutsHotelWidget';
+import CustomHotelSearch from '../components/CustomHotelSearch';
 
 const HotelSearch = () => {
   return (
@@ -57,7 +57,7 @@ const HotelSearch = () => {
           transition={{ delay: 0.2, type: "spring", stiffness: 40 }}
           className="bg-white/80 backdrop-blur-xl p-2 md:p-4 rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] border border-white"
         >
-          <TravelpayoutsHotelWidget />
+          <CustomHotelSearch />
         </motion.div>
       </div>
 
