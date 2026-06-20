@@ -14,6 +14,7 @@ import ServiceRules from './pages/ServiceRules';
 import SitePreferences from './pages/SitePreferences';
 import Contact from './pages/Contact';
 import FlightSearch from './pages/FlightSearch';
+import HotelSearch from './pages/HotelSearch';
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
@@ -66,6 +67,7 @@ function AppInner() {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/team" element={<OurTeam />} />
         <Route path="/flights" element={<FlightSearch />} />
+        <Route path="/hotels" element={<HotelSearch />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/destination/:countryId" element={<DestinationDetails />} />
