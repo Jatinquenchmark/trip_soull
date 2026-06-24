@@ -509,6 +509,7 @@ const PackageDetails = () => {
 
                         <div className="space-y-10">
                           {activeItinerary?.map((day, i) => {
+                            const isExpanded = expandedDay === i;
                             return (
                               <div key={i} className="relative pl-12 md:pl-24">
                                 {/* Glowing Timeline Dot */}
@@ -516,10 +517,13 @@ const PackageDetails = () => {
                                   <div className="absolute inset-0 rounded-full animate-ping bg-soul-blue/30"></div>
                                 </div>
 
-                                {/* Main Card Container (Static, No Accordion) */}
+                                {/* Main Card Container (Accordion) */}
                                 <div className="rounded-3xl border border-soul-blue/20 bg-white shadow-[0_15px_40px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)] transition-all duration-500 overflow-hidden">
                                   {/* Header */}
-                                  <div className="p-6 md:p-8 flex items-center justify-between gap-4">
+                                  <div 
+                                    className="p-6 md:p-8 flex items-center justify-between gap-4 cursor-pointer"
+                                    onClick={() => setExpandedDay(isExpanded ? null : i)}
+                                  >
                                     <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 flex-1">
                                       {/* Bright Day Badge */}
                                       <div className="shrink-0 px-5 py-3 rounded-2xl text-center font-black bg-gradient-to-br from-soul-blue to-blue-600 text-white shadow-xl shadow-blue-200">
@@ -534,52 +538,67 @@ const PackageDetails = () => {
                                         <p className="text-sm font-semibold text-slate-500 mt-2 uppercase tracking-widest">{day.date || 'Scheduled Experience'}</p>
                                       </div>
                                     </div>
+                                    <div className="w-10 h-10 shrink-0 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-soul-blue transition-colors">
+                                      {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                                    </div>
                                   </div>
 
                                   {/* Content */}
-                                  <div className="p-6 md:p-8 pt-0 md:pt-0">
-                                    {/* Divider */}
-                                    <div className="h-px w-full bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 mb-8"></div>
-                                    
-                                    {/* Pace Tag */}
-                                    {day.pace && (
-                                      <div className="mb-6 flex gap-2">
-                                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wide">
-                                          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                                          {day.pace} Pace
-                                        </span>
-                                      </div>
-                                    )}
+                                  <AnimatePresence>
+                                    {isExpanded && (
+                                      <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="overflow-hidden"
+                                      >
+                                        <div className="p-6 md:p-8 pt-0 md:pt-0">
+                                          {/* Divider */}
+                                          <div className="h-px w-full bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 mb-8"></div>
+                                          
+                                          {/* Pace Tag */}
+                                          {day.pace && (
+                                            <div className="mb-6 flex gap-2">
+                                              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wide">
+                                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                                {day.pace} Pace
+                                              </span>
+                                            </div>
+                                          )}
 
-                                    {/* Description Points */}
-                                    <div className="space-y-4 mb-8">
-                                      {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
-                                        <div key={idx} className="flex gap-4 items-start bg-slate-50/50 p-4 rounded-2xl border border-slate-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors">
-                                          <div className="w-7 h-7 rounded-full bg-white border border-blue-100 shadow-sm flex items-center justify-center shrink-0 text-soul-blue mt-0.5">
-                                            <Check className="w-4 h-4" />
+                                          {/* Description Points */}
+                                          <div className="space-y-4 mb-8">
+                                            {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
+                                              <div key={idx} className="flex gap-4 items-start bg-slate-50/50 p-4 rounded-2xl border border-slate-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors">
+                                                <div className="w-7 h-7 rounded-full bg-white border border-blue-100 shadow-sm flex items-center justify-center shrink-0 text-soul-blue mt-0.5">
+                                                  <Check className="w-4 h-4" />
+                                                </div>
+                                                <p className="text-slate-600 text-base leading-relaxed pt-0.5">{line.replace(/^- /, '')}</p>
+                                              </div>
+                                            ))}
                                           </div>
-                                          <p className="text-slate-600 text-base leading-relaxed pt-0.5">{line.replace(/^- /, '')}</p>
-                                        </div>
-                                      ))}
-                                    </div>
 
-                                    {/* Highlight Box */}
-                                    <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100 relative overflow-hidden shadow-sm">
-                                      {/* Decorative icon background */}
-                                      <Star className="absolute -right-6 -bottom-6 w-32 h-32 text-orange-200/40 rotate-12" />
-                                      <div className="relative z-10 flex gap-5 items-start">
-                                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-200 flex items-center justify-center shrink-0">
-                                          <Star className="w-6 h-6 fill-white" />
+                                          {/* Highlight Box */}
+                                          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100 relative overflow-hidden shadow-sm">
+                                            {/* Decorative icon background */}
+                                            <Star className="absolute -right-6 -bottom-6 w-32 h-32 text-orange-200/40 rotate-12" />
+                                            <div className="relative z-10 flex gap-5 items-start">
+                                              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-200 flex items-center justify-center shrink-0">
+                                                <Star className="w-6 h-6 fill-white" />
+                                              </div>
+                                              <div>
+                                                <span className="block text-xs font-black text-orange-800 uppercase tracking-[0.2em] mb-2">Special Highlight</span>
+                                                <p className="text-slate-700 text-[15px] font-medium leading-relaxed">
+                                                  {day.whyThisWorks || "Experience the absolute best of the destination with thoughtfully planned moments of magic and comfort."}
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
-                                        <div>
-                                          <span className="block text-xs font-black text-orange-800 uppercase tracking-[0.2em] mb-2">Special Highlight</span>
-                                          <p className="text-slate-700 text-[15px] font-medium leading-relaxed">
-                                            {day.whyThisWorks || "Experience the absolute best of the destination with thoughtfully planned moments of magic and comfort."}
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
                                 </div>
                               </div>
                             );
