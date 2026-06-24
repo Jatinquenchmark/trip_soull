@@ -220,29 +220,7 @@ const Home = () => {
             Explore expertly curated multi-day tours
           </motion.p>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex items-center gap-2 md:gap-4 bg-white shadow-2xl rounded-full p-1 md:p-2 pl-4 md:pl-6 border border-slate-100 max-w-2xl w-full"
-          >
-            <MapPin className="text-slate-400 w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
-            <input 
-              type="text" 
-              placeholder="Search destinations..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              className="flex-1 bg-transparent border-none outline-none text-slate-700 py-2 md:py-3 text-sm md:text-base font-poppins"
-            />
-            <button 
-              onClick={handleSearch}
-              style={{ backgroundColor: '#2B4A8C' }}
-              className="text-white px-5 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-sm md:text-base hover:opacity-90 transition-all shadow-lg whitespace-nowrap"
-            >
-              Search
-            </button>
-          </motion.div>
+
         </div>
       </section>
 
@@ -323,7 +301,32 @@ const Home = () => {
         </div>
       </section>
 
-
+      {/* Search Bar - Moved below filter */}
+      <section className="py-8 bg-[#FDFDFD] flex justify-center px-4 -mt-4 relative z-30">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center gap-2 md:gap-4 bg-white shadow-2xl rounded-full p-1 md:p-2 pl-4 md:pl-6 border border-slate-100 max-w-2xl w-full"
+        >
+          <MapPin className="text-slate-400 w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
+          <input 
+            type="text" 
+            placeholder="Search destinations..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            className="flex-1 bg-transparent border-none outline-none text-slate-700 py-2 md:py-3 text-sm md:text-base font-poppins"
+          />
+          <button 
+            onClick={handleSearch}
+            style={{ backgroundColor: '#2B4A8C' }}
+            className="text-white px-5 md:px-10 py-2.5 md:py-4 rounded-full font-bold text-sm md:text-base hover:opacity-90 transition-all shadow-lg whitespace-nowrap"
+          >
+            Search
+          </button>
+        </motion.div>
+      </section>
 
       <PackagesSection 
         selectedCountryId={selectedCountry?.id} 
