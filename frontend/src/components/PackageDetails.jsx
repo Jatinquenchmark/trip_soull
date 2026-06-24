@@ -19,7 +19,7 @@ const PackageDetails = () => {
   const [pkgTiers, setPkgTiers] = useState(pricingTiers);
   const [selectedTier, setSelectedTier] = useState(pricingTiers[1]);
   const [activeImage, setActiveImage] = useState(null);
-  const [expandedDay, setExpandedDay] = useState(0);
+  const [expandedDay, setExpandedDay] = useState(null);
 
   const availableExperiences = experiences.filter(exp => {
     if (pkg && pkg.experiences) {
