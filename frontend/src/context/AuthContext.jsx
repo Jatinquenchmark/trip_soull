@@ -62,8 +62,15 @@ export const AuthProvider = ({ children }) => {
     await checkAuth();
   };
 
+  const fetchWithAuth = async (url, options = {}) => {
+    return fetch(url, {
+      ...options,
+      credentials: 'include'
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isAdmin, user, login, logout, loading, checkAuth }}>
+    <AuthContext.Provider value={{ isAuthenticated, isAdmin, user, login, logout, loading, checkAuth, fetchWithAuth }}>
       {children}
     </AuthContext.Provider>
   );
