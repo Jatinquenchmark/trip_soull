@@ -135,91 +135,98 @@ const PackagesSection = ({ selectedCountryId, searchQuery, limit = 6, showViewAl
               return (
                 <div 
                   key={packageId} 
-                  className="bg-white rounded-[24px] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group relative"
+                  className="bg-white rounded-[40px] p-3 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-shadow flex flex-col group relative"
                 >
-                  {/* Image/Top area */}
-                  <div className="h-48 relative overflow-hidden bg-slate-900">
-                    <Link to={`/package/${packageId}`}>
-                      <img 
-                        src={pkg.images && pkg.images.length > 0 ? pkg.images[0] : 'https://placehold.co/600x400/png'} 
-                        alt={pkg.name} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                      />
-                    </Link>
+                  {/* Image Container */}
+                  <div className="relative h-[280px] w-full rounded-[32px] overflow-hidden">
+                    <img 
+                      src={pkg.images && pkg.images.length > 0 ? pkg.images[0] : 'https://placehold.co/600x400/png'} 
+                      alt={pkg.name} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    />
                     
-                    {/* Floating Badges */}
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-soul-blue font-black px-3.5 py-1.5 rounded-full text-[10px] uppercase tracking-wider border border-white/20 shadow-md">
-                      Best Seller
-                    </div>
-                    
-                    {/* Wishlist Button */}
-                    <button 
-                      onClick={(e) => handleWishlistToggle(e, packageId)}
-                      className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-10"
-                    >
-                      <Heart className={`w-5 h-5 transition-colors ${wishlist.includes(packageId) ? 'fill-red-500 text-red-500' : 'text-slate-400'}`} />
-                    </button>
+                    {/* Dark Gradient at bottom for text readability */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none"></div>
 
-                    <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full text-[10px] text-white font-black flex items-center gap-1.5 border border-white/10 shadow-md">
-                      <Star className="text-yellow-400 w-3 h-3 fill-yellow-400" /> {(pkg.rating || 5).toFixed(1)}
+                    {/* Top Right Badges */}
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <div className="bg-white/90 backdrop-blur-md text-slate-800 text-[10px] font-bold px-3 py-1.5 rounded-full flex items-center shadow-sm">
+                        Best Seller
+                      </div>
+                      <button 
+                        onClick={(e) => handleWishlistToggle(e, packageId)}
+                        className="bg-white/90 backdrop-blur-md p-1.5 rounded-full hover:bg-white transition-colors shadow-sm"
+                      >
+                        <Heart className={`w-4 h-4 ${wishlist.includes(packageId) ? 'fill-red-500 text-red-500' : 'text-slate-600'}`} />
+                      </button>
+                    </div>
+
+                    {/* Bottom Content (Inside Image) */}
+                    <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end gap-2">
+                      <div className="flex-1">
+                        <h3 className="text-white text-lg font-bold leading-tight mb-1.5 line-clamp-2">{pkg.name}</h3>
+                        <p className="text-gray-300 text-xs flex items-center gap-1 font-medium">
+                          <MapPin className="w-3.5 h-3.5" /> {displayLocation}
+                        </p>
+                      </div>
+                      <Link 
+                        to={`/package/${packageId}`} 
+                        className="bg-white/95 backdrop-blur-sm hover:bg-white text-slate-900 text-[11px] font-bold py-2.5 px-4 rounded-full flex items-center gap-1.5 transition-colors shrink-0 shadow-lg active:scale-95"
+                      >
+                        View Details <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
                     </div>
                   </div>
 
-                  {/* Body Content */}
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 text-slate-500 text-[11px] mb-2 font-bold">
-                      <Clock className="w-3.5 h-3.5 text-soul-blue" />
-                      <span>{displayDuration}</span>
-                    </div>
-
-                    <Link to={`/package/${packageId}`}>
-                      <h3 className="text-base font-black text-slate-800 mb-1 group-hover:text-soul-blue transition-colors line-clamp-1">
-                        {pkg.name}
-                      </h3>
-                    </Link>
-
-                    <p className="text-slate-500 text-[11px] font-semibold mb-2 flex items-center gap-1.5">
-                      <MapPin className="w-3 h-3 text-red-500" /> {displayLocation}
-                    </p>
-
-                    <p className="text-slate-500 text-xs font-medium line-clamp-2 mb-3 leading-relaxed">
-                      {pkg.overview}
-                    </p>
-
-                    {/* Pricing Tiers Section */}
+                  {/* Stats Section Below Image */}
+                  <div className="px-4 pt-6 pb-4 flex flex-col flex-1 justify-between">
+                    {/* Top row of stats: Pricing Tiers */}
                     {pkg.pricingTiers && (pkg.pricingTiers.essential || pkg.pricingTiers.comfort || pkg.pricingTiers.luxury) && (
-                      <div className="mt-2 mb-3 grid grid-cols-3 gap-2">
+                      <div className="flex gap-6 mb-5">
                         {pkg.pricingTiers.essential && (
-                          <Link to={`/package/${packageId}?tier=basic`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md">
-                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Essential</span>
-                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.essential.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                          </Link>
+                          <div className="flex flex-col">
+                            <span className="text-[13px] font-extrabold text-slate-800">₹{pkg.pricingTiers.essential.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                            <span className="text-[10px] text-slate-400 font-semibold mt-0.5">Essential</span>
+                          </div>
                         )}
                         {pkg.pricingTiers.comfort && (
-                          <Link to={`/package/${packageId}?tier=medium`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-8 h-8 bg-soul-blue/5 rounded-full blur-md"></div>
-                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Comfort</span>
-                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.comfort.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                          </Link>
+                          <div className="flex flex-col">
+                            <span className="text-[13px] font-extrabold text-slate-800">₹{pkg.pricingTiers.comfort.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                            <span className="text-[10px] text-slate-400 font-semibold mt-0.5">Comfort</span>
+                          </div>
                         )}
                         {pkg.pricingTiers.luxury && (
-                          <Link to={`/package/${packageId}?tier=luxury`} className="bg-white border border-slate-200 rounded-lg py-2 px-1 text-center hover:bg-blue-50 hover:border-soul-blue/30 transition-all cursor-pointer group/tier shadow-sm hover:shadow-md">
-                            <span className="block text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1 group-hover/tier:text-soul-blue transition-colors">Luxury</span>
-                            <span className="block text-[11px] font-black text-slate-800">₹{pkg.pricingTiers.luxury.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                          </Link>
+                          <div className="flex flex-col">
+                            <span className="text-[13px] font-extrabold text-slate-800">₹{pkg.pricingTiers.luxury.toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                            <span className="text-[10px] text-slate-400 font-semibold mt-0.5">Luxury</span>
+                          </div>
                         )}
                       </div>
                     )}
 
-                    {/* CTA Buttons */}
-                    <div className="mt-auto pt-3 border-t border-slate-100 flex">
-                      <Link 
-                        to={`/package/${packageId}`}
-                        style={{ backgroundColor: '#2B4A8C' }}
-                        className="w-full text-center text-white font-black py-2 rounded-xl hover:opacity-90 transition-all shadow-md active:scale-95 text-xs"
-                      >
-                        View Details & Book
-                      </Link>
+                    {/* Bottom row of stats */}
+                    <div className="flex justify-between items-end mt-auto">
+                      <div className="flex gap-8">
+                        <div className="flex flex-col">
+                          <div className="w-10 h-1.5 rounded-full bg-blue-400 mb-2"></div>
+                          <span className="text-[10px] text-slate-400 font-semibold">{displayDuration}</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[13px] font-extrabold text-slate-800 flex items-center gap-1">
+                            {(pkg.rating || 5).toFixed(1)} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 -mt-0.5" />
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-semibold mt-0.5">Rating</span>
+                        </div>
+                      </div>
+
+                      {/* Decorative Map Box placeholder */}
+                      <div className="w-20 h-14 bg-slate-50/80 rounded-xl border border-slate-100 flex items-center justify-center opacity-80">
+                        <svg viewBox="0 0 40 30" className="w-12 h-8 stroke-slate-300" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5,25 L10,20 L12,22 L16,14 L22,16 L28,8 L35,5" />
+                          <circle cx="5" cy="25" r="2" fill="#cbd5e1" stroke="none" />
+                          <circle cx="35" cy="5" r="2" fill="#cbd5e1" stroke="none" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
