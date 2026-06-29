@@ -8,6 +8,9 @@ import {
 import { destinations, experiences, pricingTiers } from '../data/trips';
 import { API_BASE_URL } from '../config';
 import PackagesSection from './PackagesSection';
+import { loadRazorpayScript } from '../utils/loadRazorpay';
+import { useAuth } from '../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const PackageDetails = () => {
   const { id } = useParams();
@@ -20,6 +23,7 @@ const PackageDetails = () => {
   const [selectedTier, setSelectedTier] = useState(pricingTiers[1]);
   const [activeImage, setActiveImage] = useState(null);
   const [expandedDay, setExpandedDay] = useState(null);
+  const { user, isAuthenticated } = useAuth();
 
   const availableExperiences = experiences.filter(exp => {
     if (pkg && pkg.experiences) {
@@ -136,9 +140,90 @@ const PackageDetails = () => {
     }
   };
 
-  const handleBooking = () => {
-    const message = `Hi TripSoul! I'm interested in the ${selectedTier?.name || 'Comfort Soul'} for ${pkg?.name} (${selectedExp?.name || 'Luxury'} style).`;
-    window.open(`https://wa.me/918851484102?text=${encodeURIComponent(message)}`, '_blank');
+  const handleBooking = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please login to book a package!');
+      navigate('/login');
+      return;
+    }
+
+    const priceString = selectedTier?.price || '0';
+    const amount = parseInt(priceString.toString().replace(/[^\d]/g, ''));
+    if (!amount || amount <= 0) {
+      toast.error('Invalid amount for booking.');
+      return;
+    }
+
+    const isLoaded = await loadRazorpayScript();
+    if (!isLoaded) {
+      toast.error('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+
+    toast.loading('Initiating payment...', { id: 'payment-toast' });
+
+    try {
+      const orderRes = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount })
+      });
+      const orderData = await orderRes.json();
+      
+      if (!orderData.success) {
+        toast.error(orderData.message || 'Failed to create order', { id: 'payment-toast' });
+        return;
+      }
+
+      toast.dismiss('payment-toast');
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_T7O9Ow7E7T4SLi', 
+        amount: orderData.order.amount,
+        currency: orderData.order.currency,
+        name: 'Trip Soul',
+        description: `Booking: ${pkg.name} - ${selectedTier?.name}`,
+        order_id: orderData.order.id,
+        handler: async function (response) {
+          toast.loading('Verifying payment...', { id: 'verify-toast' });
+          const verifyRes = await fetch(`${API_BASE_URL}/api/payment/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            })
+          });
+          const verifyData = await verifyRes.json();
+          if (verifyData.success) {
+            toast.success('Payment successful! Booking confirmed.', { id: 'verify-toast' });
+            // Optionally redirect to bookings page
+            navigate('/bookings');
+          } else {
+            toast.error('Payment verification failed!', { id: 'verify-toast' });
+          }
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+        },
+        theme: {
+          color: '#2B4A8C'
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+      
+      paymentObject.on('payment.failed', function (response) {
+        toast.error('Payment Failed or Cancelled');
+      });
+
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong!', { id: 'payment-toast' });
+    }
   };
 
   if (loading) {
@@ -696,7 +781,7 @@ const PackageDetails = () => {
                           className="group w-full relative overflow-hidden bg-soul-blue text-white py-5 rounded-2xl font-black text-sm tracking-wider transition-all hover:bg-slate-900 hover:shadow-2xl hover:shadow-blue-200 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
                         >
                           <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                          <span className="relative z-10">Lock This Price</span>
+                          <span className="relative z-10">Pay & Book Now</span>
                           <Check className="w-5 h-5 relative z-10" />
                         </button>
 

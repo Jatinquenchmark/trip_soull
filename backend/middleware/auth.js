@@ -1,29 +1,33 @@
-const { requireAuth } = require('@clerk/express');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-const loadUser = async (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
-    if (!req.auth || !req.auth.userId) {
-      return res.status(401).json({ message: 'No token, authorization denied' });
+    const token = req.cookies.userToken || req.cookies.adminToken;
+    
+    if (!token) {
+      return res.status(401).json({ message: 'No authentication token found, authorization denied' });
     }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Find the user in MongoDB using the Clerk ID
-    const user = await User.findOne({ clerkId: req.auth.userId });
-    
-    if (user) {
+    // Find the user in MongoDB
+    if (decoded.role === 'admin') {
+      req.user = { id: 'admin', role: 'admin' };
+    } else {
+      const user = await User.findById(decoded.id).select('-password');
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
       req.user = user;
-      // Also map id so req.user.id works for downstream routes
-      req.user.id = user._id; 
+      req.user.id = user._id; // Ensure req.user.id is accessible
     }
-    
+
     next();
   } catch (err) {
     console.error('Auth middleware error:', err);
-    res.status(500).json({ message: 'Server error in auth middleware' });
+    res.status(401).json({ message: 'Token is not valid' });
   }
 };
 
-// This middleware array ensures that a valid Clerk user is making the request,
-// and then loads their corresponding MongoDB user object into req.user.
-module.exports = [requireAuth(), loadUser];
-
+module.exports = auth;

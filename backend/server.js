@@ -11,6 +11,7 @@ const googleAuthRoutes = require('./routes/googleAuthRoutes');
 const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const webhookRoutes = require('./routes/webhookRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const { clerkMiddleware } = require('@clerk/express');
 
 const app = express();
@@ -61,6 +62,7 @@ app.use('/api/auth', googleAuthRoutes);
 app.use('/api/packages', packageRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // MongoDB Connection
 const PORT = process.env.PORT || 5000;
