@@ -11,7 +11,22 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlToken = urlParams.get('token');
+      if (urlToken) {
+        localStorage.setItem('userToken', urlToken);
+        // Clean up URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      const token = localStorage.getItem('userToken');
+      const headers = { 'Content-Type': 'application/json' };
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+        headers,
         credentials: 'include'
       });
       if (response.ok) {
@@ -40,10 +55,17 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const endpoint = isAdmin ? '/api/auth/logout' : '/api/auth/user-logout';
+      const token = localStorage.getItem('userToken');
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
       await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
+        headers,
         credentials: 'include'
       });
+      localStorage.removeItem('userToken');
     } catch (err) {
       console.error('Logout API call failed:', err);
     } finally {
@@ -63,8 +85,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   const fetchWithAuth = async (url, options = {}) => {
+    const token = localStorage.getItem('userToken');
+    const headers = {
+      ...options.headers,
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
     return fetch(url, {
       ...options,
+      headers,
       credentials: 'include'
     });
   };

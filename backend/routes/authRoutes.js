@@ -31,7 +31,7 @@ router.post('/login', authLimiter, (req, res) => {
       maxAge: 24 * 60 * 60 * 1000 // 1 day
     });
 
-    return res.json({ message: 'Logged in successfully' });
+    return res.json({ message: 'Logged in successfully', token });
   }
 
   return res.status(401).json({ message: 'Invalid credentials' });
@@ -85,6 +85,7 @@ router.post('/register', authLimiter, async (req, res) => {
 
     res.status(201).json({ 
       message: 'User registered successfully', 
+      token,
       user: { id: user._id, name: user.name, email: user.email, role: user.role } 
     });
   } catch (error) {
@@ -124,6 +125,7 @@ router.post('/user-login', authLimiter, async (req, res) => {
 
     res.json({ 
       message: 'Logged in successfully',
+      token,
       user: { id: user._id, name: user.name, email: user.email, role: user.role }
     });
   } catch (error) {
@@ -151,6 +153,12 @@ router.get('/verify', async (req, res) => {
     let userData = null;
     let currentRole = null;
 
+    const authHeader = req.headers.authorization;
+    let bearerToken = null;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      bearerToken = authHeader.split(' ')[1];
+    }
+
     if (req.cookies && req.cookies.adminToken) {
       try {
         jwt.verify(req.cookies.adminToken, process.env.JWT_SECRET);
@@ -160,9 +168,11 @@ router.get('/verify', async (req, res) => {
       } catch (err) {}
     }
 
-    if (req.cookies && req.cookies.userToken) {
+    const userToken = (req.cookies && req.cookies.userToken) ? req.cookies.userToken : bearerToken;
+
+    if (userToken) {
       try {
-        const decoded = jwt.verify(req.cookies.userToken, process.env.JWT_SECRET);
+        const decoded = jwt.verify(userToken, process.env.JWT_SECRET);
         if (decoded.role === 'user') {
           const user = await User.findById(decoded.id).select('-password');
           if (user) {
