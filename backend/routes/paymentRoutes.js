@@ -3,13 +3,39 @@ const router = express.Router();
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
+const Package = require('../models/Package');
+
 // Route to create a Razorpay order
 router.post('/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR' } = req.body;
+    const { packageId, tierId, experienceId, currency = 'INR' } = req.body;
 
-    if (!amount) {
-      return res.status(400).json({ success: false, message: 'Amount is required' });
+    if (!packageId || !tierId) {
+      return res.status(400).json({ success: false, message: 'Package ID and Tier ID are required' });
+    }
+
+    const pkg = await Package.findById(packageId);
+    if (!pkg) {
+      return res.status(404).json({ success: false, message: 'Package not found' });
+    }
+
+    // Determine active pricing source
+    let activePricingSource = pkg.pricingTiers;
+    if (experienceId && pkg.experiences && pkg.experiences[experienceId]) {
+      const exp = pkg.experiences[experienceId];
+      if (exp.pricingTiers && (exp.pricingTiers.essential || exp.pricingTiers.comfort || exp.pricingTiers.luxury)) {
+        activePricingSource = exp.pricingTiers;
+      }
+    }
+
+    let priceString = '0';
+    if (tierId === 'basic') priceString = activePricingSource?.essential || '0';
+    if (tierId === 'medium') priceString = activePricingSource?.comfort || '0';
+    if (tierId === 'luxury') priceString = activePricingSource?.luxury || '0';
+
+    const amount = parseInt(priceString.toString().replace(/[^\d]/g, ''));
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ success: false, message: 'Invalid or zero price for selected package tier' });
     }
 
     const instance = new Razorpay({
@@ -26,7 +52,7 @@ router.post('/create-order', async (req, res) => {
     const order = await instance.orders.create(options);
 
     if (!order) {
-      return res.status(500).json({ success: false, message: 'Some error occurred' });
+      return res.status(500).json({ success: false, message: 'Some error occurred with Razorpay' });
     }
 
     res.json({ success: true, order });

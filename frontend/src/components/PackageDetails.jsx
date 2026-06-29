@@ -147,10 +147,8 @@ const PackageDetails = () => {
       return;
     }
 
-    const priceString = selectedTier?.price || '0';
-    const amount = parseInt(priceString.toString().replace(/[^\d]/g, ''));
-    if (!amount || amount <= 0) {
-      toast.error('Invalid amount for booking.');
+    if (!pkg) {
+      toast.error('Package details missing.');
       return;
     }
 
@@ -162,11 +160,17 @@ const PackageDetails = () => {
 
     toast.loading('Initiating payment...', { id: 'payment-toast' });
 
+    const payload = {
+      packageId: pkg._id || pkg.id,
+      tierId: selectedTier?.id || 'medium',
+      experienceId: selectedExp?.id || null
+    };
+
     try {
       const orderRes = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount })
+        body: JSON.stringify(payload)
       });
       const orderData = await orderRes.json();
       
