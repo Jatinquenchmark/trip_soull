@@ -243,9 +243,10 @@ const Home = () => {
             spaceBetween={15}
             slidesPerView={5}
             breakpoints={{
-              640: { slidesPerView: 6, spaceBetween: 20 },
-              768: { slidesPerView: 8, spaceBetween: 25 },
-              1024: { slidesPerView: 10, spaceBetween: 30 },
+              640: { slidesPerView: 5, spaceBetween: 20 },
+              768: { slidesPerView: 6, spaceBetween: 30 },
+              1024: { slidesPerView: 7, spaceBetween: 40 },
+              1280: { slidesPerView: 8, spaceBetween: 50 },
             }}
             className="w-full"
           >
