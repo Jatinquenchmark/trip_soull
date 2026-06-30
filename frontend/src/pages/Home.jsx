@@ -237,10 +237,10 @@ const Home = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl lg:text-[80px] font-extrabold text-[#1A1A1A] mb-6 md:mb-8 leading-[1.1] tracking-tight font-poppins drop-shadow-sm"
+            className="text-[44px] md:text-7xl lg:text-[92px] font-black text-[#0A0F1D] mb-5 md:mb-8 leading-[1.05] tracking-[-0.04em] font-serif drop-shadow-sm"
           >
             Your Tour, <br />
-            Perfectly <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2B4A8C] via-[#6366F1] to-[#F97316]">Personalised!</span>
+            Perfectly <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E3A8A] via-[#4F46E5] to-[#E11D48] drop-shadow-md">Personalised!</span>
           </motion.h1>
           
           <motion.p 

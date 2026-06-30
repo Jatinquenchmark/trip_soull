@@ -78,14 +78,14 @@ const Navbar = () => {
 
 
   return (
-    <nav className={`fixed top-0 w-full z-[1000] transition-transform duration-300 bg-white border-b border-slate-100 py-1 px-6 ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="TripSoul" className="h-16 w-auto object-contain" />
+    <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-[1000] transition-all duration-500 ${showNavbar ? 'translate-y-0 opacity-100' : '-translate-y-[150%] opacity-0'}`}>
+      <div className="bg-white/40 backdrop-blur-md rounded-full p-2 flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50">
+        
+        {/* Left Logo Pill */}
+        <div className="flex items-center">
+          <Link to="/" className="bg-white/80 backdrop-blur-sm rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center hover:scale-105 transition-transform shadow-sm">
+            <img src={logo} alt="TripSoul" className="h-8 md:h-10 w-auto object-contain" />
           </Link>
- 
-
         </div>
 
         {/* Desktop Menu */}
@@ -99,7 +99,7 @@ const Navbar = () => {
                   handleScroll(e, link.href);
                 }
               }}
-              className="text-sm font-medium text-soul-blue/80 hover:text-soul-blue transition-colors"
+              className="text-[14px] font-semibold text-slate-700 hover:text-black transition-colors px-1"
             >
               {link.name}
             </Link>
@@ -108,7 +108,7 @@ const Navbar = () => {
           {/* Professional Flights Icon */}
           <Link 
             to="/flights" 
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all shadow-sm border border-blue-100"
+            className="flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/50 backdrop-blur-sm text-slate-700 hover:bg-white hover:text-black transition-all shadow-sm"
             title="Search Flights"
           >
             <Plane className="w-5 h-5" />
@@ -121,15 +121,15 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               <button 
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-2 text-sm font-bold text-soul-blue bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-full transition-all border border-blue-100"
+                className="flex items-center gap-2 text-[14px] font-bold text-slate-800 bg-white/60 hover:bg-white backdrop-blur-sm px-5 md:px-6 py-2.5 md:py-3 rounded-full transition-all shadow-sm"
               >
                 {user.profilePicture ? (
-                  <img src={user.profilePicture} alt="Profile" className="w-6 h-6 rounded-full object-cover border border-white" />
+                  <img src={user.profilePicture} alt="Profile" className="w-5 h-5 rounded-full object-cover border border-slate-200" />
                 ) : (
                   <UserCircle className="w-5 h-5" />
                 )}
                 <span>{user.name.split(' ')[0]}</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showProfileMenu ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${showProfileMenu ? 'rotate-180' : ''}`} />
               </button>
               
               {/* Dropdown Menu */}
@@ -156,29 +156,29 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <Link to="/login" className="text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full transition-colors shadow-md">
+            <Link to="/login" className="text-[14px] font-bold text-white bg-slate-900 hover:bg-black px-6 py-3 md:py-3.5 rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap">
               Sign In
             </Link>
           )}
         </div>
 
         {/* Mobile Toggle */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="p-2 text-slate-800">
+        <div className="md:hidden pr-3">
+          <button onClick={() => setIsOpen(!isOpen)} className="text-slate-800 p-1 focus:outline-none">
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-2xl p-6 flex flex-col gap-4 border-t border-slate-100">
+        <div className="md:hidden absolute top-[110%] left-0 w-full bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] p-6 flex flex-col gap-4 border border-white/50 mt-2">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
               to={link.href.startsWith('/') ? link.href : `/${link.href}`} 
               onClick={() => setIsOpen(false)}
-              className="text-lg font-medium text-slate-700 py-2 border-b border-slate-50"
+              className="text-lg font-medium text-slate-700 hover:text-black py-2 border-b border-slate-200/50"
             >
               {link.name}
             </Link>
@@ -188,7 +188,7 @@ const Navbar = () => {
           <Link 
             to="/flights" 
             onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 text-lg font-bold text-blue-600 py-3 border-b border-slate-50 bg-blue-50/50 px-4 rounded-xl mt-2"
+            className="flex items-center gap-3 text-lg font-bold text-slate-800 py-3 border-b border-slate-200/50 bg-white/50 px-4 rounded-xl mt-2 shadow-sm"
           >
             <Plane className="w-6 h-6" /> Search Flights
           </Link>
