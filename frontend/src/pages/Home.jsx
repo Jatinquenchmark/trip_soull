@@ -214,18 +214,18 @@ const Home = () => {
             </motion.div>
           </div>
 
-          {/* New Herocomp Images - Moved Inwards */}
+          {/* New Herocomp Images - Moved Inwards and made visible on mobile with smaller size/opacity */}
           <motion.div 
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100"
+            className="absolute left-[-15%] top-[10%] lg:left-[1%] lg:top-[65%] -translate-y-1/2 z-0 block max-w-[120px] lg:max-w-[280px] pointer-events-none opacity-40 lg:opacity-100"
           >
             <img src={HerocompLeft} className="w-full h-auto object-contain transform -rotate-6" alt="" />
           </motion.div>
           <motion.div 
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute right-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100"
+            className="absolute right-[-15%] top-[80%] lg:right-[1%] lg:top-[65%] -translate-y-1/2 z-0 block max-w-[120px] lg:max-w-[280px] pointer-events-none opacity-40 lg:opacity-100"
           >
             <img src={HerocompRight} className="w-full h-auto object-contain transform rotate-6" alt="" />
           </motion.div>
@@ -247,7 +247,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base md:text-lg lg:text-xl text-[#4A4A4A] font-medium mb-8 md:mb-12 font-poppins max-w-2xl bg-white/40 backdrop-blur-sm px-6 py-2 rounded-full shadow-sm border border-white/50"
+            className="text-sm md:text-lg lg:text-xl text-[#4A4A4A] font-medium mb-8 md:mb-12 font-poppins max-w-2xl bg-white/40 backdrop-blur-sm px-4 md:px-6 py-1.5 md:py-2 rounded-full shadow-sm border border-white/50"
           >
             Explore expertly curated multi-day tours
           </motion.p>
@@ -258,9 +258,9 @@ const Home = () => {
 
       {/* Layer 1: Destination Selection (Thrillophilia Style) */}
       <section className={`py-3 md:py-4 border-b border-slate-100 bg-white sticky z-40 shadow-sm transition-all duration-300 ${isScrollingDown ? 'top-0' : 'top-[72px]'}`}>
-        <div className="max-w-7xl mx-auto px-10 relative">
+        <div className="max-w-7xl mx-auto px-4 md:px-10 relative">
           <button 
-            className="dest-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="dest-prev hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft size={16} />
           </button>
@@ -271,9 +271,10 @@ const Home = () => {
               prevEl: '.dest-prev',
               nextEl: '.dest-next',
             }}
-            spaceBetween={15}
-            slidesPerView={5}
+            spaceBetween={10}
+            slidesPerView={4.2}
             breakpoints={{
+              480: { slidesPerView: 5.2, spaceBetween: 15 },
               640: { slidesPerView: 6, spaceBetween: 20 },
               768: { slidesPerView: 8, spaceBetween: 25 },
               1024: { slidesPerView: 10, spaceBetween: 30 },
@@ -325,7 +326,7 @@ const Home = () => {
           </Swiper>
 
           <button 
-            className="dest-next absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md flex items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="dest-next hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white border border-slate-200 rounded-full shadow-md items-center justify-center text-slate-500 hover:text-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronRight size={16} />
           </button>
