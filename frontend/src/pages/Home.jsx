@@ -130,73 +130,105 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Thrillophilia Style Perfected */}
-      <section className="relative pt-32 lg:pt-48 pb-12 px-4 md:px-6 overflow-hidden bg-[#FDFDFD]">
+      {/* Hero Section - Premium Modern Style */}
+      <section className="relative pt-32 lg:pt-48 pb-12 px-4 md:px-6 overflow-hidden bg-slate-50">
+        
+        {/* Animated Mesh Gradient Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-blue-300 to-purple-300 blur-[100px] mix-blend-multiply opacity-70 animate-pulse" style={{ animationDuration: '8s' }}></div>
+          <div className="absolute top-[20%] right-[-10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-orange-200 to-pink-200 blur-[100px] mix-blend-multiply opacity-70 animate-pulse" style={{ animationDuration: '10s' }}></div>
+          <div className="absolute bottom-[-10%] left-[20%] w-[60%] h-[50%] rounded-full bg-gradient-to-tr from-teal-100 to-blue-200 blur-[100px] mix-blend-multiply opacity-70 animate-pulse" style={{ animationDuration: '12s' }}></div>
+        </div>
+
         {/* Patterned Static Thumbnails Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           {/* Left Side Horizontal Rows (Tapering) - Hidden on Mobile */}
           <div className="absolute left-[2%] top-[12%] hidden lg:flex flex-col gap-8 pointer-events-none">
             {/* Row 1 */}
-            <div className="flex gap-4 items-center -ml-20">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-2">
+            <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="flex gap-4 items-center -ml-20"
+            >
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-3 translate-y-2">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 translate-y-6">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-2 translate-y-6">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 translate-y-10">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-2 translate-y-10">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
-            </div>
+            </motion.div>
             {/* Row 2 */}
-            <div className="flex gap-4 items-center -ml-10">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 -translate-y-2">
+            <motion.div 
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="flex gap-4 items-center -ml-10"
+            >
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-2 -translate-y-2">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-4">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-3 translate-y-4">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-6 translate-y-8">
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-6 translate-y-8">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Side Horizontal Rows (Tapering) - Hidden on Mobile */}
           <div className="absolute right-[2%] top-[12%] hidden lg:flex flex-col gap-8 items-end pointer-events-none">
             {/* Row 1 */}
-            <div className="flex gap-4 items-center -mr-20">
-              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 translate-y-10">
+            <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="flex gap-4 items-center -mr-20"
+            >
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-2 translate-y-10">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-3 translate-y-6">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-3 translate-y-6">
                 <img src={HomeHero2} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-3 translate-y-2">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-3 translate-y-2">
                 <img src={HomeHero3} className="w-full h-full object-cover" alt="" />
               </div>
-            </div>
+            </motion.div>
             {/* Row 2 */}
-            <div className="flex gap-4 items-center -mr-10">
-              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-6 translate-y-8">
+            <motion.div 
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+              className="flex gap-4 items-center -mr-10"
+            >
+              <div className="w-16 h-16 md:w-24 md:h-24 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-6 translate-y-8">
                 <img src={HomeHero4} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-3 translate-y-4">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform rotate-3 translate-y-4">
                 <img src={HomeHero5} className="w-full h-full object-cover" alt="" />
               </div>
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform -rotate-2 -translate-y-2">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden shadow-2xl border-[3px] border-white/80 backdrop-blur-sm transform -rotate-2 -translate-y-2">
                 <img src={HomeHero1} className="w-full h-full object-cover" alt="" />
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* New Herocomp Images - Moved Inwards */}
-          <div className="absolute left-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100">
+          <motion.div 
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute left-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100"
+          >
             <img src={HerocompLeft} className="w-full h-auto object-contain transform -rotate-6" alt="" />
-          </div>
-          <div className="absolute right-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100">
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="absolute right-[1%] top-[65%] -translate-y-1/2 z-0 hidden lg:block max-w-[280px] pointer-events-none opacity-100"
+          >
             <img src={HerocompRight} className="w-full h-auto object-contain transform rotate-6" alt="" />
-          </div>
+          </motion.div>
         </div>
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 px-4">
@@ -205,21 +237,20 @@ const Home = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl lg:text-[80px] font-extrabold text-[#2D2D2D] mb-6 md:mb-8 leading-[1.1] tracking-tight font-poppins"
+            className="text-4xl md:text-6xl lg:text-[80px] font-extrabold text-[#1A1A1A] mb-6 md:mb-8 leading-[1.1] tracking-tight font-poppins drop-shadow-sm"
           >
             Your Tour, <br />
-            Perfectly <span className="text-[#2B4A8C]">Personalised!</span>
+            Perfectly <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2B4A8C] via-[#6366F1] to-[#F97316]">Personalised!</span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base md:text-lg lg:text-xl text-[#666666] font-medium mb-8 md:mb-12 font-poppins max-w-2xl"
+            className="text-base md:text-lg lg:text-xl text-[#4A4A4A] font-medium mb-8 md:mb-12 font-poppins max-w-2xl bg-white/40 backdrop-blur-sm px-6 py-2 rounded-full shadow-sm border border-white/50"
           >
             Explore expertly curated multi-day tours
           </motion.p>
-
 
         </div>
       </section>
