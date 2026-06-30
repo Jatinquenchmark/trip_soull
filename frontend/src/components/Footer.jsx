@@ -206,15 +206,20 @@ const Footer = () => {
             </div>
           </a>
 
-          <div className="inline-flex items-center gap-3 bg-white/5 border border-slate-800 px-4 py-2.5 rounded-2xl hover:bg-white/10 transition-all duration-300 group">
+          <a 
+            href="https://www.quenchmark.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-white/5 border border-slate-800 px-4 py-2.5 rounded-2xl hover:bg-white/10 transition-all duration-300 group cursor-pointer"
+          >
             <div className="w-10 h-10 bg-[#2B4A8C] rounded-xl flex items-center justify-center shadow-inner">
               <span className="text-white font-bold text-lg">Q</span>
             </div>
             <div className="text-left flex flex-col justify-center">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-tight mb-0.5">Powered By</span>
-              <span className="text-sm font-black text-white leading-tight tracking-wide">Qunchmark</span>
+              <span className="text-sm font-black text-white leading-tight tracking-wide">Quenchmark</span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </footer>
