@@ -253,7 +253,7 @@ const PackageDetails = () => {
   }
 
   return (
-    <div className="bg-[#F8FAFC] relative pb-12">
+    <div className="bg-[#F8FAFC] relative pb-28 lg:pb-12">
       {step === 1 && (
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden animate-in fade-in duration-1000">
           <img 
@@ -268,7 +268,7 @@ const PackageDetails = () => {
 
       {/* ── STEP 2 PREMIUM HERO COVER SECTION (FULL BLEED EDGE-TO-EDGE) ── */}
       {step === 2 && (
-        <div className="absolute top-0 left-0 w-full h-[340px] md:h-[440px] overflow-hidden z-0 animate-in fade-in duration-700">
+        <div className="absolute top-0 left-0 w-full h-[480px] md:h-[440px] overflow-hidden z-0 animate-in fade-in duration-700">
           <img 
             src={pkg.images?.[0] || ''} 
             className="w-full h-full object-cover object-[center_35%]" 
@@ -295,7 +295,7 @@ const PackageDetails = () => {
       )}
 
       {/* Luxury Navigation Bar */}
-      <div className="relative z-40 pt-20 md:pt-28 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col md:flex-row gap-3 md:gap-0 justify-between items-center">
+      <div className="relative z-40 pt-28 md:pt-32 px-4 md:px-8 max-w-[1600px] mx-auto flex flex-col md:flex-row gap-3 md:gap-0 justify-between items-center">
         <button 
           onClick={handleBack}
           className="group flex items-center justify-center gap-2 md:gap-4 px-4 md:px-6 py-2.5 md:py-3 rounded-full border border-white/20 shadow-sm transition-all duration-500 bg-white/10 backdrop-blur-md text-white hover:bg-white hover:text-slate-900 w-full md:w-auto"
@@ -472,11 +472,11 @@ const PackageDetails = () => {
             <div key="step2" className="relative animate-in fade-in duration-700">
 
               {/* Spacer matching the height of the full-bleed cover banner minus navbar padding */}
-              <div className="h-[340px] md:h-[440px] pointer-events-none"></div>
+              <div className="h-[480px] md:h-[440px] pointer-events-none"></div>
 
               {/* Light premium background strip for overlapping content */}
-              <div className="absolute top-[340px] md:top-[440px] bottom-0 inset-x-0 bg-gradient-to-b from-slate-50 via-white to-blue-50/30 z-0 rounded-t-[48px]"></div>
-              <div className="absolute top-[340px] md:top-[440px] bottom-0 inset-x-0 z-0 rounded-t-[48px] overflow-hidden pointer-events-none">
+              <div className="absolute top-[480px] md:top-[440px] bottom-0 inset-x-0 bg-gradient-to-b from-slate-50 via-white to-blue-50/30 z-0 rounded-t-[48px]"></div>
+              <div className="absolute top-[480px] md:top-[440px] bottom-0 inset-x-0 z-0 rounded-t-[48px] overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -left-40 w-[700px] h-[700px] bg-blue-100/60 rounded-full blur-[160px]"></div>
                 <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-slate-100/80 rounded-full blur-[140px]"></div>
                 <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-blue-50/80 rounded-full blur-[120px]"></div>
@@ -538,7 +538,7 @@ const PackageDetails = () => {
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                      <div className="grid grid-cols-3 gap-2 md:gap-5">
                         {pkgTiers.map((tier, idx) => {
                           const isSelected = selectedTier?.id === tier.id;
                           const configs = [
@@ -551,24 +551,24 @@ const PackageDetails = () => {
                             <button
                               key={tier.id}
                               onClick={() => setSelectedTier(tier)}
-                              className={`relative p-7 rounded-[24px] border text-left transition-all duration-500 ${c.bg} ${
+                              className={`relative p-3 md:p-7 rounded-[16px] md:rounded-[24px] border text-center md:text-left transition-all duration-500 w-full flex flex-col items-center md:items-start ${c.bg} ${
                                 isSelected
-                                  ? `shadow-2xl ${c.glow} scale-[1.04] ring-2 ring-soul-blue/30`
+                                  ? `shadow-xl md:shadow-2xl ${c.glow} scale-[1.02] md:scale-[1.04] ring-1 md:ring-2 ring-soul-blue/30`
                                   : 'opacity-70 hover:opacity-100 shadow-sm'
                               }`}
                             >
                               {isSelected && (
-                                <div className="absolute -top-2 -right-2 w-5 h-5 bg-soul-blue rounded-full flex items-center justify-center shadow-lg shadow-soul-blue/30">
-                                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                                <div className="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 w-4 h-4 md:w-5 md:h-5 bg-soul-blue rounded-full flex items-center justify-center shadow-lg shadow-soul-blue/30">
+                                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></div>
                                 </div>
                               )}
-                              <span className={`text-[9px] font-black uppercase tracking-[0.35em] ${c.tag}`}>{tier.name}</span>
-                              <h3 className={`text-4xl font-black tracking-tighter mt-3 mb-1 ${c.price}`}>{tier.price}</h3>
-                              <p className="text-slate-400 text-[11px] font-medium">per person</p>
+                              <span className={`text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-[0.35em] line-clamp-1 ${c.tag}`}>{tier.name}</span>
+                              <h3 className={`text-sm sm:text-lg md:text-4xl font-black tracking-tighter mt-1 md:mt-3 mb-0 md:mb-1 ${c.price}`}>{tier.price}</h3>
+                              <p className="text-slate-400 text-[7px] md:text-[11px] font-medium leading-none md:leading-normal mt-1 md:mt-0">per person</p>
                               {isSelected && (
-                                <div className="mt-4 pt-4 border-t border-soul-blue/10 flex items-center gap-2">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-soul-blue animate-pulse"></div>
-                                  <span className="text-[9px] font-black text-soul-blue uppercase tracking-widest">Active Selection</span>
+                                <div className="mt-2 md:mt-4 pt-2 md:pt-4 border-t border-soul-blue/10 flex items-center justify-center md:justify-start gap-1 md:gap-2 w-full">
+                                  <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-soul-blue animate-pulse shrink-0"></div>
+                                  <span className="text-[6px] md:text-[9px] font-black text-soul-blue uppercase tracking-widest truncate">Active<span className="hidden md:inline"> Selection</span></span>
                                 </div>
                               )}
                             </button>
@@ -593,115 +593,120 @@ const PackageDetails = () => {
                       </div>
 
                       <div className="relative z-10">
-                        {/* Timeline background line */}
-                        <div className="absolute left-6 md:left-[3.25rem] top-8 bottom-12 w-[3px] bg-gradient-to-b from-soul-blue/20 via-soul-blue/10 to-transparent rounded-full"></div>
+                        {/* Main Container (Accordion) */}
+                        <div className="rounded-3xl border border-soul-blue/20 bg-white shadow-[0_15px_40px_rgb(0,0,0,0.06)] transition-all duration-500 overflow-hidden">
+                          {/* Main Header */}
+                          <div 
+                            className="p-6 md:p-8 flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                            onClick={() => setExpandedDay(expandedDay === 'all' ? null : 'all')}
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="w-12 h-12 rounded-2xl bg-soul-blue text-white flex items-center justify-center shadow-lg shadow-blue-200 shrink-0">
+                                <Compass className="w-6 h-6" />
+                              </div>
+                              <div>
+                                <h4 className="text-xl md:text-2xl font-bold text-slate-900">View Full Itinerary</h4>
+                                <p className="text-sm font-medium text-slate-500">{activeItinerary?.length} Days of Experiences</p>
+                              </div>
+                            </div>
+                            <div className="w-10 h-10 shrink-0 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 transition-colors">
+                              {expandedDay === 'all' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                            </div>
+                          </div>
 
-                        <div className="space-y-10">
-                          {activeItinerary?.map((day, i) => {
-                            const isExpanded = expandedDay === i;
-                            return (
-                              <div key={i} className="relative pl-12 md:pl-24">
-                                {/* Glowing Timeline Dot */}
-                                <div className="absolute left-[13px] md:left-[35px] top-8 w-6 h-6 rounded-full border-[5px] border-white shadow-lg z-10 bg-soul-blue">
-                                  <div className="absolute inset-0 rounded-full animate-ping bg-soul-blue/30"></div>
-                                </div>
+                          {/* Main Content */}
+                          <AnimatePresence>
+                            {expandedDay === 'all' && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="overflow-hidden bg-slate-50/50"
+                              >
+                                <div className="p-4 md:p-10 pt-8 border-t border-slate-100 relative">
+                                  {/* Timeline background line */}
+                                  <div className="absolute left-[34px] md:left-[64px] top-8 bottom-12 w-[2px] bg-gradient-to-b from-soul-blue/20 via-soul-blue/10 to-transparent hidden sm:block"></div>
 
-                                {/* Main Card Container (Accordion) */}
-                                <div className="rounded-3xl border border-soul-blue/20 bg-white shadow-[0_15px_40px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.1)] transition-all duration-500 overflow-hidden">
-                                  {/* Header */}
-                                  <div 
-                                    className="p-6 md:p-8 flex items-center justify-between gap-4 cursor-pointer"
-                                    onClick={() => setExpandedDay(isExpanded ? null : i)}
-                                  >
-                                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 flex-1">
-                                      {/* Bright Day Badge */}
-                                      <div className="shrink-0 px-5 py-3 rounded-2xl text-center font-black bg-gradient-to-br from-soul-blue to-blue-600 text-white shadow-xl shadow-blue-200">
-                                        <span className="block text-[11px] uppercase tracking-widest opacity-90 mb-1">Day</span>
-                                        <span className="block text-2xl leading-none">{i + 1}</span>
-                                      </div>
-                                      
-                                      <div className="flex-1">
-                                        <h4 className="text-xl md:text-2xl font-bold text-soul-blue">
-                                          {day.title}
-                                        </h4>
-                                        <p className="text-sm font-semibold text-slate-500 mt-2 uppercase tracking-widest">{day.date || 'Scheduled Experience'}</p>
-                                      </div>
-                                    </div>
-                                    <div className="w-10 h-10 shrink-0 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-soul-blue transition-colors">
-                                      {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                                    </div>
-                                  </div>
+                                  <div className="space-y-12">
+                                    {activeItinerary?.map((day, i) => (
+                                      <div key={i} className="relative sm:pl-14 md:pl-20">
+                                        {/* Glowing Timeline Dot */}
+                                        <div className="absolute left-[-5px] md:left-[2px] top-4 w-4 h-4 rounded-full border-[3px] border-white shadow-md z-10 bg-soul-blue hidden sm:block"></div>
 
-                                  {/* Content */}
-                                  <AnimatePresence>
-                                    {isExpanded && (
-                                      <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="overflow-hidden"
-                                      >
-                                        <div className="p-6 md:p-8 pt-0 md:pt-0">
-                                          {/* Divider */}
-                                          <div className="h-px w-full bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 mb-8"></div>
+                                        {/* Day Header */}
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6 mb-6">
+                                          <div className="shrink-0 px-4 py-2 rounded-xl text-center font-black bg-white border border-slate-100 shadow-sm text-soul-blue w-fit">
+                                            <span className="block text-[9px] uppercase tracking-widest opacity-80 mb-0.5">Day</span>
+                                            <span className="block text-xl leading-none">{i + 1}</span>
+                                          </div>
                                           
+                                          <div className="flex-1">
+                                            <h4 className="text-xl md:text-2xl font-bold text-slate-900">
+                                              {day.title}
+                                            </h4>
+                                            <p className="text-xs font-semibold text-slate-500 mt-1 uppercase tracking-widest">{day.date || 'Scheduled Experience'}</p>
+                                          </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="bg-white p-5 md:p-8 rounded-2xl border border-slate-100 shadow-sm">
                                           {/* Pace Tag */}
                                           {day.pace && (
-                                            <div className="mb-6 flex gap-2">
-                                              <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wide">
-                                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                            <div className="mb-5 flex gap-2">
+                                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wide">
+                                                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                                                 {day.pace} Pace
                                               </span>
                                             </div>
                                           )}
 
                                           {/* Description Points */}
-                                          <div className="space-y-4 mb-8">
+                                          <div className="space-y-3 mb-6">
                                             {day.description.split('\n').filter(line => line.trim()).map((line, idx) => (
-                                              <div key={idx} className="flex gap-4 items-start bg-slate-50/50 p-4 rounded-2xl border border-slate-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors">
-                                                <div className="w-7 h-7 rounded-full bg-white border border-blue-100 shadow-sm flex items-center justify-center shrink-0 text-soul-blue mt-0.5">
-                                                  <Check className="w-4 h-4" />
+                                              <div key={idx} className="flex gap-3 items-start p-2 sm:p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                                                <div className="w-6 h-6 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0 text-soul-blue mt-0.5">
+                                                  <Check className="w-3.5 h-3.5" />
                                                 </div>
-                                                <p className="text-slate-600 text-base leading-relaxed pt-0.5">{line.replace(/^- /, '')}</p>
+                                                <p className="text-slate-600 text-sm md:text-base leading-relaxed">{line.replace(/^- /, '')}</p>
                                               </div>
                                             ))}
                                           </div>
 
                                           {/* Highlight Box */}
-                                          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-6 border border-orange-100 relative overflow-hidden shadow-sm">
-                                            {/* Decorative icon background */}
-                                            <Star className="absolute -right-6 -bottom-6 w-32 h-32 text-orange-200/40 rotate-12" />
-                                            <div className="relative z-10 flex gap-5 items-start">
-                                              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-200 flex items-center justify-center shrink-0">
-                                                <Star className="w-6 h-6 fill-white" />
+                                          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-100 relative overflow-hidden">
+                                            <Star className="absolute -right-4 -bottom-4 w-24 h-24 text-orange-200/40 rotate-12" />
+                                            <div className="relative z-10 flex flex-col sm:flex-row gap-4 sm:items-start">
+                                              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-400 to-amber-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-orange-200">
+                                                <Star className="w-5 h-5 fill-white" />
                                               </div>
                                               <div>
-                                                <span className="block text-xs font-black text-orange-800 uppercase tracking-[0.2em] mb-2">Special Highlight</span>
-                                                <p className="text-slate-700 text-[15px] font-medium leading-relaxed">
+                                                <span className="block text-[10px] font-black text-orange-800 uppercase tracking-widest mb-1">Special Highlight</span>
+                                                <p className="text-slate-700 text-sm font-medium leading-relaxed">
                                                   {day.whyThisWorks || "Experience the absolute best of the destination with thoughtfully planned moments of magic and comfort."}
                                                 </p>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
-                                      </motion.div>
-                                    )}
-                                  </AnimatePresence>
+
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
                       </div>
                     </div>
 
                     {/* ── VISUAL JOURNEY ── */}
                     <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
-                      <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight">Visual Journey</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+                      <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-6 tracking-tight">Visual Journey</h3>
+                      <div className="flex flex-col md:grid md:grid-cols-12 gap-3 md:gap-5">
                         {/* Left side: Large vertical image */}
-                        <div className="md:col-span-7 h-[450px] rounded-3xl overflow-hidden shadow-md group/img relative cursor-zoom-in" onClick={() => setActiveImage(displayImages[0])}>
+                        <div className="md:col-span-7 h-[220px] sm:h-[280px] md:h-[450px] rounded-2xl md:rounded-3xl overflow-hidden shadow-md group/img relative cursor-zoom-in" onClick={() => setActiveImage(displayImages[0])}>
                           <img 
                             src={displayImages[0]} 
                             alt={`${pkg.name} view 1`}
@@ -710,14 +715,17 @@ const PackageDetails = () => {
                           <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-all duration-300"></div>
                         </div>
 
-                        {/* Right side: 3 smaller horizontal images stacked */}
-                        <div className="md:col-span-5 flex flex-col gap-4 h-[450px]">
+                        {/* Right side: Collage on mobile, stacked on desktop */}
+                        <div className="md:col-span-5 grid grid-cols-2 md:flex md:flex-col gap-3 md:gap-4 h-auto md:h-[450px]">
                           {[1, 2, 3].map((idx) => {
                             const imgSrc = displayImages[idx];
+                            // Create a dynamic asymmetric look on mobile: first two are squares, third is a wide rectangle
+                            const mobileLayoutClass = idx === 3 ? 'col-span-2 h-[130px] sm:h-[180px]' : 'col-span-1 h-[140px] sm:h-[180px]';
+                            
                             return (
                               <div 
                                 key={idx} 
-                                className="flex-1 rounded-2xl overflow-hidden shadow-sm group/img relative cursor-zoom-in"
+                                className={`${mobileLayoutClass} md:h-auto md:flex-1 rounded-xl md:rounded-2xl overflow-hidden shadow-sm group/img relative cursor-zoom-in`}
                                 onClick={() => setActiveImage(imgSrc)}
                               >
                                 <img 
@@ -731,7 +739,7 @@ const PackageDetails = () => {
                           })}
                         </div>
                       </div>
-                      <p className="text-center text-xs text-slate-400 font-semibold mt-4">
+                      <p className="text-center text-[10px] md:text-xs text-slate-400 font-semibold mt-4">
                         Click on any image to view in full size
                       </p>
                     </div>
@@ -825,6 +833,31 @@ const PackageDetails = () => {
           )}
         </AnimatePresence>
       </div>
+
+      {/* ── MOBILE STICKY BOOKING BAR ── */}
+      <AnimatePresence>
+        {pkg && step === 2 && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-slate-200 p-4 pb-safe shadow-[0_-10px_40px_rgba(0,0,0,0.1)] rounded-t-3xl"
+          >
+            <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{selectedTier?.name} Soul</span>
+                <span className="text-2xl font-black text-slate-900 leading-none">{selectedTier?.price}</span>
+              </div>
+              <button
+                onClick={handleBooking}
+                className="flex-1 bg-soul-blue text-white py-3.5 px-6 rounded-2xl font-black text-sm tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-blue-200 active:scale-95 transition-all"
+              >
+                <span>Book Now</span>
+                <Check className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── LIGHTBOX MODAL ── */}
       <AnimatePresence>
