@@ -48,8 +48,9 @@ const IconMap = {
 };
 
 import PackagesSection from '../components/PackagesSection';
-import AboutSection from '../components/AboutSection';
+import FeaturesSection from '../components/FeaturesSection';
 import FAQSection from '../components/FAQSection';
+import CategoryNav from '../components/CategoryNav';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -233,6 +234,8 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10 px-4">
 
+          {/* Category Navigation (MMT Style) */}
+          <CategoryNav />
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
@@ -254,7 +257,6 @@ const Home = () => {
 
         </div>
       </section>
-
 
       {/* Layer 1: Destination Selection (Thrillophilia Style) */}
       <section className={`py-3 md:py-4 border-b border-slate-100 bg-white sticky z-40 shadow-sm transition-all duration-300 ${isScrollingDown ? 'top-0' : 'top-[72px]'}`}>
@@ -364,7 +366,7 @@ const Home = () => {
         selectedCountryId={selectedCountry?.id} 
         searchQuery={searchQuery}
       />
-      <AboutSection />
+      <FeaturesSection />
       <FAQSection />
     </div>
   );

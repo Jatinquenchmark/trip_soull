@@ -82,14 +82,14 @@ const Navbar = () => {
       <div className="bg-white/40 backdrop-blur-md rounded-full p-2 flex items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/50">
         
         {/* Left Logo Pill */}
-        <div className="flex items-center">
+        <div className="flex-shrink-0">
           <Link to="/" className="bg-white/80 backdrop-blur-sm rounded-full w-12 h-12 md:w-14 md:h-14 flex items-center justify-center hover:scale-105 transition-transform shadow-sm">
             <img src={logo} alt="TripSoul" className="h-8 md:h-10 w-auto object-contain" />
           </Link>
         </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Center Desktop Links */}
+        <div className="hidden md:flex flex-1 justify-center items-center gap-4 lg:gap-8 px-4">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
@@ -99,21 +99,15 @@ const Navbar = () => {
                   handleScroll(e, link.href);
                 }
               }}
-              className="text-[14px] font-semibold text-slate-700 hover:text-black transition-colors px-1"
+              className="text-[14px] font-semibold text-slate-700 hover:text-black transition-colors whitespace-nowrap"
             >
               {link.name}
             </Link>
           ))}
-          
-          {/* Professional Flights Icon */}
-          <Link 
-            to="/flights" 
-            className="flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-full bg-white/50 backdrop-blur-sm text-slate-700 hover:bg-white hover:text-black transition-all shadow-sm"
-            title="Search Flights"
-          >
-            <Plane className="w-5 h-5" />
-          </Link>
-          
+        </div>
+
+        {/* Right Auth Section */}
+        <div className="hidden md:flex items-center flex-shrink-0 pl-2">
 
           {loading ? (
             <div className="w-20 h-10 bg-slate-100 animate-pulse rounded-full"></div>
@@ -183,15 +177,6 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          
-          {/* Mobile Flights Link */}
-          <Link 
-            to="/flights" 
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 text-lg font-bold text-slate-800 py-3 border-b border-slate-200/50 bg-white/50 px-4 rounded-xl mt-2 shadow-sm"
-          >
-            <Plane className="w-6 h-6" /> Search Flights
-          </Link>
 
 
           {isAuthenticated && user && !isAdmin ? (
