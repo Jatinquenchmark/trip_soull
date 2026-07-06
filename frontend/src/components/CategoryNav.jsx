@@ -36,7 +36,7 @@ const CategoryNav = () => {
             >
               {/* 3D Icon using Icons8 */}
               <div className="w-9 h-9 sm:w-11 sm:h-11 md:w-14 md:h-14 flex items-center justify-center drop-shadow-md group-hover:-translate-y-1 group-hover:scale-105 transition-all duration-300 mt-1">
-                <img src={cat.iconUrl} alt={cat.label} className="w-full h-full object-contain filter drop-shadow-sm" />
+                <img src={cat.iconUrl} alt={cat.label} className={`w-full h-full object-contain filter drop-shadow-sm grayscale opacity-75 ${isActive ? 'opacity-100' : 'group-hover:opacity-100'}`} />
               </div>
               
               <span className={`text-[9.5px] sm:text-[11px] md:text-[14px] leading-tight font-bold text-center transition-colors duration-300 px-0.5 ${isActive ? 'text-[#008cff]' : 'text-[#4a4a4a] group-hover:text-[#008cff]'}`}>
