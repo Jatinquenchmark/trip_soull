@@ -79,8 +79,12 @@ const Register = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
+        if (data.token) {
+          localStorage.setItem('userToken', data.token);
+        }
         toast.success('Registration successful!');
-        login(); // update auth context state
+        await login(); // update auth context state
         navigate('/profile');
       } else {
         const errData = await response.json();
