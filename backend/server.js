@@ -15,6 +15,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const { clerkMiddleware } = require('@clerk/express');
 
 const app = express();
+app.set('trust proxy', 1); // Fixes rate-limit issue on Render (proxy)
 
 // Middleware
 const allowedOrigins = [
