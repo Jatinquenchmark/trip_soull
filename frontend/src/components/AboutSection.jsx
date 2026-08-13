@@ -94,7 +94,7 @@ const AboutSection = () => {
                   <Shield className="text-[#2B4A8C] w-6 h-6" />
                 </div>
                 <h4 className="text-base font-bold text-slate-800 mb-2">100% Secure</h4>
-                <p className="text-sm text-slate-500 leading-relaxed">Safe payments and strictly verified operators for complete peace of mind.</p>
+                <p className="text-sm text-slate-500 leading-relaxed">Safe payments and strictly verified operators for complete peace of mind</p>
               </div>
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center shrink-0 mb-4">
