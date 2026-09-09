@@ -722,7 +722,7 @@ const PackageDetails = () => {
                             <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
                               <Check className="w-4 h-4" />
                             </div>
-                            What's Included
+                            Inclusions
                           </h3>
                           {parsedInclusions.length > 0 ? (
                             <ul className="space-y-3">
@@ -744,7 +744,7 @@ const PackageDetails = () => {
                             <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600">
                               <X className="w-4 h-4" />
                             </div>
-                            What's Not Included
+                            Exclusions
                           </h3>
                           {parsedExclusions.length > 0 ? (
                             <ul className="space-y-3">
