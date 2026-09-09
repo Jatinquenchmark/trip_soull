@@ -78,8 +78,6 @@ router.post('/', auth, upload.any(), async (req, res) => {
 
     // Parse JSON fields from the form data if they are stringified
     const parsedItinerary = req.body.itinerary ? JSON.parse(req.body.itinerary) : [];
-    const parsedInclusions = req.body.inclusions ? JSON.parse(req.body.inclusions) : [];
-    const parsedExclusions = req.body.exclusions ? JSON.parse(req.body.exclusions) : [];
     const parsedPricingTiers = req.body.pricingTiers ? JSON.parse(req.body.pricingTiers) : {};
     const parsedExperiences = req.body.experiences 
       ? JSON.parse(req.body.experiences) 
@@ -103,8 +101,8 @@ router.post('/', auth, upload.any(), async (req, res) => {
       rating: req.body.rating || 5.0,
       images: finalImages,
       itinerary: parsedItinerary,
-      inclusions: parsedInclusions,
-      exclusions: parsedExclusions,
+      inclusions: req.body.inclusions || '',
+      exclusions: req.body.exclusions || '',
       termsAndConditions: req.body.termsAndConditions || '',
       experiences: parsedExperiences,
     });
@@ -204,8 +202,6 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
     }
 
     const parsedItinerary = req.body.itinerary ? JSON.parse(req.body.itinerary) : existingPackage.itinerary;
-    const parsedInclusions = req.body.inclusions ? JSON.parse(req.body.inclusions) : existingPackage.inclusions;
-    const parsedExclusions = req.body.exclusions ? JSON.parse(req.body.exclusions) : existingPackage.exclusions;
     const parsedPricingTiers = req.body.pricingTiers ? JSON.parse(req.body.pricingTiers) : existingPackage.pricingTiers;
     const parsedExperiences = req.body.experiences ? JSON.parse(req.body.experiences) : existingPackage.experiences;
 
@@ -220,8 +216,8 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
     existingPackage.groupCapacity = req.body.groupCapacity || existingPackage.groupCapacity;
     existingPackage.pricingTiers = parsedPricingTiers;
     existingPackage.itinerary = parsedItinerary;
-    existingPackage.inclusions = parsedInclusions;
-    existingPackage.exclusions = parsedExclusions;
+    existingPackage.inclusions = req.body.inclusions !== undefined ? req.body.inclusions : existingPackage.inclusions;
+    existingPackage.exclusions = req.body.exclusions !== undefined ? req.body.exclusions : existingPackage.exclusions;
     existingPackage.termsAndConditions = req.body.termsAndConditions !== undefined ? req.body.termsAndConditions : existingPackage.termsAndConditions;
     existingPackage.images = finalImages;
     existingPackage.experiences = parsedExperiences;

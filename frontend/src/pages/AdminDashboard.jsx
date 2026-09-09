@@ -23,13 +23,8 @@ const AdminDashboard = () => {
     discountedPrice: '0',
     days: '',
     nights: '',
-    inclusions: {
-      flights: true,
-      hotels: true,
-      breakfast: true,
-      transfers: false,
-    },
-    exclusions: ['Visa Fees', 'Travel Insurance'],
+    inclusions: '',
+    exclusions: '',
     experiences: {
       solo: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
       adventure: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
@@ -47,7 +42,6 @@ const AdminDashboard = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
-  const [newExclusion, setNewExclusion] = useState('');
   const [bannerFile, setBannerFile] = useState(null);
   const [existingBanner, setExistingBanner] = useState('');
   const [galleryFiles, setGalleryFiles] = useState([]);
@@ -124,13 +118,8 @@ const AdminDashboard = () => {
       discountedPrice: pkg.discountedPrice || '0',
       days: pkg.days || '',
       nights: pkg.nights || '',
-      inclusions: pkg.inclusions || {
-        flights: false,
-        hotels: false,
-        breakfast: false,
-        transfers: false,
-      },
-      exclusions: pkg.exclusions || [],
+      inclusions: pkg.inclusions || '',
+      exclusions: pkg.exclusions || '',
       experiences: {
         solo: {
           active: typeof pkg.experiences?.solo === 'object' ? pkg.experiences.solo.active : (pkg.experiences?.solo ?? true),
@@ -209,13 +198,6 @@ const AdminDashboard = () => {
     setFormData(prev => ({
       ...prev,
       pricingTiers: { ...prev.pricingTiers, [tier]: value }
-    }));
-  };
-
-  const toggleInclusion = (key) => {
-    setFormData(prev => ({
-      ...prev,
-      inclusions: { ...prev.inclusions, [key]: !prev.inclusions[key] }
     }));
   };
 
@@ -384,23 +366,6 @@ const AdminDashboard = () => {
     });
   };
 
-  const addExclusion = () => {
-    if (newExclusion.trim() && !formData.exclusions.includes(newExclusion.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        exclusions: [...prev.exclusions, newExclusion.trim()]
-      }));
-      setNewExclusion('');
-    }
-  };
-
-  const removeExclusion = (tag) => {
-    setFormData(prev => ({
-      ...prev,
-      exclusions: prev.exclusions.filter(e => e !== tag)
-    }));
-  };
-
   const addItineraryDay = () => {
     setFormData(prev => ({
       ...prev,
@@ -479,8 +444,8 @@ const AdminDashboard = () => {
       data.append('overview', formData.overview);
       data.append('groupCapacity', formData.groupCapacity);
       data.append('pricingTiers', JSON.stringify(formData.pricingTiers));
-      data.append('inclusions', JSON.stringify(formData.inclusions));
-      data.append('exclusions', JSON.stringify(formData.exclusions));
+      data.append('inclusions', formData.inclusions);
+      data.append('exclusions', formData.exclusions);
       data.append('experiences', JSON.stringify(formData.experiences || { solo: true, adventure: true, couple: true }));
       data.append('itinerary', JSON.stringify(formData.itinerary));
       data.append('termsAndConditions', formData.termsAndConditions);
@@ -535,7 +500,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex font-poppins">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#0F172A] text-slate-300 flex flex-col hidden md:flex">
+      <aside className="w-64 bg-[#0F172A] text-slate-300  flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-slate-800">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white font-black">
@@ -948,39 +913,28 @@ const AdminDashboard = () => {
 
                         {/* Inclusions & Exclusions */}
                         <Card title="Inclusions & Exclusions">
-                          <div className="space-y-6">
+                          <div className="space-y-5">
                             <div>
-                              <label className="block text-xs font-semibold text-slate-700 mb-3">Package Inclusions</label>
-                              <div className="grid grid-cols-2 gap-4">
-                                <Checkbox label="Flights Included" checked={formData.inclusions.flights} onChange={() => toggleInclusion('flights')} />
-                                <Checkbox label="Hotels Included" checked={formData.inclusions.hotels} onChange={() => toggleInclusion('hotels')} />
-                                <Checkbox label="Daily Breakfast" checked={formData.inclusions.breakfast} onChange={() => toggleInclusion('breakfast')} />
-                                <Checkbox label="Airport Transfers" checked={formData.inclusions.transfers} onChange={() => toggleInclusion('transfers')} />
-                              </div>
+                              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Package Inclusions</label>
+                              <textarea 
+                                name="inclusions"
+                                rows="4"
+                                value={formData.inclusions}
+                                onChange={handleInputChange}
+                                placeholder="Type all inclusions here (e.g. Flights, Hotel, Breakfast)..."
+                                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                              ></textarea>
                             </div>
-                            <div className="pt-4 border-t border-slate-100">
-                              <label className="block text-xs font-semibold text-slate-700 mb-2">Package Exclusions</label>
-                              <div className="flex gap-2 mb-3">
-                                <input 
-                                  type="text" 
-                                  value={newExclusion} 
-                                  onChange={(e) => setNewExclusion(e.target.value)}
-                                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addExclusion())}
-                                  placeholder="e.g. Visa Fees" 
-                                  className="flex-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                                />
-                                <button type="button" onClick={addExclusion} className="px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-800 transition-colors">
-                                  Add
-                                </button>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {formData.exclusions.map((exclusion, idx) => (
-                                  <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
-                                    {exclusion}
-                                    <button type="button" onClick={() => removeExclusion(exclusion)} className="text-slate-400 hover:text-red-500"><X size={12}/></button>
-                                  </span>
-                                ))}
-                              </div>
+                            <div>
+                              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Package Exclusions</label>
+                              <textarea 
+                                name="exclusions"
+                                rows="4"
+                                value={formData.exclusions}
+                                onChange={handleInputChange}
+                                placeholder="Type all exclusions here (e.g. Visa, Personal expenses)..."
+                                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                              ></textarea>
                             </div>
                           </div>
                         </Card>
@@ -1186,7 +1140,7 @@ const AdminDashboard = () => {
                                   </button>
                                 </div>
                               ) : (
-                                <label className="border-2 border-dashed border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer relative overflow-hidden block">
+                                <label className="border-2 border-dashed border-slate-200 rounded-xl p-6  flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer relative overflow-hidden block">
                                   <input 
                                     type="file" 
                                     id="banner-upload"
@@ -1243,7 +1197,7 @@ const AdminDashboard = () => {
                                 </div>
                               )}
 
-                              <label className="border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer relative overflow-hidden block">
+                              <label className="border-2 border-dashed border-slate-200 rounded-xl p-8  flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer relative overflow-hidden block">
                                 <input 
                                   type="file" 
                                   id="image-upload"

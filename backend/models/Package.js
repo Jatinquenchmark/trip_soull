@@ -37,13 +37,8 @@ const packageSchema = new mongoose.Schema({
     title: { type: String },
     description: { type: String }
   }],
-  inclusions: {
-    flights: { type: Boolean, default: false },
-    hotels: { type: Boolean, default: false },
-    breakfast: { type: Boolean, default: false },
-    transfers: { type: Boolean, default: false }
-  },
-  exclusions: [{ type: String }],
+  inclusions: { type: String, default: '' },
+  exclusions: { type: String, default: '' },
   termsAndConditions: { type: String, default: '' },
   experiences: {
     solo: { type: experienceSchema, default: () => ({}) },
