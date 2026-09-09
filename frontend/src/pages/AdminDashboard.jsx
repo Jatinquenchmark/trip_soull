@@ -23,8 +23,8 @@ const AdminDashboard = () => {
     discountedPrice: '0',
     days: '',
     nights: '',
-    inclusions: '',
-    exclusions: '',
+    inclusions: [],
+    exclusions: [],
     experiences: {
       solo: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
       adventure: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
@@ -42,6 +42,8 @@ const AdminDashboard = () => {
   };
 
   const [formData, setFormData] = useState(initialFormState);
+  const [newInclusion, setNewInclusion] = useState('');
+  const [newExclusion, setNewExclusion] = useState('');
   const [bannerFile, setBannerFile] = useState(null);
   const [existingBanner, setExistingBanner] = useState('');
   const [galleryFiles, setGalleryFiles] = useState([]);
@@ -118,8 +120,8 @@ const AdminDashboard = () => {
       discountedPrice: pkg.discountedPrice || '0',
       days: pkg.days || '',
       nights: pkg.nights || '',
-      inclusions: pkg.inclusions || '',
-      exclusions: pkg.exclusions || '',
+      inclusions: Array.isArray(pkg.inclusions) ? pkg.inclusions : (typeof pkg.inclusions === 'string' && pkg.inclusions ? pkg.inclusions.split(',').map(s=>s.trim()) : []),
+      exclusions: Array.isArray(pkg.exclusions) ? pkg.exclusions : (typeof pkg.exclusions === 'string' && pkg.exclusions ? pkg.exclusions.split(',').map(s=>s.trim()) : []),
       experiences: {
         solo: {
           active: typeof pkg.experiences?.solo === 'object' ? pkg.experiences.solo.active : (pkg.experiences?.solo ?? true),
@@ -198,6 +200,40 @@ const AdminDashboard = () => {
     setFormData(prev => ({
       ...prev,
       pricingTiers: { ...prev.pricingTiers, [tier]: value }
+    }));
+  };
+
+  const addInclusion = () => {
+    if (newInclusion.trim() && !formData.inclusions.includes(newInclusion.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        inclusions: [...prev.inclusions, newInclusion.trim()]
+      }));
+      setNewInclusion('');
+    }
+  };
+
+  const removeInclusion = (tag) => {
+    setFormData(prev => ({
+      ...prev,
+      inclusions: prev.inclusions.filter(e => e !== tag)
+    }));
+  };
+
+  const addExclusion = () => {
+    if (newExclusion.trim() && !formData.exclusions.includes(newExclusion.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        exclusions: [...prev.exclusions, newExclusion.trim()]
+      }));
+      setNewExclusion('');
+    }
+  };
+
+  const removeExclusion = (tag) => {
+    setFormData(prev => ({
+      ...prev,
+      exclusions: prev.exclusions.filter(e => e !== tag)
     }));
   };
 
@@ -444,8 +480,8 @@ const AdminDashboard = () => {
       data.append('overview', formData.overview);
       data.append('groupCapacity', formData.groupCapacity);
       data.append('pricingTiers', JSON.stringify(formData.pricingTiers));
-      data.append('inclusions', formData.inclusions);
-      data.append('exclusions', formData.exclusions);
+      data.append('inclusions', JSON.stringify(formData.inclusions));
+      data.append('exclusions', JSON.stringify(formData.exclusions));
       data.append('experiences', JSON.stringify(formData.experiences || { solo: true, adventure: true, couple: true }));
       data.append('itinerary', JSON.stringify(formData.itinerary));
       data.append('termsAndConditions', formData.termsAndConditions);
@@ -913,28 +949,54 @@ const AdminDashboard = () => {
 
                         {/* Inclusions & Exclusions */}
                         <Card title="Inclusions & Exclusions">
-                          <div className="space-y-5">
+                          <div className="space-y-6">
                             <div>
-                              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Package Inclusions</label>
-                              <textarea 
-                                name="inclusions"
-                                rows="4"
-                                value={formData.inclusions}
-                                onChange={handleInputChange}
-                                placeholder="Type all inclusions here (e.g. Flights, Hotel, Breakfast)..."
-                                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                              ></textarea>
+                              <label className="block text-xs font-semibold text-slate-700 mb-2">Package Inclusions</label>
+                              <div className="flex gap-2 mb-3">
+                                <input 
+                                  type="text" 
+                                  value={newInclusion} 
+                                  onChange={(e) => setNewInclusion(e.target.value)}
+                                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addInclusion())}
+                                  placeholder="e.g. Flights Included" 
+                                  className="flex-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                />
+                                <button type="button" onClick={addInclusion} className="px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-800 transition-colors">
+                                  Add
+                                </button>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {formData.inclusions.map((inclusion, idx) => (
+                                  <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
+                                    {inclusion}
+                                    <button type="button" onClick={() => removeInclusion(inclusion)} className="text-slate-400 hover:text-red-500"><X size={12}/></button>
+                                  </span>
+                                ))}
+                              </div>
                             </div>
-                            <div>
-                              <label className="block text-xs font-semibold text-slate-700 mb-1.5">Package Exclusions</label>
-                              <textarea 
-                                name="exclusions"
-                                rows="4"
-                                value={formData.exclusions}
-                                onChange={handleInputChange}
-                                placeholder="Type all exclusions here (e.g. Visa, Personal expenses)..."
-                                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
-                              ></textarea>
+                            <div className="pt-4 border-t border-slate-100">
+                              <label className="block text-xs font-semibold text-slate-700 mb-2">Package Exclusions</label>
+                              <div className="flex gap-2 mb-3">
+                                <input 
+                                  type="text" 
+                                  value={newExclusion} 
+                                  onChange={(e) => setNewExclusion(e.target.value)}
+                                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addExclusion())}
+                                  placeholder="e.g. Visa Fees" 
+                                  className="flex-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                />
+                                <button type="button" onClick={addExclusion} className="px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-800 transition-colors">
+                                  Add
+                                </button>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {formData.exclusions.map((exclusion, idx) => (
+                                  <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
+                                    {exclusion}
+                                    <button type="button" onClick={() => removeExclusion(exclusion)} className="text-slate-400 hover:text-red-500"><X size={12}/></button>
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </Card>
