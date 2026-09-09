@@ -76,17 +76,25 @@ router.post('/', auth, upload.any(), async (req, res) => {
       finalImages = [...existingImages, ...legacyUrls, ...galleryUrls];
     }
 
-    const parsedItinerary = req.body.itinerary ? JSON.parse(req.body.itinerary) : [];
-    const parsedInclusions = req.body.inclusions ? JSON.parse(req.body.inclusions) : [];
-    const parsedExclusions = req.body.exclusions ? JSON.parse(req.body.exclusions) : [];
-    const parsedPricingTiers = req.body.pricingTiers ? JSON.parse(req.body.pricingTiers) : {};
-    const parsedExperiences = req.body.experiences 
-      ? JSON.parse(req.body.experiences) 
-      : { 
+    // Ensure safe JSON parsing
+    const safeParse = (str, fallback) => {
+      try {
+        if (str === undefined || str === null || str === 'undefined') return fallback;
+        return JSON.parse(str);
+      } catch (e) {
+        return fallback;
+      }
+    };
+
+    const parsedItinerary = safeParse(req.body.itinerary, []);
+    const parsedInclusions = safeParse(req.body.inclusions, []);
+    const parsedExclusions = safeParse(req.body.exclusions, []);
+    const parsedPricingTiers = safeParse(req.body.pricingTiers, {});
+    const parsedExperiences = safeParse(req.body.experiences, { 
           solo: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
           adventure: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] },
           couple: { active: true, overview: '', pricingTiers: { essential: '', comfort: '', luxury: '' }, itinerary: [] }
-        };
+        });
 
     const newPackage = new Package({
       name: req.body.name,
@@ -203,11 +211,21 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
       }
     }
 
-    const parsedItinerary = req.body.itinerary ? JSON.parse(req.body.itinerary) : existingPackage.itinerary;
-    const parsedInclusions = req.body.inclusions ? JSON.parse(req.body.inclusions) : existingPackage.inclusions;
-    const parsedExclusions = req.body.exclusions ? JSON.parse(req.body.exclusions) : existingPackage.exclusions;
-    const parsedPricingTiers = req.body.pricingTiers ? JSON.parse(req.body.pricingTiers) : existingPackage.pricingTiers;
-    const parsedExperiences = req.body.experiences ? JSON.parse(req.body.experiences) : existingPackage.experiences;
+    // Ensure safe JSON parsing
+    const safeParse = (str, fallback) => {
+      try {
+        if (str === undefined || str === null || str === 'undefined') return fallback;
+        return JSON.parse(str);
+      } catch (e) {
+        return fallback;
+      }
+    };
+
+    const parsedItinerary = safeParse(req.body.itinerary, existingPackage.itinerary);
+    const parsedInclusions = safeParse(req.body.inclusions, existingPackage.inclusions);
+    const parsedExclusions = safeParse(req.body.exclusions, existingPackage.exclusions);
+    const parsedPricingTiers = safeParse(req.body.pricingTiers, existingPackage.pricingTiers);
+    const parsedExperiences = safeParse(req.body.experiences, existingPackage.experiences);
 
     existingPackage.name = req.body.name || existingPackage.name;
     existingPackage.countryId = req.body.countryId || existingPackage.countryId;
@@ -222,7 +240,11 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
     existingPackage.itinerary = parsedItinerary;
     existingPackage.inclusions = parsedInclusions;
     existingPackage.exclusions = parsedExclusions;
-    existingPackage.termsAndConditions = req.body.termsAndConditions !== undefined ? req.body.termsAndConditions : existingPackage.termsAndConditions;
+    
+    if (req.body.termsAndConditions !== undefined && req.body.termsAndConditions !== 'undefined') {
+      existingPackage.termsAndConditions = req.body.termsAndConditions;
+    }
+    
     existingPackage.images = finalImages;
     existingPackage.experiences = parsedExperiences;
 
