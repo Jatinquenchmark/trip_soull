@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 import {
-  DubaiIcon, JapanIcon, MaldivesIcon, ThailandIcon, VietnamIcon, SingaporeIcon, EuropeIcon, TurkeyIcon
+  DubaiIcon, JapanIcon, MaldivesIcon, ThailandIcon, VietnamIcon, SingaporeIcon, EuropeIcon, TurkeyIcon, IndiaIcon
 } from '../components/CustomDestinationIcons';
 
 const IconMap = {
@@ -44,7 +44,8 @@ const IconMap = {
   singapore: SingaporeIcon,
   europe: EuropeIcon,
   turkey: TurkeyIcon,
-  bali: Palmtree // Bali keeps Palmtree
+  bali: Palmtree,
+  india: IndiaIcon
 };
 
 import PackagesSection from '../components/PackagesSection';

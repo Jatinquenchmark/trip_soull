@@ -129,3 +129,18 @@ export const TurkeyIcon = (props) => (
     <path d="M12 2c2 0 3 5 3 17" />
   </svg>
 );
+
+export const IndiaIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M2 22h20" />
+    <path d="M4 22v-2h16v2" />
+    <path d="M12 4c-3 0-5 3-5 7v7h10v-7c0-4-2-7-5-7z" />
+    <path d="M12 2v2" />
+    <path d="M5 20V10" />
+    <path d="M4 10h2" />
+    <path d="M19 20V10" />
+    <path d="M18 10h2" />
+    <path d="M7 13c0-1.5 1-2.5 2-2.5s2 1 2 2.5" />
+    <path d="M15 13c0-1.5 1-2.5 2-2.5s2 1 2 2.5" />
+  </svg>
+);

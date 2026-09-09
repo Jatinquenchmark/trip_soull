@@ -12,6 +12,7 @@ import adventureImg from '../assets/adventure-seekers-1.jpg';
 import coupleImg from '../assets/a-couple-of-1694334_640.webp';
 
 export const destinations = [
+  { id: 'india', name: 'India', image: 'https://loremflickr.com/320/320/india,landmark/all', icon: 'Landmark', description: 'Incredible landscapes and rich heritage.' },
   { id: 'vietnam', name: 'Vietnam', image: vietnamLogo, icon: 'FaSailboat', description: 'Ancient temples and emerald bays.' },
   { id: 'bali', name: 'Bali', image: baliLogo, icon: 'GiPalmTree', description: 'Tropical paradise and spiritual heart.' },
   { id: 'dubai', name: 'Dubai', image: dubaiLogo, icon: 'TbBuildingSkyscraper', description: 'Modern luxury and golden sands.' },

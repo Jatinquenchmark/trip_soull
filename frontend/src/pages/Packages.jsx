@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
 import {
-  DubaiIcon, JapanIcon, MaldivesIcon, ThailandIcon, VietnamIcon, SingaporeIcon, EuropeIcon, TurkeyIcon
+  DubaiIcon, JapanIcon, MaldivesIcon, ThailandIcon, VietnamIcon, SingaporeIcon, EuropeIcon, TurkeyIcon, IndiaIcon
 } from '../components/CustomDestinationIcons';
 
 const IconMap = {
@@ -36,7 +36,8 @@ const IconMap = {
   singapore: SingaporeIcon,
   europe: EuropeIcon,
   turkey: TurkeyIcon,
-  bali: Palmtree
+  bali: Palmtree,
+  india: IndiaIcon
 };
 
 const Packages = () => {
