@@ -144,6 +144,7 @@ router.get('/:id', async (req, res) => {
 // PUT: Update a package
 router.put('/:id', auth, upload.any(), async (req, res) => {
   try {
+    console.log('PUT /api/packages/:id REQ.BODY:', req.body);
     const existingPackage = await Package.findById(req.params.id);
     if (!existingPackage) {
       return res.status(404).json({ message: 'Package not found' });

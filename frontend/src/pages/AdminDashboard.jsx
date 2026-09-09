@@ -86,7 +86,7 @@ const AdminDashboard = () => {
   const fetchPackages = async () => {
     setLoadingPackages(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/packages`);
+      const response = await fetch(`${API_BASE_URL}/api/packages`, { cache: 'no-store' });
       if (response.ok) {
         const data = await response.json();
         setPackages(data);
@@ -466,6 +466,18 @@ const AdminDashboard = () => {
       return;
     }
 
+    let finalInclusions = [...formData.inclusions];
+    if (newInclusion.trim() && !finalInclusions.includes(newInclusion.trim())) {
+      finalInclusions.push(newInclusion.trim());
+      setNewInclusion('');
+    }
+
+    let finalExclusions = [...formData.exclusions];
+    if (newExclusion.trim() && !finalExclusions.includes(newExclusion.trim())) {
+      finalExclusions.push(newExclusion.trim());
+      setNewExclusion('');
+    }
+
     setIsSubmitting(true);
     try {
       const data = new FormData();
@@ -480,11 +492,11 @@ const AdminDashboard = () => {
       data.append('overview', formData.overview);
       data.append('groupCapacity', formData.groupCapacity);
       data.append('pricingTiers', JSON.stringify(formData.pricingTiers));
-      data.append('inclusions', JSON.stringify(formData.inclusions));
-      data.append('exclusions', JSON.stringify(formData.exclusions));
+      data.append('inclusions', JSON.stringify(finalInclusions));
+      data.append('exclusions', JSON.stringify(finalExclusions));
       data.append('experiences', JSON.stringify(formData.experiences || { solo: true, adventure: true, couple: true }));
       data.append('itinerary', JSON.stringify(formData.itinerary));
-      data.append('termsAndConditions', formData.termsAndConditions);
+      data.append('termsAndConditions', formData.termsAndConditions || '');
       
       if (bannerFile) {
         data.append('bannerImage', bannerFile);
