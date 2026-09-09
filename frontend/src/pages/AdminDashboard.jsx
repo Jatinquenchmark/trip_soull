@@ -42,7 +42,8 @@ const AdminDashboard = () => {
       essential: '',
       comfort: '',
       luxury: ''
-    }
+    },
+    termsAndConditions: ''
   };
 
   const [formData, setFormData] = useState(initialFormState);
@@ -157,7 +158,8 @@ const AdminDashboard = () => {
         essential: '',
         comfort: '',
         luxury: ''
-      }
+      },
+      termsAndConditions: pkg.termsAndConditions || ''
     });
     setExistingBanner(pkg.images?.[0] || '');
     setExistingGallery(pkg.images?.slice(1) || []);
@@ -424,9 +426,7 @@ const AdminDashboard = () => {
     setFormData(prev => ({ ...prev, itinerary: updatedItinerary }));
   };
 
-  const handleFileChange = (e) => {
-    setImageFiles(e.target.files);
-  };
+
 
   const showToast = (message, type = 'error') => {
     toast.custom((t) => (
@@ -483,6 +483,7 @@ const AdminDashboard = () => {
       data.append('exclusions', JSON.stringify(formData.exclusions));
       data.append('experiences', JSON.stringify(formData.experiences || { solo: true, adventure: true, couple: true }));
       data.append('itinerary', JSON.stringify(formData.itinerary));
+      data.append('termsAndConditions', formData.termsAndConditions);
       
       if (bannerFile) {
         data.append('bannerImage', bannerFile);
@@ -945,7 +946,59 @@ const AdminDashboard = () => {
                           </div>
                         </Card>
 
+                        {/* Inclusions & Exclusions */}
+                        <Card title="Inclusions & Exclusions">
+                          <div className="space-y-6">
+                            <div>
+                              <label className="block text-xs font-semibold text-slate-700 mb-3">Package Inclusions</label>
+                              <div className="grid grid-cols-2 gap-4">
+                                <Checkbox label="Flights Included" checked={formData.inclusions.flights} onChange={() => toggleInclusion('flights')} />
+                                <Checkbox label="Hotels Included" checked={formData.inclusions.hotels} onChange={() => toggleInclusion('hotels')} />
+                                <Checkbox label="Daily Breakfast" checked={formData.inclusions.breakfast} onChange={() => toggleInclusion('breakfast')} />
+                                <Checkbox label="Airport Transfers" checked={formData.inclusions.transfers} onChange={() => toggleInclusion('transfers')} />
+                              </div>
+                            </div>
+                            <div className="pt-4 border-t border-slate-100">
+                              <label className="block text-xs font-semibold text-slate-700 mb-2">Package Exclusions</label>
+                              <div className="flex gap-2 mb-3">
+                                <input 
+                                  type="text" 
+                                  value={newExclusion} 
+                                  onChange={(e) => setNewExclusion(e.target.value)}
+                                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addExclusion())}
+                                  placeholder="e.g. Visa Fees" 
+                                  className="flex-1 px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                                />
+                                <button type="button" onClick={addExclusion} className="px-4 py-2 bg-slate-900 text-white font-semibold rounded-lg text-sm hover:bg-slate-800 transition-colors">
+                                  Add
+                                </button>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                {formData.exclusions.map((exclusion, idx) => (
+                                  <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
+                                    {exclusion}
+                                    <button type="button" onClick={() => removeExclusion(exclusion)} className="text-slate-400 hover:text-red-500"><X size={12}/></button>
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
 
+                        {/* Terms & Conditions */}
+                        <Card title="Terms & Conditions">
+                          <div>
+                            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Policies, Rules & Guidelines</label>
+                            <textarea 
+                              name="termsAndConditions"
+                              rows="4"
+                              value={formData.termsAndConditions}
+                              onChange={handleInputChange}
+                              placeholder="Enter any cancellation policies, payment terms, or trip rules here..."
+                              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                            ></textarea>
+                          </div>
+                        </Card>
 
                         {/* Itinerary Card */}
                         <Card title="Itinerary" action={<button type="button" onClick={addItineraryDay} className="text-blue-600 hover:text-blue-700 text-sm font-semibold flex items-center gap-1"><Plus size={16}/> Add Day</button>}>
@@ -1367,6 +1420,7 @@ const Card = ({ title, action, children }) => (
 
 const Checkbox = ({ label, checked, onChange }) => (
   <label className="flex items-center gap-3 cursor-pointer group">
+    <input type="checkbox" className="hidden" checked={checked} onChange={onChange} />
     <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
       checked ? 'bg-blue-500 border-blue-500' : 'border-slate-300 bg-white group-hover:border-blue-400'
     }`}>

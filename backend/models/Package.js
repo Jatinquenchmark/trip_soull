@@ -44,6 +44,7 @@ const packageSchema = new mongoose.Schema({
     transfers: { type: Boolean, default: false }
   },
   exclusions: [{ type: String }],
+  termsAndConditions: { type: String, default: '' },
   experiences: {
     solo: { type: experienceSchema, default: () => ({}) },
     adventure: { type: experienceSchema, default: () => ({}) },

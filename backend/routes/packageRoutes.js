@@ -105,6 +105,7 @@ router.post('/', auth, upload.any(), async (req, res) => {
       itinerary: parsedItinerary,
       inclusions: parsedInclusions,
       exclusions: parsedExclusions,
+      termsAndConditions: req.body.termsAndConditions || '',
       experiences: parsedExperiences,
     });
 
@@ -221,6 +222,7 @@ router.put('/:id', auth, upload.any(), async (req, res) => {
     existingPackage.itinerary = parsedItinerary;
     existingPackage.inclusions = parsedInclusions;
     existingPackage.exclusions = parsedExclusions;
+    existingPackage.termsAndConditions = req.body.termsAndConditions !== undefined ? req.body.termsAndConditions : existingPackage.termsAndConditions;
     existingPackage.images = finalImages;
     existingPackage.experiences = parsedExperiences;
 
