@@ -252,6 +252,18 @@ const PackageDetails = () => {
     );
   }
 
+  const getNormalizedArray = (field) => {
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    if (typeof field === 'string') return field.split(',').map(s => s.trim()).filter(Boolean);
+    if (typeof field === 'object') return Object.entries(field).filter(([k,v]) => v).map(([k]) => k);
+    return [];
+  };
+
+  const parsedInclusions = getNormalizedArray(pkg.inclusions);
+  const parsedExclusions = getNormalizedArray(pkg.exclusions);
+  const termsAndConditions = pkg.termsAndConditions || '';
+
   return (
     <div className="bg-[#F8FAFC] relative pb-28 lg:pb-12">
       {step === 1 && (
@@ -700,6 +712,70 @@ const PackageDetails = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* ── INCLUSIONS & EXCLUSIONS ── */}
+                    <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Inclusions */}
+                        <div>
+                          <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                              <Check className="w-4 h-4" />
+                            </div>
+                            What's Included
+                          </h3>
+                          {parsedInclusions.length > 0 ? (
+                            <ul className="space-y-3">
+                              {parsedInclusions.map((item, idx) => (
+                                <li key={idx} className="flex items-start gap-3">
+                                  <div className="mt-1 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></div>
+                                  <span className="text-slate-600 font-medium">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-slate-400 italic">Standard inclusions apply.</p>
+                          )}
+                        </div>
+
+                        {/* Exclusions */}
+                        <div>
+                          <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                              <X className="w-4 h-4" />
+                            </div>
+                            What's Not Included
+                          </h3>
+                          {parsedExclusions.length > 0 ? (
+                            <ul className="space-y-3">
+                              {parsedExclusions.map((item, idx) => (
+                                <li key={idx} className="flex items-start gap-3">
+                                  <div className="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></div>
+                                  <span className="text-slate-600 font-medium">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-slate-400 italic">No specific exclusions listed.</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* ── TERMS & CONDITIONS ── */}
+                    {termsAndConditions && (
+                      <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
+                        <h3 className="text-2xl font-black text-slate-900 mb-6 tracking-tight flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-600">
+                            <Info className="w-4 h-4" />
+                          </div>
+                          Terms & Conditions
+                        </h3>
+                        <div className="prose prose-slate max-w-none text-sm text-slate-600 leading-relaxed font-medium whitespace-pre-line">
+                          {termsAndConditions}
+                        </div>
+                      </div>
+                    )}
 
                     {/* ── VISUAL JOURNEY ── */}
                     <div className="rounded-[24px] md:rounded-[32px] border border-slate-200 bg-white p-6 md:p-10 shadow-xl shadow-slate-200/60">
